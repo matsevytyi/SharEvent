@@ -21,6 +21,18 @@ public class DatabaseDAO {
         }
     }
 
+    public void deleteEvent(String event_id) {
+
+        String query = "DELETE FROM events WHERE event_id = " + event_id;
+
+        try {
+            database.executeQuery(query);
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 
