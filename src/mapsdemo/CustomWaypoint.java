@@ -1,4 +1,4 @@
-package com.example.mapsdemo;
+package mapsdemo;
 
 import org.jdesktop.swingx.mapviewer.DefaultWaypoint;
 

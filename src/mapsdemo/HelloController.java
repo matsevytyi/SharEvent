@@ -1,4 +1,4 @@
-package com.example.mapsdemo;
+package mapsdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

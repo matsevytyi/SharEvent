@@ -1,5 +1,5 @@
 
-package com.example.mapsdemo;
+package mapsdemo;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;

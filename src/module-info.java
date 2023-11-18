@@ -3,8 +3,9 @@ module com.example.mapsdemo {
     requires javafx.fxml;
     requires javafx.swing;
     requires jxmapviewer2;
+    requires java.sql;
 
 
-    opens com.example.mapsdemo to javafx.fxml;
-    exports com.example.mapsdemo;
+    opens mapsdemo to javafx.fxml;
+    exports mapsdemo;
 }
