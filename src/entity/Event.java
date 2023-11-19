@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Event implements EventInterface{
 
@@ -12,7 +13,19 @@ public class Event implements EventInterface{
     private final String description;
     private final User creator;
 
-    public Event(int eventId, String eventName, long latitude, long longtitude, Date eventDate, String description, User creator) {
+    private List<User> eventAttendants;
+
+    public List<User> getEventAttendants() {
+        return eventAttendants;
+    }
+
+    public void setEventAttendants(List<User> eventAttendants) {
+        this.eventAttendants = eventAttendants;
+    }
+
+
+
+    public Event(int eventId, String eventName, long latitude, long longtitude, Date eventDate, String description, User creator, List<User> eventAttendants) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.latitude = latitude;
@@ -20,6 +33,7 @@ public class Event implements EventInterface{
         this.eventDate = eventDate;
         this.description = description;
         this.creator = creator;
+        this.eventAttendants = eventAttendants;
     }
 
 

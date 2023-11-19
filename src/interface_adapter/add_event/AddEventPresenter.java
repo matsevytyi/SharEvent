@@ -32,8 +32,8 @@ public class AddEventPresenter implements AddEventOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        AddEventState signupState = signupViewModel.getState();
-        signupState.setEventError(error);
+        AddEventState addEventState= signupViewModel.getState();
+        addEventState.setEventError(error);
         signupViewModel.firePropertyChanged();
     }
 }

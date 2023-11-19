@@ -7,4 +7,9 @@ public class EventDataAccessObject implements EventDataAccessInterface {
     public void addEvent(Event event) {
 
     }
+
+    @Override
+    public Event getEventById(int id) {
+        return null;
+    }
 }

@@ -3,6 +3,9 @@ package use_case.add_event;
 import data_access.EventDataAccessInterface;
 import entity.Event;
 import entity.EventFactory;
+import entity.User;
+
+import java.util.List;
 
 public class AddEventInteractor implements AddEventInputBoundary{
 
@@ -15,10 +18,12 @@ public class AddEventInteractor implements AddEventInputBoundary{
     int eventId;
     User creator;
 
+
     public AddEventInteractor(EventDataAccessInterface eventDataAccessInterface, AddEventOutputBoundary addEventPresenter, EventFactory eventFactory) {
         this.eventDataAccessInterface = eventDataAccessInterface;
         this.addEventPresenter = addEventPresenter;
         this.eventFactory = eventFactory;
+
     }
 
 
@@ -27,7 +32,7 @@ public class AddEventInteractor implements AddEventInputBoundary{
 
         //add conditions
 
-        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongitude(), addEventInputData.getEventDate(), addEventInputData.getDescription(), creator);
+        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongitude(), addEventInputData.getEventDate(), addEventInputData.getDescription(), creator, null);
         eventDataAccessInterface.addEvent(event);
 
         AddEventOutputData signupOutputData = new  AddEventOutputData(event.getEventName(),  false);
