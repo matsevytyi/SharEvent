@@ -17,4 +17,10 @@ public class AddEventController {
 
         addEventUseCaseInteractor.execute(signupInputData);
     }
+
+    public void executeMapClick(double latitude, double longitude) {
+        // Handle map clicks if needed
+        // For example, show a dialog for additional event details
+        // or navigate to the screen where the user can provide more information.
+    }
 }

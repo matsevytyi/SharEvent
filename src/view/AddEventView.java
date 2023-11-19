@@ -3,6 +3,7 @@ package view;
 import interface_adapter.add_event.AddEventController;
 import interface_adapter.add_event.AddEventState;
 import interface_adapter.add_event.AddEventViewModel;
+import org.jxmapviewer.input.MapClickListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,10 +32,12 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
     final JTextField descriptionInputField = new JTextField(15);
 
     final JButton addEvent;
+    private MapView mapView;
 
     public AddEventView(AddEventViewModel addEventViewModel, AddEventController addEventController, JButton addEvent) {
         this.addEventViewModel = addEventViewModel;
         this.addEventController = addEventController;
+
         this.addEventViewModel.addPropertyChangeListener(this);
 
         this.addEvent = addEvent;
@@ -55,6 +58,18 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
         JPanel buttons = new JPanel();
         addEvent = new JButton(AddEventViewModel.ADD_EVENT_BUTTON_LABEL);
         buttons.add(addEvent);
+
+
+        mapView = new MapView();
+        mapView.addMapClickListener(new MapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                // Handle map click, pass latitude and longitude to the controller
+                addEventController.executeMapClick(point.getLatitude(), point.getLongitude());
+            }
+        });
+
+        this.add(mapView);
 
         addEvent.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {

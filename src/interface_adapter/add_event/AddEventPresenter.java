@@ -5,8 +5,6 @@ import use_case.add_event.AddEventOutputData;
 import view.MapViewModel;
 import view.ViewManagerModel;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class AddEventPresenter implements AddEventOutputBoundary {
 

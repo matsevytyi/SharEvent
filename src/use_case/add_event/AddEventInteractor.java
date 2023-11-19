@@ -1,11 +1,12 @@
 package use_case.add_event;
 
+import data_access.EventDataAccessInterface;
 import entity.Event;
 import entity.EventFactory;
 
 public class AddEventInteractor implements AddEventInputBoundary{
 
-    final AddEventDataAccessInterface addEventDataAccessInterface;
+    final EventDataAccessInterface eventDataAccessInterface;
 
     final AddEventOutputBoundary addEventPresenter;
 
@@ -14,8 +15,8 @@ public class AddEventInteractor implements AddEventInputBoundary{
     int eventId;
     User creator;
 
-    public AddEventInteractor(AddEventDataAccessInterface addEventDataAccessInterface, AddEventOutputBoundary addEventPresenter, EventFactory eventFactory) {
-        this.addEventDataAccessInterface = addEventDataAccessInterface;
+    public AddEventInteractor(EventDataAccessInterface eventDataAccessInterface, AddEventOutputBoundary addEventPresenter, EventFactory eventFactory) {
+        this.eventDataAccessInterface = eventDataAccessInterface;
         this.addEventPresenter = addEventPresenter;
         this.eventFactory = eventFactory;
     }
@@ -26,8 +27,8 @@ public class AddEventInteractor implements AddEventInputBoundary{
 
         //add conditions
 
-        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongtitude(), addEventInputData.getEventDate(), addEventInputData.getDescription(), creator);
-        addEventDataAccessInterface.save(event);
+        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongitude(), addEventInputData.getEventDate(), addEventInputData.getDescription(), creator);
+        eventDataAccessInterface.addEvent(event);
 
         AddEventOutputData signupOutputData = new  AddEventOutputData(event.getEventName(),  false);
         addEventPresenter.prepareSuccessView(signupOutputData);

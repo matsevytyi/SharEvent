@@ -16,8 +16,8 @@ public class AddEventInputData {
         return latitude;
     }
 
-    public long getLongtitude() {
-        return longtitude;
+    public long getLongitude() {
+        return longitude;
     }
 
     public Date getEventDate() {
@@ -28,16 +28,16 @@ public class AddEventInputData {
         return description;
     }
 
-    private final long longtitude;
+    private final long longitude;
     private final Date eventDate;
     private final String description;
    // private final User creator;
 
-    public AddEventInputData(String eventName, long latitude, long longtitude, Date eventDate, String description) {
+    public AddEventInputData(String eventName, long latitude, long longitude, Date eventDate, String description) {
        // this.eventId = eventId;
         this.eventName = eventName;
         this.latitude = latitude;
-        this.longtitude = longtitude;
+        this.longitude = longitude;
         this.eventDate = eventDate;
         this.description = description;
       //  this.creator = creator;
