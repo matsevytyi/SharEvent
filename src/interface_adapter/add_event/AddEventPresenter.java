@@ -8,12 +8,12 @@ import view.ViewManagerModel;
 
 public class AddEventPresenter implements AddEventOutputBoundary {
 
-    private final AddEventViewModel signupViewModel;
+    private final AddEventViewModel addEventViewModel;
     private final MapViewModel mapViewModel;
     private ViewManagerModel viewManagerModel;
 
     public AddEventPresenter(AddEventViewModel signupViewModel, MapViewModel mapViewModel, ViewManagerModel viewManagerModel) {
-        this.signupViewModel = signupViewModel;
+        this.addEventViewModel = signupViewModel;
         this.mapViewModel = mapViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -21,10 +21,14 @@ public class AddEventPresenter implements AddEventOutputBoundary {
     @Override
     public void prepareSuccessView(AddEventOutputData event) {
 
-        MapState loginState = mapViewModel.getState();
-        loginState.setUsername(response.getUsername());
-        this.mapViewModel.setState(loginState);
-        mapViewModel.firePropertyChanged();
+        MapState mapState = mapViewModel.getState();
+        this.mapViewModel.setState(mapState);
+        mapViewModel.firePropertyChanged();//open map again
+
+
+        AddEventState addEventState = addEventViewModel.getState();
+        addEventState.setEventName(addEventState.getEventName());
+        addEventViewModel.firePropertyChanged(); // having message about successful adding of event
 
         viewManagerModel.setActiveView(mapViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
@@ -32,8 +36,8 @@ public class AddEventPresenter implements AddEventOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        AddEventState addEventState= signupViewModel.getState();
-        addEventState.setEventError(error);
-        signupViewModel.firePropertyChanged();
+        AddEventState addEventState= addEventViewModel.getState();
+        addEventState.setEventNameError(error);
+        addEventViewModel.firePropertyChanged();
     }
 }
