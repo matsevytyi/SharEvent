@@ -18,28 +18,51 @@ public class Database {
         }
     }
 
-    public ResultSet executeQuery(String input_query) throws SQLException {
+    public Object executeQuery(String query, boolean isUpdate, Object... parameters) {
         Connection connection = connect();
-        if (connection != null) {
-            System.out.println("Connected to the database!");
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            // Set parameters if any
+            for (int i = 0; i < parameters.length; i++) {
+                statement.setObject(i + 1, parameters[i]);
+            }
 
-            PreparedStatement getResult = connection.prepareStatement(input_query);
-
-            ResultSet resultSet = getResult.executeQuery();
-
-            // TODO Consider moving the nect try_cath so that it will be executed only once, after the app is closed
+            ResultSet resultSet;
+            // Execute the query
+            if (isUpdate) {
+                // For INSERT, UPDATE, DELETE
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected == 0) {
+                    System.out.println("Failed to save");
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                // For SELECT
+                resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    //TODO What are we supposed to do gere instead of printing resultSet?
+                    System.out.println(resultSet.getString(1));
+                    return resultSet;
+                } else {
+                    System.out.println("No results found");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            return resultSet;
-
-
-        } else {
-            System.out.println("Failed to connect to the database.");
         }
-        return null;
     }
+
+
+
+
 }
