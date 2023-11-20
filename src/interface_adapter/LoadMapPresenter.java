@@ -5,7 +5,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 public class LoadMapPresenter {
 
-    private JXMapKit mapKit;
+    private static JXMapKit mapKit;
 
     LoadMapPresenter() {
 
@@ -18,7 +18,7 @@ public class LoadMapPresenter {
         //mapKit.setAddressLocation(GetCoordByIP_API.getCoord());
     }
 
-    public JXMapKit getMapKit() {
+    public static JXMapKit getMapKit() {
         return mapKit;
     }
 
