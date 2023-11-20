@@ -3,7 +3,13 @@ package database;
 import javafx.scene.chart.PieChart;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import lombok.SneakyThrows;
+import java.util.List;
+import java.util.Map;
 
 
 public class DatabaseDAO {
@@ -139,6 +145,124 @@ public class DatabaseDAO {
     //TODO: think of cases of implementing getEvent function. I have the query but I don't see any reason for its implementation
 
 
+    public boolean existsByName(String identifier) throws SQLException {
+        String query = "SELECT * FROM public.user WHERE username=?";
+        Object result = database.executeQuery(query, false, identifier);
+
+        return result != null;
+    }
+
+    public boolean save(User user) {
+
+        String query = "INSERT INTO public.user (username, name, email, password)" +
+                "VALUES (?,?,?,?)";
+        database.executeQuery(query, true, user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
+        return true;
+    }
+
+    public User getUserByUsername(String username) {
+        String query = "select * from user where username=?";
+        Object result = database.executeQuery(query, false, username);
+
+        return extractUser((ResultSet) result);
+    }
+
+    public List<User> FindFollowersOfUser(String username) throws SQLException {
+        String query = "select * from public.user \n" +
+                "\t where username in (select follower\n" +
+                "                  from public.following\n" +
+                "                  where target_user = ?)";
+
+        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+
+        List<User> userList = new LinkedList<>();
+
+        while (resultSet.next()) {
+            userList.add(extractUser(resultSet));
+        }
+
+        return userList;
+    }
+
+    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
+        String query = "select event.event_name from public.event\n" +
+                "   where id_event in (select event\n" +
+                "                    from public.attendedEvents\n" +
+                "                    where visitor = ?)";
+
+        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+
+        List<Event> eventList = new LinkedList<>();
+
+        while (resultSet.next()) {
+            eventList.add(extractEvent(resultSet));
+        }
+
+        return eventList;
+    }
+
+    public List<Event> FindEventsUserHosts(String username) throws SQLException {
+        String query = "select event_name from public.event\n" +
+                "   where creator in (select username\n" +
+                "                  from public.user\n" +
+                "                  where username = ?)\n";
+
+        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+
+        List<Event> eventList = new LinkedList<>();
+
+        while (resultSet.next()) {
+            eventList.add(extractEvent(resultSet));
+        }
+
+        return eventList;
+    }
+
+    public boolean FollowUser(String username) {
+        String query = "insert into public.following (id_relation, target_user, follower)\n" +
+                "\t values (?, ?, ?)\n";
+
+        Object result = database.executeQuery(query, true, username);
+
+        return (boolean) result;
+
+    }
+
+    public boolean UnFollowUser(String username) {
+        String query = "delete from public.following where follower = ?";
+
+        Object result = database.executeQuery(query, true, username);
+
+        return (boolean) result;
+
+    }
+
+    @SneakyThrows
+    private User extractUser(ResultSet resultSet) {
+        String username = resultSet.getString("username");
+        String name = resultSet.getString("name");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+
+        // need to somehow deal with nulls
+        return new User(username, name, email, password, null, null);
+    }
+
+    @SneakyThrows
+    private Event extractEvent(ResultSet resultSet) {
+        int id_event = resultSet.getInt("id_event ");
+        String event_name = resultSet.getString("event_name");
+        String description = resultSet.getString("description");
+        String type = resultSet.getString("type");
+        String time = resultSet.getString("time");
+        String date = resultSet.getString("date");
+        float longitude = resultSet.getFloat("longitude");
+        float latitude = resultSet.getFloat("latitude");
+        String creator = resultSet.getString("creator");
+
+        // треба якось переробити з цими налами
+        return new Event(id_event, event_name, description, type, time, date, longitude, latitude, creator);
+    }
 
 
 
