@@ -3,11 +3,11 @@ package interface_adapter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 
-public class LoadMapController {
+public class LoadMapPresenter {
 
     private JXMapKit mapKit;
 
-    LoadMapController() {
+    LoadMapPresenter() {
 
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
