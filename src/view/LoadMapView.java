@@ -1,6 +1,7 @@
 
 package  view;
 
+import Entities.ButtonFactory;
 import interface_adapter.LoadMapPresenter;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
@@ -62,13 +63,6 @@ public class LoadMapView {
         viewEventsButton = ButtonFactory.createViewEventsButton(ButtonFactory.class, mapKit, "/UI_elements/ViewMyEventsButtonBg.png", 170);
         addEventButton = ButtonFactory.createAddEventButton(ButtonFactory.class, mapKit, "/UI_elements/AddEventButtonBg.png", 170);
         updateEventsButton = ButtonFactory.createUpdateEventsButton(mapKit);
-
-
-
-        //TODO: find out how to add buttons using array
-        //ArrayList<Button> MainViewButtons = new ArrayList<>();
-        //MainViewButtons.add(updateEventsButton);
-        //MainViewButtons.add(createViewEventsButton);
 
         //TODO: adjusting should be done on the LoadMapViewModel
         pane = new StackPane();
