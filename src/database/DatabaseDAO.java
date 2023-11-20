@@ -53,7 +53,18 @@ public class DatabaseDAO {
 
     }
 
-   
+    public void registerUserForEvent(String username, String event_id) {
+
+
+        //TODO: implement additional logic if needed (for holding unappropriate cases)
+
+        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (" + username + ", " + event_id + ")";
+
+        database.executeQuery(query, true);
+
+    }
+
+    
 
 
 
