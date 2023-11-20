@@ -64,7 +64,81 @@ public class DatabaseDAO {
 
     }
 
-    
+    public void unregisterUserFromEvent(String username, String event_id) {
+
+        //TODO: implement additional logic if needed (for holding unappropriate cases) --
+        // + only particular visitor or event creator can perform such operation for particular event
+
+        String query = "DELETE FROM public.attendedEvents WHERE visitor = " + username + " AND event = " + event_id;
+
+        database.executeQuery(query, true);
+
+    }
+
+    public void getUsersRegisteredForEvent(String event_id) {
+
+        //TODO: implement additional logic if needed (for holding unappropriate cases) --
+        // + write query to get event_id or add event_id to the event class
+
+        String query = "SELECT * " +
+                " FROM public.user JOIN public.attendedEvents " +
+                " WHERE public.attendedEvents.event = " + event_id +
+                ";";
+
+
+        database.executeQuery(query, false);
+
+        //TODO return List<User>
+    }
+
+    public void FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
+
+        String query = "SELECT * " +
+                "FROM public.events " +
+                "WHERE type = " + type +
+                " AND " +
+                "EVENTLAT > " + latitude1 +" AND EVENTLAT < " + latitude2 +
+                " AND " +
+                "EVENTLONG > " + longitude1 +" AND EVENTLONG < " + longitude2 +
+                ";";
+
+        database.executeQuery(query, false);
+
+        //TODO return List<Event>
+
+    }
+
+    public void SearchEvent(String event_name) {
+
+        String query = "SELECT * " +
+                "FROM public.events " +
+                "WHERE event_name = " + event_name +
+                ";";
+
+
+        database.executeQuery(query, false);
+
+        //TODO return Event
+    }
+
+    public void getEventInRange(String latitude1, String latitude2, String longitude1, String longitude2) {
+
+        String query = "SELECT *" +
+                "FROM public.events" +
+                "WHERE EVENTLAT > " + latitude1 + "AND EVENTLAT < " + latitude2 +
+                "AND" +
+                "EVENTLONG > " + longitude1 + "AND EVENTLONG < " + longitude2 +
+                ";";
+
+
+        database.executeQuery(query, false);
+
+        //TODO return List<Event>
+    }
+
+    //TODO: think of cases of implementing getEvent function. I have the query but I don't see any reason for its implementation
+
+
 
 
 
