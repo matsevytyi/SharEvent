@@ -10,13 +10,14 @@ import java.util.Set;
 
 import Entities.Temporary_entites.Event;
 import org.jxmapviewer.viewer.Waypoint;
+import use_case.LoadEventsInputBoundary;
 import use_case.LoadEventsInteractor;
 
 public class LoadEventsController {
     JXMapViewer mapViewer;
     Set<Event> events;
 
-    LoadEventsInteractor loadEventsInteractor;
+    LoadEventsInputBoundary loadEventsInteractor;
 
     public LoadEventsController(JXMapViewer mapViewer) {
         this.mapViewer = mapViewer;

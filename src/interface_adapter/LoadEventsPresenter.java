@@ -21,7 +21,6 @@ import java.util.Set;
 
 public class LoadEventsPresenter {
 
-    private LoadEventsInteractor loadEventsInteractor;
     private LoadEventsView loadEventsView;
 
     @Getter
@@ -33,7 +32,6 @@ public class LoadEventsPresenter {
         loadMapView = loadMapViewResult;
         mapKit = loadMapView.getPresenter().getMapKit();
         initialGeo = loadMapView.getPresenter().getInitialGeo();
-        loadEventsInteractor = new LoadEventsInteractor(initialGeo);
         loadEventsView = loadEventsViewResult;
     }
     public boolean PrepareSuccesView(Set<Event> localEvents) {

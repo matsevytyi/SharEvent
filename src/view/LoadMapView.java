@@ -17,6 +17,8 @@ import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
+import use_case.LoadEventsInputBoundary;
+import use_case.LoadEventsInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +54,7 @@ public class LoadMapView {
         presenter = new LoadMapPresenter();
         mapKit = presenter.getMapKit();
         mapViewer = mapKit.getMainMap();
-        controller = new LoadMapController(mapViewer);
+        controller = new LoadMapController(mapViewer, this);
 
         SwingNode swingNode = new SwingNode();
         swingNode.setContent(mapKit);
@@ -74,8 +76,6 @@ public class LoadMapView {
         pane = new StackPane();
         pane.getChildren().add(swingNode);
         for (Button button : buttons) pane.getChildren().add(button);
-
-        LoadEventsView view = new LoadEventsView(this);
 
     }
 
@@ -107,6 +107,7 @@ public class LoadMapView {
 
         StackPane.setAlignment(updateEventsButton, Pos.BOTTOM_CENTER);
         StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
+        updateEventsButton.setVisible(true);
     }
 
     public LoadMapPresenter getPresenter() {

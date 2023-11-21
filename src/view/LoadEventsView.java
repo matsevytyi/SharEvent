@@ -8,7 +8,7 @@ import lombok.Getter;
 public class LoadEventsView {
 
     @Getter
-    private LoadEventsPresenter presenter;
+    private static LoadEventsPresenter presenter;
 
     private LoadMapView loadMapViewResult;
 

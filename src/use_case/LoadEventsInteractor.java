@@ -2,6 +2,7 @@ package use_case;
 
 import database.LoadEventsDataAccessInterface;
 import database.DatabaseDAO;
+import interface_adapter.LoadEventsPresenter;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -14,19 +15,17 @@ import Entities.Temporary_entites.Event;
 
 
 
-public class LoadEventsInteractor {
+public class LoadEventsInteractor implements LoadEventsInputBoundary {
     @Getter
     Set<Event> events;
+    GeoPosition newStartPoint;
     LoadEventsDataAccessInterface loadEventsDataAccessInterface;
+    LoadEventsPresenter presenter;
 
-    public LoadEventsInteractor(GeoPosition initialPoint) {
+    public LoadEventsInteractor(GeoPosition initialPoint, LoadEventsPresenter presenter) {
         loadEventsDataAccessInterface = new DatabaseDAO();
-        events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude() - 5./111), String.valueOf(initialPoint.getLatitude() + 5./111), String.valueOf(initialPoint.getLongitude() - 5./111), String.valueOf(initialPoint.getLongitude() + 5./111));
-    }
-
-    public Set<Event> updateEvents(GeoPosition newStartPoint) {
-        events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
-        return events;
+        newStartPoint = initialPoint;
+        this.presenter = presenter;
     }
 
     public boolean checkForClickOnEvent(Point clickPoint, JXMapViewer mapViewer) {
@@ -55,5 +54,16 @@ public class LoadEventsInteractor {
 
         // Check if the click is within the threshold distance of the waypoint
         return clickPoint.distance(waypointPoint) < threshold;
+    }
+
+    public void execute() {
+        try{
+            events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
+        } catch (Exception e) {
+            System.out.println("Exception while loading events from DB\n" + e.getMessage());
+            presenter.PrepareFailView("Database_error");
+        }
+        if(events.isEmpty()) presenter.PrepareFailView("No_events");
+        else presenter.PrepareSuccesView(events);
     }
 }

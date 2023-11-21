@@ -21,7 +21,7 @@ public class LoadMapPresenter {
 
     public LoadMapPresenter() {
         mapKit = new JXMapKit();
-        initialGeo = getCoordByIP_API_call.getCoord(); //TODO: surround with try_catch for handling exceptions
+        initialGeo = getCoordByIP_API_call.getCoord(); //TODO: surround with try_catch for handling exceptions and success/fil views
         PrepareSuccesView();
     }
 

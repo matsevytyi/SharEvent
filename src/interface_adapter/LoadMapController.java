@@ -1,22 +1,22 @@
 package interface_adapter;
 
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.DefaultWaypoint;
-import org.jxmapviewer.viewer.GeoPosition;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.HashSet;
-import java.util.Set;
+import use_case.LoadEventsInputBoundary;
 import use_case.LoadEventsInteractor;
-
+import view.LoadEventsView;
+import view.LoadMapView;
 
 public class LoadMapController {
 
+    //TODO: initialize it
+
     JXMapViewer mapViewer;
 
-    public LoadMapController(JXMapViewer mapViewer) {
+    LoadMapView loadMapView;
+
+    public LoadMapController(JXMapViewer mapViewer, LoadMapView loadMapView) {
         this.mapViewer = mapViewer;
+        this.loadMapView = loadMapView;
     }
 
     public void viewProfile(){
@@ -40,6 +40,8 @@ public class LoadMapController {
     }
 
     public void updateEvents(){
-        //LoadEventsInteractor.updateEvents(initialGeo);
+        LoadEventsView loadEventsView = new LoadEventsView(loadMapView);
+        LoadEventsInputBoundary loadEventsInteractor = new LoadEventsInteractor(mapViewer.getCenterPosition(), loadEventsView.getPresenter());
+        loadEventsInteractor.execute();
     }
 }
