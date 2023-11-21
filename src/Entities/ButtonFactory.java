@@ -9,8 +9,6 @@ public class ButtonFactory {
 
     //TODO:
     //Leave this transformation for onActionCkucked...
-    //viewFriendsButton.setOnMouseEntered(e -> viewFriendsButton.setStyle("-fx-background-color: rgba(167,165,165,0.65); -fx-background-radius: 40;"));
-    //viewFriendsButton.setOnMouseExited(e -> viewFriendsButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;"));
 
     public static Button createUpdateEventsButton(JXMapKit mapKit) {
         Button updateEventsButton = new Button("Update Events");

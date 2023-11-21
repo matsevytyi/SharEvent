@@ -3,6 +3,7 @@ package  view;
 
 import Entities.ButtonFactory;
 import interface_adapter.LoadMapPresenter;
+import interface_adapter.LoadMapController;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 
@@ -23,6 +24,7 @@ import java.awt.*;
 public class LoadMapView {
 
     LoadMapPresenter presenter;
+    LoadMapController controller;
 
     private static JXMapKit mapKit;
 
@@ -47,11 +49,25 @@ public class LoadMapView {
 
         presenter = new LoadMapPresenter();
         mapKit = presenter.getMapKit();
+        mapViewer = mapKit.getMainMap();
+        controller = new LoadMapController(mapViewer);
 
         SwingNode swingNode = new SwingNode();
         createSwingContent(swingNode);
 
-        // Create a button
+        addButtons();
+        adjustButtonLocation();
+        setButtonListeners();
+
+        //TODO: adjusting should be done on the LoadMapViewModel
+        pane = new StackPane();
+        pane.getChildren().addAll(swingNode, viewProfileButton, filterEventsButton, viewFriendsButton, viewEventsButton, addEventButton, updateEventsButton);
+
+        //TODO: create function for handling onActionListeners
+
+    }
+
+    private void addButtons() {
         //TODO: addjust buttons so that they meet the UI
         viewProfileButton = ButtonFactory.createViewProfileButton(ButtonFactory.class, mapKit, "/UI_elements/DefaultProfilePicture.png", 200);
         filterEventsButton = ButtonFactory.createFilterEventsButton(ButtonFactory.class, mapKit, "/UI_elements/MapFiltersButton.png", 170);
@@ -59,12 +75,9 @@ public class LoadMapView {
         viewEventsButton = ButtonFactory.createViewEventsButton(ButtonFactory.class, mapKit, "/UI_elements/ViewMyEventsButtonBg.png", 170);
         addEventButton = ButtonFactory.createAddEventButton(ButtonFactory.class, mapKit, "/UI_elements/AddEventButtonBg.png", 170);
         updateEventsButton = ButtonFactory.createUpdateEventsButton(mapKit);
+    }
 
-        //TODO: adjusting should be done on the LoadMapViewModel
-        pane = new StackPane();
-        pane.getChildren().addAll(swingNode, viewProfileButton, filterEventsButton, viewFriendsButton, viewEventsButton, addEventButton, updateEventsButton);
-
-
+    private void adjustButtonLocation(){
         StackPane.setAlignment(viewProfileButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(viewProfileButton, new Insets(0, 20, 820, 0));
 
@@ -82,30 +95,51 @@ public class LoadMapView {
 
         StackPane.setAlignment(updateEventsButton, Pos.BOTTOM_CENTER);
         StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
-
     }
 
     public static StackPane getStackPane() {
         return pane;
     }
 
+    private void setButtonListeners(){
+        viewProfileButton.setOnAction(e -> {
+            controller.viewProfile();
+        });
+
+        filterEventsButton.setOnAction(e -> {
+            controller.filterEvents();
+        });
+
+        viewFriendsButton.setOnAction(e -> {
+            controller.viewFriends();
+        });
+
+        viewEventsButton.setOnAction(e -> {
+            controller.viewEvents();
+        });
+
+        addEventButton.setOnAction(e -> {
+            controller.addEvent();
+        });
+
+        updateEventsButton.setOnAction(e -> {
+            controller.updateEvents();
+        });
+    }
+
     private void createSwingContent(final SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> {
 
-            mapViewer = mapKit.getMainMap();
             presenter.LoadEvents();
 
-            //TODO:Move to the LoadMapController
             mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
                     Point clickPoint = e.getPoint();
-
-                   //TODO: to convert the click coordinates to a GeoPosition by a method from a presenter
+                    controller.checkForClickOnEvent(clickPoint);
                 }
             });
 
-            //TODO: move to LoadMapController
             mapViewer.addPropertyChangeListener("centerPosition", evt -> {
                 GeoPosition centerPosition = (GeoPosition) evt.getNewValue();
                 GeoPosition addressLocation = mapKit.getAddressLocation();

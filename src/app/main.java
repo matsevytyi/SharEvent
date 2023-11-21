@@ -14,7 +14,7 @@ public class main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //TODO: consider using Stage.resizable(false) for dealing with problems with buttons
+        primaryStage.setResizable(false);
         primaryStage.setTitle("SharEvent");
 
         LoadMapView loadMapView = new LoadMapView();
