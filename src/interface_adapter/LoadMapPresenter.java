@@ -8,6 +8,8 @@ import org.jxmapviewer.viewer.WaypointPainter;
 import java.util.HashSet;
 import java.util.Set;
 
+import API_calls.getCoordByIP_API_call;
+
 class event extends DefaultWaypoint {}
 
 public class LoadMapPresenter {
@@ -22,7 +24,7 @@ public class LoadMapPresenter {
 
         mapKit.setAddressLocation(new GeoPosition(43.651575, -79.345010));
         //TODO: before the release uncommwnt the next line and delete the upper line
-        //mapKit.setAddressLocation(GetCoordByIP_API.getCoord());
+        //mapKit.setAddressLocation(getCoordByIP_API_call.getCoord());
     }
 
     public JXMapKit getMapKit() {

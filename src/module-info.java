@@ -5,6 +5,7 @@ module src {
     requires jxmapviewer2;
     requires java.sql;
     requires lombok;
+    requires com.google.gson;
 
     exports app;
 
