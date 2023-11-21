@@ -2,114 +2,17 @@ package database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.LinkedList;
+
 import lombok.SneakyThrows;
 import java.util.List;
-
-//temp measure
-
-class Event{
-    int event_id;
-    String event_name;
-    String event_description;
-    String type;
-    String time;
-    String date;
-    String creator;
-    float longitude;
-    float latitude;
-
-    public Event(int event_id, String event_name, String event_description, String type, String time, String date, String creator, float longitude, float latitude) {
-        this.event_id = event_id;
-        this.event_name = event_name;
-        this.event_description = event_description;
-        this.type = type;
-        this.time = time;
-        this.date = date;
-        this.creator = creator;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-
-
-    public int getEvent_id() {
-        return event_id;
-    }
-
-    public String getEvent_name() {
-        return event_name;
-    }
-
-    public String getEvent_description() {
-        return event_description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public float getLongitude() {
-        return longitude;
-    }
-
-    public float getLatitude() {
-        return latitude;
-    }
-}
-class User{
-    String username;
-    String password;
-
-    String Name;
-    String email;
-
-    String someData;
-    String someMoreData;
-
-    public User(String username, String password, String name, String email, String someData, String someMoreData) {
-        this.username = username;
-        this.password = password;
-        Name = name;
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
+import java.util.Set;
+import Entities.Temporary_entites.Event;
 
 
 
-}
-
-
-
-
-
-public class DatabaseDAO {
+public class DatabaseDAO implements LoadMapDataAccessInterface {
     Database database = new Database();
 
     public void addEvent(String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
@@ -224,7 +127,7 @@ public class DatabaseDAO {
         //TODO return Event
     }
 
-    public void getEventInRange(String latitude1, String latitude2, String longitude1, String longitude2) {
+    public Set<Event> getEventsInRange(String latitude1, String latitude2, String longitude1, String longitude2) {
 
         String query = "SELECT *" +
                 "FROM public.events" +
@@ -233,10 +136,16 @@ public class DatabaseDAO {
                 "EVENTLONG > " + longitude1 + "AND EVENTLONG < " + longitude2 +
                 ";";
 
+        Set<Event> events = new HashSet<>();
 
-        database.executeQuery(query, false);
+        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
 
-        //TODO return List<Event>
+        while (resultSet.next()) {
+            events.add(extractEvent(resultSet));
+        }
+
+        return events;
+
     }
 
     //TODO: think of cases of implementing getEvent function. I have the query but I don't see any reason for its implementation

@@ -41,8 +41,6 @@ public class Database {
                 // For SELECT
                 resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    //TODO What are we supposed to do gere instead of printing resultSet?
-                    System.out.println(resultSet.getString(1));
                     return resultSet;
                 } else {
                     System.out.println("No results found");
