@@ -1,15 +1,111 @@
 package database;
 
-import javafx.scene.chart.PieChart;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import lombok.SneakyThrows;
 import java.util.List;
-import java.util.Map;
+
+//temp measure
+
+class Event{
+    int event_id;
+    String event_name;
+    String event_description;
+    String type;
+    String time;
+    String date;
+    String creator;
+    float longitude;
+    float latitude;
+
+    public Event(int event_id, String event_name, String event_description, String type, String time, String date, String creator, float longitude, float latitude) {
+        this.event_id = event_id;
+        this.event_name = event_name;
+        this.event_description = event_description;
+        this.type = type;
+        this.time = time;
+        this.date = date;
+        this.creator = creator;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public String getEvent_name() {
+        return event_name;
+    }
+
+    public String getEvent_description() {
+        return event_description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+}
+class User{
+    String username;
+    String password;
+
+    String Name;
+    String email;
+
+    String someData;
+    String someMoreData;
+
+    public User(String username, String password, String name, String email, String someData, String someMoreData) {
+        this.username = username;
+        this.password = password;
+        Name = name;
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+
+
+}
+
+
 
 
 
@@ -262,7 +358,7 @@ public class DatabaseDAO {
         String creator = resultSet.getString("creator");
 
         // треба якось переробити з цими налами
-        return new Event(id_event, event_name, description, type, time, date, longitude, latitude, creator);
+        return new Event(id_event, event_name, description, type, time, date, creator, longitude, latitude);
     }
 
 

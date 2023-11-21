@@ -7,7 +7,7 @@ public class LoadMapPresenter {
 
     private static JXMapKit mapKit;
 
-    LoadMapPresenter() {
+    public LoadMapPresenter() {
 
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
@@ -18,7 +18,7 @@ public class LoadMapPresenter {
         //mapKit.setAddressLocation(GetCoordByIP_API.getCoord());
     }
 
-    public static JXMapKit getMapKit() {
+    public JXMapKit getMapKit() {
         return mapKit;
     }
 

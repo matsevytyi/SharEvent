@@ -1,4 +1,4 @@
-module com.example.mapsdemo {
+module src {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.swing;
@@ -6,7 +6,6 @@ module com.example.mapsdemo {
     requires java.sql;
     requires lombok;
 
+    exports app;
 
-    opens mapsdemo to javafx.fxml;
-    exports mapsdemo;
 }

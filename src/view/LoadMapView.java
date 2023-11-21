@@ -32,6 +32,8 @@ import java.awt.geom.Point2D;
 
 public class LoadMapView {
 
+    LoadMapPresenter presenter;
+
     private static JXMapKit mapKit;
 
     private Button updateEventsButton;
@@ -52,6 +54,10 @@ public class LoadMapView {
 
     public LoadMapView() {
         // Create a JavaFX SwingNode to host the map component
+
+        presenter = new LoadMapPresenter();
+        mapKit = presenter.getMapKit();
+        
         SwingNode swingNode = new SwingNode();
         createSwingContent(swingNode);
 
@@ -95,8 +101,6 @@ public class LoadMapView {
 
     private void createSwingContent(final SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> {
-
-            mapKit = LoadMapPresenter.getMapKit();
 
             mapViewer = mapKit.getMainMap();
 
