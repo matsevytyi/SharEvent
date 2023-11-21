@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import lombok.SneakyThrows;
 import java.util.List;
 import java.util.Set;
-import Entities.Temporary_entites.Event;
+import Entities.Temporary_entites.*;
 
 
 
@@ -127,29 +127,46 @@ public class DatabaseDAO implements LoadMapDataAccessInterface {
         //TODO return Event
     }
 
-    public Set<Event> getEventsInRange(String latitude1, String latitude2, String longitude1, String longitude2) {
-
-        String query = "SELECT *" +
-                "FROM public.events" +
-                "WHERE EVENTLAT > " + latitude1 + "AND EVENTLAT < " + latitude2 +
-                "AND" +
-                "EVENTLONG > " + longitude1 + "AND EVENTLONG < " + longitude2 +
+    public Set<Event> getEventsInRange(String latitude1, String latitude2, String longitude1, String longitude2)  {
+        String query = "SELECT * FROM public.event " +
+                "WHERE latitude > " + latitude1 + " AND latitude < " + latitude2 +
+                " AND longitude > " + longitude1 + " AND longitude < " + longitude2 +
                 ";";
 
         Set<Event> events = new HashSet<>();
 
         ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
 
-        while (resultSet.next()) {
-            events.add(extractEvent(resultSet));
+        try {
+            while (resultSet.next()) {
+                events.add(extractEvent(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error processing the ResultSet");
+            // TODO: Handle the exception or log it as needed
+        } finally {
+            // Close the ResultSet and connection in the finally block
+            database.closeConnection();
         }
 
         return events;
-
     }
 
-    //TODO: think of cases of implementing getEvent function. I have the query but I don't see any reason for its implementation
+    private void closeResultSet(ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error closing the ResultSet");
+            // TODO: Handle the exception or log it as needed
+        }
+    }
 
+
+    //TODO: implement GetEventFunction for VIEW_EVENT use case
 
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";

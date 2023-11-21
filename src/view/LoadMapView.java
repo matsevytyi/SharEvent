@@ -63,8 +63,6 @@ public class LoadMapView {
         pane = new StackPane();
         pane.getChildren().addAll(swingNode, viewProfileButton, filterEventsButton, viewFriendsButton, viewEventsButton, addEventButton, updateEventsButton);
 
-        //TODO: create function for handling onActionListeners
-
     }
 
     private void addButtons() {
@@ -127,6 +125,8 @@ public class LoadMapView {
         });
     }
 
+
+    //TODO: move to LOAD_EVENTS use case
     private void createSwingContent(final SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> {
 

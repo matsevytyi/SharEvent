@@ -17,11 +17,11 @@ public class LoadMapInteractor {
 
     public LoadMapInteractor(GeoPosition initialPoint) {
         loadMapDataAccessInterface = new DatabaseDAO();
-        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude()), String.valueOf(initialPoint.getLongitude()), String.valueOf(initialPoint.getLatitude()), String.valueOf(initialPoint.getLongitude()));
+        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude() - 5./111), String.valueOf(initialPoint.getLatitude() + 5./111), String.valueOf(initialPoint.getLongitude() - 5./111), String.valueOf(initialPoint.getLongitude() + 5./111));
     }
 
     public Set<Event> updateEvents(GeoPosition newStartPoint) {
-        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude()), String.valueOf(newStartPoint.getLongitude()), String.valueOf(newStartPoint.getLatitude()), String.valueOf(newStartPoint.getLongitude()));
+        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
         return events;
     }
 }
