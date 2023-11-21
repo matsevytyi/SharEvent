@@ -30,6 +30,8 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
 
     public boolean checkForClickOnEvent(Point clickPoint, JXMapViewer mapViewer) {
 
+        System.out.println("checkForClickOnEvent");
+
         // Check if any waypoints are clicked
         for (Event event : events) {
             GeoPosition eventPosition = event.getPosition();

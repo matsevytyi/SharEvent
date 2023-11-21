@@ -10,6 +10,9 @@ public class LoadEventsView {
     @Getter
     private static LoadEventsPresenter presenter;
 
+    @Getter
+    private LoadEventsController controller;
+
     private LoadMapView loadMapViewResult;
 
 
@@ -17,8 +20,6 @@ public class LoadEventsView {
         return loadMapViewResult.getStackPane();
     }
 
-    @Getter
-    private LoadEventsController controller;
     public LoadEventsView(LoadMapView loadMapViewResult) {
         presenter = new LoadEventsPresenter(loadMapViewResult, this);
         controller = new LoadEventsController(presenter.getMapKit().getMainMap());

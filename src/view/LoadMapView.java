@@ -4,7 +4,6 @@ package  view;
 import Entities.ButtonFactory;
 import interface_adapter.LoadMapPresenter;
 import interface_adapter.LoadMapController;
-import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 
 import javafx.geometry.Insets;
@@ -16,12 +15,6 @@ import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.GeoPosition;
-import use_case.LoadEventsInputBoundary;
-import use_case.LoadEventsInteractor;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.LinkedList;
 
 

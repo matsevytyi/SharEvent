@@ -1,22 +1,17 @@
 package interface_adapter;
 
+import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.HashSet;
 import java.util.Set;
 
-import Entities.Temporary_entites.Event;
-import org.jxmapviewer.viewer.Waypoint;
 import use_case.LoadEventsInputBoundary;
-import use_case.LoadEventsInteractor;
 
 public class LoadEventsController {
     JXMapViewer mapViewer;
-    Set<Event> events;
 
+    @Getter
     LoadEventsInputBoundary loadEventsInteractor;
 
     public LoadEventsController(JXMapViewer mapViewer) {

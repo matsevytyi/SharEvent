@@ -13,6 +13,7 @@ import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
+import use_case.LoadEventsInputBoundary;
 import use_case.LoadEventsInteractor;
 import view.LoadEventsView;
 import view.LoadMapView;
@@ -121,7 +122,10 @@ public class LoadEventsPresenter {
 
             retryButton.setOnAction(event -> {
                 System.out.println("Retry");
-                //TODO: tries to connect to the database one more time
+                initialPane.getChildren().removeAll(overlay, vbox);
+                LoadEventsPresenter presenter = new LoadEventsPresenter(loadMapView, loadEventsView);
+                LoadEventsInteractor interactor = new LoadEventsInteractor(initialGeo, presenter);
+                interactor.execute();
             });
         }
     }
