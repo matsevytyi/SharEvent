@@ -1,7 +1,14 @@
 package interface_adapter;
 
 import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.WaypointPainter;
+
+import java.util.HashSet;
+import java.util.Set;
+
+class event extends DefaultWaypoint {}
 
 public class LoadMapPresenter {
 
@@ -20,6 +27,18 @@ public class LoadMapPresenter {
 
     public JXMapKit getMapKit() {
         return mapKit;
+    }
+
+    public boolean LoadEvents() {
+
+        Set<event> localEvents = new HashSet<>(); //instead of this here Set<Events> from UseCaseInteractor should be used
+
+        WaypointPainter<event> eventPainter = new WaypointPainter<>();
+        eventPainter.setWaypoints(localEvents);
+
+        mapKit.getMainMap().setOverlayPainter(eventPainter);
+
+        return true;
     }
 
 }

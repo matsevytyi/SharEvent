@@ -9,25 +9,15 @@ import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.Waypoint;
-import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.awt.geom.Point2D;
-
-
 
 
 public class LoadMapView {
@@ -57,7 +47,7 @@ public class LoadMapView {
 
         presenter = new LoadMapPresenter();
         mapKit = presenter.getMapKit();
-        
+
         SwingNode swingNode = new SwingNode();
         createSwingContent(swingNode);
 
@@ -103,9 +93,9 @@ public class LoadMapView {
         SwingUtilities.invokeLater(() -> {
 
             mapViewer = mapKit.getMainMap();
+            presenter.LoadEvents();
 
-            //TODO: mapViewer.setOverlayPainter(waypointPainter);
-
+            //TODO:Move to the LoadMapController
             mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -115,11 +105,13 @@ public class LoadMapView {
                 }
             });
 
+            //TODO: move to LoadMapController
             mapViewer.addPropertyChangeListener("centerPosition", evt -> {
                 GeoPosition centerPosition = (GeoPosition) evt.getNewValue();
                 GeoPosition addressLocation = mapKit.getAddressLocation();
                 updateEventsButton.setVisible(!centerPosition.equals(addressLocation));
             });
+
             swingNode.setContent(mapKit);
         });
     }
