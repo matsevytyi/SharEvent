@@ -53,7 +53,7 @@ public class LoadMapView {
         controller = new LoadMapController(mapViewer);
 
         SwingNode swingNode = new SwingNode();
-        createSwingContent(swingNode);
+        swingNode.setContent(mapKit);
 
         addButtons();
         adjustButtonLocation();
@@ -126,29 +126,7 @@ public class LoadMapView {
     }
 
 
-    //TODO: move to LOAD_EVENTS use case
-    private void createSwingContent(final SwingNode swingNode) {
-        SwingUtilities.invokeLater(() -> {
 
-            presenter.LoadEvents();
-
-            mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    Point clickPoint = e.getPoint();
-                    controller.checkForClickOnEvent(clickPoint);
-                }
-            });
-
-            mapViewer.addPropertyChangeListener("centerPosition", evt -> {
-                GeoPosition centerPosition = (GeoPosition) evt.getNewValue();
-                GeoPosition addressLocation = mapKit.getAddressLocation();
-                updateEventsButton.setVisible(!centerPosition.equals(addressLocation));
-            });
-
-            swingNode.setContent(mapKit);
-        });
-    }
 }
 
 

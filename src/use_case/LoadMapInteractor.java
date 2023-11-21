@@ -1,6 +1,6 @@
 package use_case;
 
-import database.LoadMapDataAccessInterface;
+import database.LoadEventsDataAccessInterface;
 import database.DatabaseDAO;
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -13,15 +13,15 @@ import Entities.Temporary_entites.Event;
 public class LoadMapInteractor {
     @Getter
     Set<Event> events;
-    LoadMapDataAccessInterface loadMapDataAccessInterface;
+    LoadEventsDataAccessInterface loadEventsDataAccessInterface;
 
     public LoadMapInteractor(GeoPosition initialPoint) {
-        loadMapDataAccessInterface = new DatabaseDAO();
-        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude() - 5./111), String.valueOf(initialPoint.getLatitude() + 5./111), String.valueOf(initialPoint.getLongitude() - 5./111), String.valueOf(initialPoint.getLongitude() + 5./111));
+        loadEventsDataAccessInterface = new DatabaseDAO();
+        events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude() - 5./111), String.valueOf(initialPoint.getLatitude() + 5./111), String.valueOf(initialPoint.getLongitude() - 5./111), String.valueOf(initialPoint.getLongitude() + 5./111));
     }
 
     public Set<Event> updateEvents(GeoPosition newStartPoint) {
-        events = loadMapDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
+        events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
         return events;
     }
 }
