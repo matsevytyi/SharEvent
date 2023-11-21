@@ -10,12 +10,12 @@ import Entities.Temporary_entites.Event;
 
 
 
-public class LoadMapInteractor {
+public class LoadEventsInteractor {
     @Getter
     Set<Event> events;
     LoadEventsDataAccessInterface loadEventsDataAccessInterface;
 
-    public LoadMapInteractor(GeoPosition initialPoint) {
+    public LoadEventsInteractor(GeoPosition initialPoint) {
         loadEventsDataAccessInterface = new DatabaseDAO();
         events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(initialPoint.getLatitude() - 5./111), String.valueOf(initialPoint.getLatitude() + 5./111), String.valueOf(initialPoint.getLongitude() - 5./111), String.valueOf(initialPoint.getLongitude() + 5./111));
     }

@@ -95,6 +95,15 @@ public class LoadMapView {
         StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
     }
 
+    public LoadMapPresenter getPresenter() {
+        return presenter;
+    }
+
+    public LoadMapController getController() {
+        return controller;
+    }
+
+
     public static StackPane getStackPane() {
         return pane;
     }

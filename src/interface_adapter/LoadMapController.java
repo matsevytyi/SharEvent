@@ -9,12 +9,6 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
-//TODO: temporary measure, remove when Event entity will be added
-class Event extends DefaultWaypoint {
-    public Event(double longitude, double latitude) {
-        super(longitude, latitude);
-    }
-}
 
 public class LoadMapController {
 

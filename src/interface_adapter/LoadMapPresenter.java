@@ -11,20 +11,23 @@ import java.util.Set;
 import Entities.Temporary_entites.Event;
 
 import API_calls.getCoordByIP_API_call;
-import use_case.LoadMapInteractor;
 
 public class LoadMapPresenter {
 
     private static JXMapKit mapKit;
-    private LoadMapInteractor loadMapInteractor;
     private GeoPosition initialGeo;
 
     public LoadMapPresenter() {
         mapKit = new JXMapKit();
         initialGeo = getCoordByIP_API_call.getCoord(); //TODO: surround with try_catch for handling exceptions
-        loadMapInteractor = new LoadMapInteractor(initialGeo);
         PrepareSuccesView();
     }
+
+    public GeoPosition getInitialGeo() {
+        return initialGeo;
+    }
+
+
 
     public void PrepareSuccesView(){
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
@@ -43,22 +46,9 @@ public class LoadMapPresenter {
         }
     }
 
-    public JXMapKit getMapKit() {
+    public static JXMapKit getMapKit() {
         return mapKit;
     }
 
-    //TODO: move to loadEventsPresenter
-
-    public boolean LoadEvents() {
-
-        Set<Event> localEvents = loadMapInteractor.getEvents();
-
-        WaypointPainter<Event> eventPainter = new WaypointPainter<>();
-        eventPainter.setWaypoints(localEvents);
-
-        mapKit.getMainMap().setOverlayPainter(eventPainter);
-
-        return true;
-    }
 
 }

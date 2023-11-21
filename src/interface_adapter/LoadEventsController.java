@@ -8,6 +8,8 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
+import Entities.Temporary_entites.Event;
+
 public class LoadEventsController {
     JXMapViewer mapViewer;
 
