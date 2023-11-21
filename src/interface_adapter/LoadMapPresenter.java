@@ -17,6 +17,8 @@ public class LoadMapPresenter {
     private static JXMapKit mapKit;
     private GeoPosition initialGeo;
 
+
+
     public LoadMapPresenter() {
         mapKit = new JXMapKit();
         initialGeo = getCoordByIP_API_call.getCoord(); //TODO: surround with try_catch for handling exceptions
@@ -45,6 +47,8 @@ public class LoadMapPresenter {
             //TODO: SHOW BLOCK ABOVE THE STACKPANE WITH ERROR + buttons
         }
     }
+
+
 
     public static JXMapKit getMapKit() {
         return mapKit;

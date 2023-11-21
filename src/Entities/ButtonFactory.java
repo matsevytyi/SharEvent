@@ -7,9 +7,6 @@ import org.jxmapviewer.JXMapKit;
 
 public class ButtonFactory {
 
-    //TODO:
-    //Leave this transformation for onActionCkucked...
-
     public static Button createUpdateEventsButton(JXMapKit mapKit) {
         Button updateEventsButton = new Button("Update Events");
         updateEventsButton.setStyle("-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;");

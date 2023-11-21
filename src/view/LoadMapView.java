@@ -13,12 +13,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
+import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 
 public class LoadMapView {
@@ -41,11 +43,11 @@ public class LoadMapView {
 
     JXMapViewer mapViewer;
 
+    @Getter
     private static StackPane pane;
 
 
     public LoadMapView() {
-        // Create a JavaFX SwingNode to host the map component
 
         presenter = new LoadMapPresenter();
         mapKit = presenter.getMapKit();
@@ -59,9 +61,21 @@ public class LoadMapView {
         adjustButtonLocation();
         setButtonListeners();
 
+        LinkedList<Button> buttons = new LinkedList<>();
+
+        buttons.add(viewProfileButton);
+        buttons.add(filterEventsButton);
+        buttons.add(viewFriendsButton);
+        buttons.add(viewEventsButton);
+        buttons.add(addEventButton);
+        buttons.add(updateEventsButton);
+
         //TODO: adjusting should be done on the LoadMapViewModel
         pane = new StackPane();
-        pane.getChildren().addAll(swingNode, viewProfileButton, filterEventsButton, viewFriendsButton, viewEventsButton, addEventButton, updateEventsButton);
+        pane.getChildren().add(swingNode);
+        for (Button button : buttons) pane.getChildren().add(button);
+
+        LoadEventsView view = new LoadEventsView(this);
 
     }
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
+import use_case.LoadEventsInteractor;
 
 
 public class LoadMapController {
@@ -39,6 +40,6 @@ public class LoadMapController {
     }
 
     public void updateEvents(){
-        //TODO: switch to another Usecase (UPDATE_EVENTS)
+        //LoadEventsInteractor.updateEvents(initialGeo);
     }
 }
