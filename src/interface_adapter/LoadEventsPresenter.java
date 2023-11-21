@@ -1,6 +1,7 @@
 package interface_adapter;
 
 import Entities.Temporary_entites.Event;
+import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
@@ -14,6 +15,7 @@ public class LoadEventsPresenter {
 
     private LoadEventsInteractor loadEventsInteractor;
 
+    @Getter
     private static JXMapKit mapKit;
     private GeoPosition initialGeo;
     private LoadMapView loadMapView;
@@ -23,7 +25,6 @@ public class LoadEventsPresenter {
         mapKit = loadMapView.getPresenter().getMapKit();
         initialGeo = loadMapView.getPresenter().getInitialGeo();
         loadEventsInteractor = new LoadEventsInteractor(initialGeo);
-        PrepareSuccesView();
     }
     public boolean PrepareSuccesView() {
 
