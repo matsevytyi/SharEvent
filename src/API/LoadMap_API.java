@@ -42,10 +42,10 @@ public class LoadMap_API {
 
             double delta = 5./111;
 
-            Double maxLatitude = Double.parseDouble(latitude) + delta;
-            Double minLatitude = Double.parseDouble(latitude) - delta;
-            Double maxLongitude = Double.parseDouble(longitude) + delta;
-            Double minLongitude = Double.parseDouble(longitude) - delta;
+            double maxLatitude = Double.parseDouble(latitude) + delta;
+            double minLatitude = Double.parseDouble(latitude) - delta;
+            double maxLongitude = Double.parseDouble(longitude) + delta;
+            double minLongitude = Double.parseDouble(longitude) - delta;
 
             // Output latitude and longitude
             System.out.println("Latitude: " + latitude);
