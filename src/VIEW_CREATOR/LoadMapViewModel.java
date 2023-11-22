@@ -40,6 +40,15 @@ public class LoadMapViewModel {
     @Getter
     private double viewProfileButtonSize;
 
+    @Getter
+    @Setter
+    private String API_error;
+
+    @Getter
+    @Setter
+    private String Map_Load_Error;
+
+
 
 
     public LoadMapViewModel() {
@@ -60,6 +69,9 @@ public class LoadMapViewModel {
 
         viewProfileButtonStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 100;";
         viewProfileButtonSize = 200;
+
+        API_error = null;
+        Map_Load_Error = null;
 
     }
 }

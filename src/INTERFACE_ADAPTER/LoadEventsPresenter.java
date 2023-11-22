@@ -116,14 +116,7 @@ public class LoadEventsPresenter {
             // Handle button click to remove the overlay and VBox
             exitButton.setOnAction(event -> initialPane.getChildren().removeAll(overlay, vbox));
 
-            retryButton.setOnAction(event -> {
-                System.out.println("Retry");
-                initialPane.getChildren().removeAll(overlay, vbox);
-
-                LoadEventsPresenter presenter = new LoadEventsPresenter(loadMapView, loadEventsView);
-                LoadEventsInteractor interactor = new LoadEventsInteractor(initialGeo, presenter);
-                interactor.execute();
-            });
+            //remove action for retryButton;
         }
     }
 }

@@ -19,6 +19,7 @@ public class LoadMapPresenter implements LoadMapOutputBoundary {
         }
         else if (reason == "API_error"){
             //TODO: SHOW BLOCK ABOVE THE STACKPANE WITH ERROR + buttons
+            loadMapViewModel.setAPI_error("API_error");
         }
     }
 
