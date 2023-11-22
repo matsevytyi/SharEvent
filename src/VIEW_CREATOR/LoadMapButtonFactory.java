@@ -5,29 +5,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.jxmapviewer.JXMapKit;
 
-public class ButtonFactory {
+public class LoadMapButtonFactory {
 
-    public static Button createUpdateEventsButton(JXMapKit mapKit) {
-        Button updateEventsButton = new Button("Update Events");
-        updateEventsButton.setStyle("-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;");
+    public static Button createUpdateEventsButton(String buttonName, String buttonStyle) {
+        Button updateEventsButton = new Button(buttonName);
+        updateEventsButton.setStyle(buttonStyle);
 
         updateEventsButton.setPrefSize(400, 40);
 
         //Move setOnAction to another class due to Clean Architecture Principles
-        updateEventsButton.setOnAction(e -> {
-            System.out.println("Load Events in this area");
-            mapKit.setCenterPosition(mapKit.getAddressLocation());
-        });
+
         updateEventsButton.setVisible(false);
 
         return updateEventsButton;
 
     }
 
-    public static Button createFilterEventsButton(Class<?> clazz, JXMapKit mapKit, String path, double buttonSize) {
+    public static Button createFilterEventsButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {
 
         Button filterEventsButton = new Button();
-        filterEventsButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;");
+        filterEventsButton.setStyle(buttonStyle);
 
         ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
@@ -44,10 +41,10 @@ public class ButtonFactory {
 
     //I need to do for this button the same I did for createViewEventsButton
 
-    public static Button createViewFriendsButton(Class<?> clazz, JXMapKit mapKit, String path, double buttonSize) {
+    public static Button createViewFriendsButton(Class<?> clazz, String path, String buttonStyle,double buttonSize) {
 
         Button viewFriendsButton = new Button();
-        viewFriendsButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;");
+        viewFriendsButton.setStyle(buttonStyle);
 
         ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
@@ -62,9 +59,9 @@ public class ButtonFactory {
         return viewFriendsButton;
     }
 
-    public static Button createViewEventsButton(Class<?> clazz, JXMapKit mapKit, String path, double buttonSize) {
+    public static Button createViewEventsButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {
         Button viewEventsButton = new Button();
-        viewEventsButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;");
+        viewEventsButton.setStyle(buttonStyle);
 
         ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
@@ -81,9 +78,9 @@ public class ButtonFactory {
         return viewEventsButton;
     }
 
-    public static Button createAddEventButton(Class<?> clazz, JXMapKit mapKit, String path, double buttonSize) {
+    public static Button createAddEventButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {
         Button addEventButton = new Button();
-        addEventButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;");
+        addEventButton.setStyle(buttonStyle);
 
         ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
@@ -100,9 +97,9 @@ public class ButtonFactory {
         return addEventButton;
     }
 
-    public static Button createViewProfileButton(Class<?> clazz, JXMapKit mapKit, String path, double buttonSize) {
+    public static Button createViewProfileButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {
         Button viewProfileButton = new Button();
-        viewProfileButton.setStyle("-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 100;");
+        viewProfileButton.setStyle(buttonStyle);
 
 
         ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
