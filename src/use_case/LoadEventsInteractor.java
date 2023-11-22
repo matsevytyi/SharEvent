@@ -32,6 +32,8 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
 
         System.out.println("checkForClickOnEvent");
 
+        if(events == null) return false;
+
         // Check if any waypoints are clicked
         for (Event event : events) {
             GeoPosition eventPosition = event.getPosition();

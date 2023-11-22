@@ -13,21 +13,21 @@ import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
-import use_case.LoadEventsInputBoundary;
 import use_case.LoadEventsInteractor;
 import view.LoadEventsView;
 import view.LoadMapView;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class LoadEventsPresenter {
 
-    private LoadEventsView loadEventsView;
+    private final LoadEventsView loadEventsView;
 
     @Getter
-    private static JXMapKit mapKit;
-    private GeoPosition initialGeo;
-    private LoadMapView loadMapView;
+    private final JXMapKit mapKit;
+    private final GeoPosition initialGeo;
+    private final LoadMapView loadMapView;
 
     public LoadEventsPresenter(LoadMapView loadMapViewResult, LoadEventsView loadEventsViewResult) {
         loadMapView = loadMapViewResult;
@@ -46,7 +46,7 @@ public class LoadEventsPresenter {
     }
 
     public void PrepareFailView(String reason){
-        if(reason == "No_events") {
+        if(Objects.equals(reason, "No_events")) {
             StackPane initialPane = loadEventsView.getInitialPane();
             Rectangle overlay = new Rectangle(1600, 1200);
             overlay.setFill(Color.BLACK);
@@ -78,11 +78,9 @@ public class LoadEventsPresenter {
             initialPane.getChildren().addAll(overlay, vbox);
 
             // Handle button click to remove the overlay and VBox
-            exitButton.setOnAction(event -> {
-                initialPane.getChildren().removeAll(overlay, vbox);
-            });
+            exitButton.setOnAction(event -> initialPane.getChildren().removeAll(overlay, vbox));
         }
-        else if (reason == "Database_error"){
+        else if (Objects.equals(reason, "Database_error")){
             StackPane initialPane = loadEventsView.getInitialPane();
             Rectangle overlay = new Rectangle(1600, 1200);
             overlay.setFill(Color.BLACK);
@@ -116,13 +114,12 @@ public class LoadEventsPresenter {
             initialPane.getChildren().addAll(overlay, vbox);
 
             // Handle button click to remove the overlay and VBox
-            exitButton.setOnAction(event -> {
-                initialPane.getChildren().removeAll(overlay, vbox);
-            });
+            exitButton.setOnAction(event -> initialPane.getChildren().removeAll(overlay, vbox));
 
             retryButton.setOnAction(event -> {
                 System.out.println("Retry");
                 initialPane.getChildren().removeAll(overlay, vbox);
+
                 LoadEventsPresenter presenter = new LoadEventsPresenter(loadMapView, loadEventsView);
                 LoadEventsInteractor interactor = new LoadEventsInteractor(initialGeo, presenter);
                 interactor.execute();

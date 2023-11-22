@@ -70,6 +70,8 @@ public class LoadMapView {
         pane.getChildren().add(swingNode);
         for (Button button : buttons) pane.getChildren().add(button);
 
+        controller.updateEvents();
+
     }
 
     private void addButtons() {

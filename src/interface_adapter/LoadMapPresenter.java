@@ -5,6 +5,7 @@ import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +22,12 @@ public class LoadMapPresenter {
 
     public LoadMapPresenter() {
         mapKit = new JXMapKit();
-        initialGeo = getCoordByIP_API_call.getCoord(); //TODO: surround with try_catch for handling exceptions and success/fil views
+        try {
+            initialGeo = getCoordByIP_API_call.getCoord();
+        } catch (IOException e) {
+            System.out.println(e);
+            //PREPAE FAILED VIEW
+        }
         PrepareSuccesView();
     }
 

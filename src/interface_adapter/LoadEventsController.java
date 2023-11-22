@@ -7,22 +7,19 @@ import java.awt.*;
 import java.util.Set;
 
 import use_case.LoadEventsInputBoundary;
+import use_case.LoadEventsInteractor;
 
 public class LoadEventsController {
-    JXMapViewer mapViewer;
 
     @Getter
     LoadEventsInputBoundary loadEventsInteractor;
 
-    public LoadEventsController(JXMapViewer mapViewer) {
-        this.mapViewer = mapViewer;
-        mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                Point clickPoint = e.getPoint();
-                loadEventsInteractor.checkForClickOnEvent(clickPoint, mapViewer);
-            }
-        });
+    public LoadEventsController(JXMapViewer mapViewer, LoadEventsPresenter presenter) {
+        loadEventsInteractor = new LoadEventsInteractor(mapViewer.getCenterPosition(), presenter);
+    }
+
+    public void execute(Point clickPoint, JXMapViewer mapViewer){
+        loadEventsInteractor.checkForClickOnEvent(clickPoint, mapViewer);
     }
 
 
