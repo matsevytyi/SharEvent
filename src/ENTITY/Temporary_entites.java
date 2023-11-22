@@ -1,4 +1,4 @@
-package Entities;
+package ENTITY;
 
 import org.jxmapviewer.viewer.DefaultWaypoint;
 

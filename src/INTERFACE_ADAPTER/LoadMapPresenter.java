@@ -1,17 +1,11 @@
-package interface_adapter;
+package INTERFACE_ADAPTER;
 
 import org.jxmapviewer.JXMapKit;
-import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.WaypointPainter;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
-import Entities.Temporary_entites.Event;
-
-import API_calls.getCoordByIP_API_call;
+import API.LoadMap_API;
 
 public class LoadMapPresenter {
 
@@ -23,10 +17,10 @@ public class LoadMapPresenter {
     public LoadMapPresenter() {
         mapKit = new JXMapKit();
         try {
-            initialGeo = getCoordByIP_API_call.getCoord();
+            initialGeo = LoadMap_API.getCoord();
         } catch (IOException e) {
             System.out.println(e);
-            //PREPAE FAILED VIEW
+            //TODO: PREPARE FAILED VIEW AND PASS IT TO THE LOAD MAP INTERACTOR
         }
         PrepareSuccesView();
     }

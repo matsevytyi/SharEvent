@@ -1,8 +1,8 @@
-package use_case;
+package USE_CASE;
 
-import database.LoadEventsDataAccessInterface;
-import database.DatabaseDAO;
-import interface_adapter.LoadEventsPresenter;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
+import DATA_ACCESS.DatabaseDAO;
+import INTERFACE_ADAPTER.LoadEventsPresenter;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Set;
 
-import Entities.Temporary_entites.Event;
+import ENTITY.Temporary_entites.Event;
 
 
 

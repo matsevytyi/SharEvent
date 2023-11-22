@@ -1,7 +1,7 @@
-package view;
+package VIEW;
 
-import interface_adapter.LoadEventsController;
-import interface_adapter.LoadEventsPresenter;
+import INTERFACE_ADAPTER.LoadEventsController;
+import INTERFACE_ADAPTER.LoadEventsPresenter;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;

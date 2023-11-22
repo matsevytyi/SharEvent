@@ -1,9 +1,9 @@
 
-package  view;
+package VIEW;
 
-import Entities.ButtonFactory;
-import interface_adapter.LoadMapPresenter;
-import interface_adapter.LoadMapController;
+import VIEW_CREATOR.ButtonFactory;
+import INTERFACE_ADAPTER.LoadMapPresenter;
+import INTERFACE_ADAPTER.LoadMapController;
 import javafx.embed.swing.SwingNode;
 
 import javafx.geometry.Insets;

@@ -1,10 +1,10 @@
-package interface_adapter;
+package INTERFACE_ADAPTER;
 
 import org.jxmapviewer.JXMapViewer;
-import use_case.LoadEventsInputBoundary;
-import use_case.LoadEventsInteractor;
-import view.LoadEventsView;
-import view.LoadMapView;
+import USE_CASE.LoadEventsInputBoundary;
+import USE_CASE.LoadEventsInteractor;
+import VIEW.LoadEventsView;
+import VIEW.LoadMapView;
 
 public class LoadMapController {
 

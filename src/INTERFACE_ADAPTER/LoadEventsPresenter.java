@@ -1,6 +1,6 @@
-package interface_adapter;
+package INTERFACE_ADAPTER;
 
-import Entities.Temporary_entites.Event;
+import ENTITY.Temporary_entites.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,9 +13,9 @@ import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
-import use_case.LoadEventsInteractor;
-import view.LoadEventsView;
-import view.LoadMapView;
+import USE_CASE.LoadEventsInteractor;
+import VIEW.LoadEventsView;
+import VIEW.LoadMapView;
 
 import java.util.Objects;
 import java.util.Set;

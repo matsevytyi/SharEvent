@@ -1,4 +1,4 @@
-package database;
+package DATA_ACCESS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import lombok.SneakyThrows;
 import java.util.List;
 import java.util.Set;
-import Entities.Temporary_entites.*;
+import ENTITY.Temporary_entites.*;
 
 
 

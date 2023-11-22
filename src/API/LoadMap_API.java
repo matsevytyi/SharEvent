@@ -1,4 +1,4 @@
-package API_calls;
+package API;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -8,10 +8,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class getCoordByIP_API_call {
+public class LoadMap_API {
     public static GeoPosition getCoord() throws IOException {
         String apiKey = "21c8d093151b434dad0212bbb482d7e6";
         String apiUrl = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey;

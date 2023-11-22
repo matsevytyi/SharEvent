@@ -7,6 +7,6 @@ module src {
     requires lombok;
     requires com.google.gson;
 
-    exports app;
+    exports APP;
 
 }

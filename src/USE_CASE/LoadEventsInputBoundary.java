@@ -1,4 +1,4 @@
-package use_case;
+package USE_CASE;
 
 import org.jxmapviewer.JXMapViewer;
 
