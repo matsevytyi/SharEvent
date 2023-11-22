@@ -1,10 +1,7 @@
 package VIEW_CREATOR;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import lombok.Getter;
+import lombok.Setter;
 import org.jxmapviewer.JXMapKit;
 
 import java.util.LinkedList;
@@ -12,6 +9,7 @@ import java.util.LinkedList;
 public class LoadMapViewModel {
 
     @Getter
+    @Setter
     private JXMapKit mapKit;
 
     @Getter

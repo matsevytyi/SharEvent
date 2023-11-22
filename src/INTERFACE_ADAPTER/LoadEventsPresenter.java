@@ -31,8 +31,8 @@ public class LoadEventsPresenter {
 
     public LoadEventsPresenter(LoadMapView loadMapViewResult, LoadEventsView loadEventsViewResult) {
         loadMapView = loadMapViewResult;
-        mapKit = loadMapView.getPresenter().getMapKit();
-        initialGeo = loadMapView.getPresenter().getInitialGeo();
+        mapKit = loadMapView.getViewModel().getMapKit();
+        initialGeo = loadMapView.getViewModel().getMapKit().getAddressLocation();
         loadEventsView = loadEventsViewResult;
     }
     public boolean PrepareSuccesView(Set<Event> localEvents) {

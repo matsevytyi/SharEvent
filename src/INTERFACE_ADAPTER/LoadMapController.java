@@ -1,22 +1,15 @@
 package INTERFACE_ADAPTER;
 
-import org.jxmapviewer.JXMapViewer;
-import USE_CASE.LoadEventsInputBoundary;
-import USE_CASE.LoadEventsInteractor;
-import VIEW.LoadEventsView;
-import VIEW.LoadMapView;
+import USE_CASE.LoadMapInteractor;
+import VIEW_CREATOR.LoadMapViewModel;
 
 public class LoadMapController {
 
-    //TODO: initialize it
+    public void execute(LoadMapViewModel viewModel){
+        LoadMapOutputData loadMapOutputData = new LoadMapOutputData();
+        LoadMapInteractor interactor = new LoadMapInteractor();
 
-    JXMapViewer mapViewer;
-
-    LoadMapView loadMapView;
-
-    public LoadMapController(JXMapViewer mapViewer, LoadMapView loadMapView) {
-        this.mapViewer = mapViewer;
-        this.loadMapView = loadMapView;
+        interactor.execute(loadMapOutputData, viewModel);
     }
 
     public void viewProfile(){
@@ -40,8 +33,6 @@ public class LoadMapController {
     }
 
     public void updateEvents(){
-        LoadEventsView loadEventsView = new LoadEventsView(loadMapView);
-        LoadEventsInputBoundary loadEventsInteractor = new LoadEventsInteractor(mapViewer.getCenterPosition(), loadEventsView.getPresenter());
-        loadEventsInteractor.execute();
+        //TODO: switch to another Usecase (UPDATE_EVENTS)
     }
 }

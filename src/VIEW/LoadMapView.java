@@ -8,6 +8,7 @@ import VIEW_CREATOR.LoadMapViewModel;
 import javafx.scene.layout.StackPane;
 
 import lombok.Getter;
+import org.jxmapviewer.JXMapKit;
 
 public class LoadMapView {
 
@@ -29,12 +30,13 @@ public class LoadMapView {
         viewModel = new LoadMapViewModel();
 
         presenter = new LoadMapPresenter();
-        controller = new LoadMapController(viewModel.getMapKit().getMainMap(), this);
+        controller = new LoadMapController();
 
         pane = new StackPane();
-        pane = new LoadMapViewFactory().createView(pane, viewModel, controller);
 
-        controller.updateEvents();
+        controller.execute(viewModel);
+
+        pane = new LoadMapViewFactory().createView(pane, viewModel, controller);
 
     }
 
