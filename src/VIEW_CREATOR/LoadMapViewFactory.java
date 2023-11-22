@@ -1,6 +1,5 @@
 package VIEW_CREATOR;
 
-import INTERFACE_ADAPTER.LoadMapController;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +11,7 @@ import java.util.LinkedList;
 public class LoadMapViewFactory {
 
 
-    public StackPane createView(StackPane pane, LoadMapViewModel viewModel, LoadMapController controller) {
+    public StackPane createView(StackPane pane, LoadMapViewModel viewModel) {
         LinkedList<Button> buttons = createButtons(viewModel);
 
         SwingNode swingNode = new SwingNode();
@@ -22,8 +21,6 @@ public class LoadMapViewFactory {
         for (Button button : buttons) pane.getChildren().add(button);
 
         adjustButtonLocation(pane);
-        setButtonListeners(pane, controller);
-
         FailViewFactory failViewFactory = new FailViewFactory();
 
         if(viewModel.getMap_Load_Error() != null) {
@@ -31,7 +28,7 @@ public class LoadMapViewFactory {
             failViewFactory.createFailView(pane, "Oops, looks like you are using wrong map", "Check your connection, ensure that your app is up-to-date and reload the app.\n If problem still appears, contact our support");
             return pane;
         }
-        
+
         //TODO: create subclasses-models for these cases on LoadMapViewModel
         if(viewModel.getAPI_error() != null) {
             //create fail view
@@ -89,39 +86,5 @@ public class LoadMapViewFactory {
         StackPane.setAlignment(updateEventsButton, Pos.BOTTOM_CENTER);
         StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
         updateEventsButton.setVisible(true);
-    }
-
-    private void setButtonListeners(StackPane pane, LoadMapController controller) {
-
-        Button viewProfileButton = (Button) pane.getChildren().get(1);
-        Button filterEventsButton = (Button) pane.getChildren().get(2);
-        Button viewFriendsButton = (Button) pane.getChildren().get(3);
-        Button viewEventsButton = (Button) pane.getChildren().get(4);
-        Button addEventButton = (Button) pane.getChildren().get(5);
-        Button updateEventsButton = (Button) pane.getChildren().get(6);
-
-        viewProfileButton.setOnAction(e -> {
-            controller.viewProfile();
-        });
-
-        filterEventsButton.setOnAction(e -> {
-            controller.filterEvents();
-        });
-
-        viewFriendsButton.setOnAction(e -> {
-            controller.viewFriends();
-        });
-
-        viewEventsButton.setOnAction(e -> {
-            controller.viewEvents();
-        });
-
-        addEventButton.setOnAction(e -> {
-            controller.addEvent();
-        });
-
-        updateEventsButton.setOnAction(e -> {
-            controller.updateEvents();
-        });
     }
 }

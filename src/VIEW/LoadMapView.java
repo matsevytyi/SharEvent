@@ -1,14 +1,14 @@
 package VIEW;
 
-import INTERFACE_ADAPTER.LoadMapPresenter;
 import INTERFACE_ADAPTER.LoadMapController;
+import INTERFACE_ADAPTER.LoadMapPresenter;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 import lombok.Getter;
-import org.jxmapviewer.JXMapKit;
 
 public class LoadMapView {
 
@@ -30,18 +30,58 @@ public class LoadMapView {
         viewModel = new LoadMapViewModel();
 
         presenter = new LoadMapPresenter();
-        controller = new LoadMapController();
 
         pane = new StackPane();
 
+        controller =  new LoadMapController();
+
         controller.execute(viewModel);
 
-        pane = new LoadMapViewFactory().createView(pane, viewModel, controller);
+        pane = new LoadMapViewFactory().createView(pane, viewModel);
+
+        setButtonListeners(pane, controller);
+
+        //Initial call of LOAD_EVENTS Use Case
+        controller.updateEvents(this);
 
     }
 
     public StackPane getStackPane() {
         return pane;
+    }
+
+    private void setButtonListeners(StackPane pane, LoadMapController controller) {
+
+        Button viewProfileButton = (Button) pane.getChildren().get(1);
+        Button filterEventsButton = (Button) pane.getChildren().get(2);
+        Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        Button viewEventsButton = (Button) pane.getChildren().get(4);
+        Button addEventButton = (Button) pane.getChildren().get(5);
+        Button updateEventsButton = (Button) pane.getChildren().get(6);
+
+        viewProfileButton.setOnAction(e -> {
+            controller.viewProfile();
+        });
+
+        filterEventsButton.setOnAction(e -> {
+            controller.filterEvents();
+        });
+
+        viewFriendsButton.setOnAction(e -> {
+            controller.viewFriends();
+        });
+
+        viewEventsButton.setOnAction(e -> {
+            controller.viewEvents();
+        });
+
+        addEventButton.setOnAction(e -> {
+            controller.addEvent();
+        });
+
+        updateEventsButton.setOnAction(e -> {
+            controller.updateEvents(this);
+        });
     }
 }
 

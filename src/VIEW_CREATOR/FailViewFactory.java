@@ -16,6 +16,7 @@ public class FailViewFactory {
         overlay.setFill(Color.BLACK);
         overlay.setOpacity(0.5);
 
+        //TODO: create models for different fail views
         //TODO: adjust styling for labels and buttons
 
         Label titleLabel = new Label(titleLabelText);

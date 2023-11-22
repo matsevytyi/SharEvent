@@ -1,6 +1,8 @@
 package INTERFACE_ADAPTER;
 
 import USE_CASE.LoadMapInteractor;
+import VIEW.LoadEventsView;
+import VIEW.LoadMapView;
 import VIEW_CREATOR.LoadMapViewModel;
 
 public class LoadMapController {
@@ -32,7 +34,9 @@ public class LoadMapController {
         //TODO: switch to another Usecase (ADD_EVENT)
     }
 
-    public void updateEvents(){
+    public void updateEvents(LoadMapView loadMapView){
         //TODO: switch to another Usecase (UPDATE_EVENTS)
+        LoadEventsView view = new LoadEventsView(loadMapView); //TODO: consider moving just this line to another class so that view will not be created each time
+        view.reloadEvents(loadMapView);
     }
 }

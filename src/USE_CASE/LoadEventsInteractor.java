@@ -1,9 +1,12 @@
 package USE_CASE;
 
 import DATA_ACCESS.LoadEventsDAO_InputData;
-import DATA_ACCESS.LoadEventsDataAccessInterface;
+import DATA_ACCESS.LoadEventsDAO_OutputData;
 import DATA_ACCESS.DatabaseDAO;
+import INTERFACE_ADAPTER.LoadEventsInputData;
+import INTERFACE_ADAPTER.LoadEventsOuputData;
 import INTERFACE_ADAPTER.LoadEventsPresenter;
+import VIEW.LoadMapView;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -17,17 +20,20 @@ import ENTITY.Temporary_entites.Event;
 
 
 public class LoadEventsInteractor implements LoadEventsInputBoundary {
-    @Getter
-    Set<Event> events;
-    GeoPosition newStartPoint;
-    LoadEventsDataAccessInterface loadEventsDataAccessInterface;
-    LoadEventsPresenter presenter;
 
-    public LoadEventsInteractor(GeoPosition initialPoint, LoadEventsPresenter presenter) {
-        loadEventsDataAccessInterface = new DatabaseDAO();
-        newStartPoint = initialPoint;
-        this.presenter = presenter;
+    @Getter
+    private Set<Event> events;
+
+    @Getter
+    private GeoPosition currentGeoposition;
+
+
+    public LoadEventsInteractor(LoadEventsOuputData loadEventsOuputData) {
+        events = null;
+        currentGeoposition = loadEventsOuputData.getNewLocationPoint();
     }
+
+    //TODO: this code may be moved to another UseCaseInteractor (VIEW_EVENT)
 
     public boolean checkForClickOnEvent(Point clickPoint, JXMapViewer mapViewer) {
 
@@ -61,15 +67,33 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
         return clickPoint.distance(waypointPoint) < threshold;
     }
 
-    public void execute() {
+    //TODO: --- till here ---
+
+    public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView) {
+        String problem = "";
+
         try{
-            LoadEventsDAO_InputData inputData = new LoadEventsDAO_InputData(newStartPoint);
-            events = loadEventsDataAccessInterface.getEventsInRange(inputData).getEvents();
+            LoadEventsDAO_InputData inputDatabaseData = new LoadEventsDAO_InputData(loadEventsOuputData.getNewLocationPoint());
+            LoadEventsDAO_OutputData outputDatabaseData = new DatabaseDAO().getEventsInRange(inputDatabaseData);
+            events = outputDatabaseData.getEvents();
         } catch (Exception e) {
             System.out.println("Exception while loading events from DB\n" + e.getMessage());
-            presenter.PrepareFailView("Database_error");
+            problem = "Database_error";
         }
-        if(events.isEmpty()) presenter.PrepareFailView("No_events");
-        else presenter.PrepareSuccesView(events);
+
+        LoadEventsInputData loadEventsInputData = new LoadEventsInputData(events);
+        LoadEventsPresenter presenter = new LoadEventsPresenter(loadEventsInputData, loadMapView);
+
+        if(problem == "Database_error") {
+            presenter.PrepareFailView(problem, loadMapView);
+            return;
+        }
+
+        if(events == null) {
+            presenter.PrepareFailView("No_events", loadMapView);
+            return;
+        }
+
+        presenter.PrepareSuccesView();
     }
 }

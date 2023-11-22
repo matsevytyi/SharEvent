@@ -127,7 +127,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
         //TODO return Event
     }
 
-    public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) {
+    public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
         String query = "SELECT * FROM public.event " +
                 "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
                 " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
@@ -137,18 +137,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
         ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
 
-        try {
-            while (resultSet.next()) {
-                events.add(extractEvent(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error processing the ResultSet");
-            // TODO: Handle the exception or log it as needed
-        } finally {
-            // Close the ResultSet and connection in the finally block
-            database.closeConnection();
+
+
+        while (resultSet.next()) {
+            events.add(extractEvent(resultSet));
         }
+        database.closeConnection();
+
 
         return new LoadEventsDAO_OutputData(events);
     }

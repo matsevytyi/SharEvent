@@ -1,5 +1,6 @@
 package INTERFACE_ADAPTER;
 
+import VIEW.LoadMapView;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 
@@ -13,12 +14,14 @@ public class LoadEventsController {
     @Getter
     LoadEventsInputBoundary loadEventsInteractor;
 
-    public LoadEventsController(JXMapViewer mapViewer, LoadEventsPresenter presenter) {
-        loadEventsInteractor = new LoadEventsInteractor(mapViewer.getCenterPosition(), presenter);
+    public void checkForEvent(Point clickPoint, JXMapViewer mapViewer){
+        loadEventsInteractor.checkForClickOnEvent(clickPoint, mapViewer);
     }
 
-    public void execute(Point clickPoint, JXMapViewer mapViewer){
-        loadEventsInteractor.checkForClickOnEvent(clickPoint, mapViewer);
+    public void execute(LoadMapView loadMapView){
+        LoadEventsOuputData loadEventsOuputData = new LoadEventsOuputData(loadMapView.getViewModel().getMapKit().getMainMap().getCenterPosition());
+        loadEventsInteractor = new LoadEventsInteractor(loadEventsOuputData);
+        loadEventsInteractor.execute(loadEventsOuputData, loadMapView);
     }
 
 
