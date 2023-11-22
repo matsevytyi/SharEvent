@@ -1,9 +1,9 @@
 package use_case.view_event;
 
 
-    public interface ViewEventInputBoundary {
-        void viewEvent(int eventId);
-        void registerForEvent(int eventId);
-        void deleteEvent(int eventId);
+import use_case.add_event.AddEventInputData;
+
+public interface ViewEventInputBoundary {
+    void execute(ViewEventInputData viewEventInputData);
     }
 

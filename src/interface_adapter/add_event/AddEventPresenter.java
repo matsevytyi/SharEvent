@@ -27,7 +27,7 @@ public class AddEventPresenter implements AddEventOutputBoundary {
 
 
         AddEventState addEventState = addEventViewModel.getState();
-        addEventState.setEventName(addEventState.getEventName());
+        addEventState.setEventName(event.getEventName());
         addEventViewModel.firePropertyChanged(); // having message about successful adding of event
 
 //        viewManagerModel.setActiveView(mapViewModel.getViewName());
