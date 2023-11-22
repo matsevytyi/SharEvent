@@ -127,10 +127,10 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
         //TODO return Event
     }
 
-    public Set<Event> getEventsInRange(String latitude1, String latitude2, String longitude1, String longitude2)  {
+    public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) {
         String query = "SELECT * FROM public.event " +
-                "WHERE latitude > " + latitude1 + " AND latitude < " + latitude2 +
-                " AND longitude > " + longitude1 + " AND longitude < " + longitude2 +
+                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
+                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
                 ";";
 
         Set<Event> events = new HashSet<>();
@@ -150,7 +150,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
             database.closeConnection();
         }
 
-        return events;
+        return new LoadEventsDAO_OutputData(events);
     }
 
     private void closeResultSet(ResultSet resultSet) {

@@ -1,5 +1,6 @@
 package USE_CASE;
 
+import DATA_ACCESS.LoadEventsDAO_InputData;
 import DATA_ACCESS.LoadEventsDataAccessInterface;
 import DATA_ACCESS.DatabaseDAO;
 import INTERFACE_ADAPTER.LoadEventsPresenter;
@@ -62,7 +63,8 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
 
     public void execute() {
         try{
-            events = loadEventsDataAccessInterface.getEventsInRange(String.valueOf(newStartPoint.getLatitude() - 5./111), String.valueOf(newStartPoint.getLatitude() + 5./111), String.valueOf(newStartPoint.getLongitude() - 5./111), String.valueOf(newStartPoint.getLongitude() + 5./111));
+            LoadEventsDAO_InputData inputData = new LoadEventsDAO_InputData(newStartPoint);
+            events = loadEventsDataAccessInterface.getEventsInRange(inputData).getEvents();
         } catch (Exception e) {
             System.out.println("Exception while loading events from DB\n" + e.getMessage());
             presenter.PrepareFailView("Database_error");
