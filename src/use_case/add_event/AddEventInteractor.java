@@ -32,7 +32,7 @@ public class AddEventInteractor implements AddEventInputBoundary{
 
         //add conditions
 
-        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongitude(), addEventInputData.getEventDate(), addEventInputData.getDescription(), creator, null);
+        Event event =  eventFactory.create(eventId, addEventInputData.getEventName(), addEventInputData.getLatitude(), addEventInputData.getLongitude(), addEventInputData.getEventDate(), addEventInputData.getEventTime(), addEventInputData.getDescription(), creator, null);
         eventDataAccessInterface.addEvent(event);
 
         AddEventOutputData signupOutputData = new  AddEventOutputData(event.getEventName(),  false);

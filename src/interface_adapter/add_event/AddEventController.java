@@ -3,6 +3,8 @@ package interface_adapter.add_event;
 import use_case.add_event.AddEventInputBoundary;
 import use_case.add_event.AddEventInputData;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class AddEventController {
@@ -11,9 +13,9 @@ public class AddEventController {
         this.addEventUseCaseInteractor = addEventUseCaseInteractor;
     }
 
-    public void execute(String eventName, long latitude, long longtitude, Date eventDate, String description) {
+    public void execute(String eventName, long latitude, long longtitude, LocalDate eventDate, LocalTime eventTime, String description) {
         AddEventInputData signupInputData = new AddEventInputData(
-                eventName, latitude, longtitude, eventDate, description);
+                eventName, latitude, eventTime, longtitude, eventDate, description);
 
         addEventUseCaseInteractor.execute(signupInputData);
     }

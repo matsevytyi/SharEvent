@@ -1,7 +1,7 @@
 package interface_adapter.add_event;
 
 import interface_adapter.ViewModel;
-import view.AddEventView;
+
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

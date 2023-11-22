@@ -21,16 +21,16 @@ public class AddEventPresenter implements AddEventOutputBoundary {
     @Override
     public void prepareSuccessView(AddEventOutputData event) {
 
-        MapState mapState = mapViewModel.getState();
-        this.mapViewModel.setState(mapState);
-        mapViewModel.firePropertyChanged();//open map again
+//        MapState mapState = mapViewModel.getState();
+//        this.mapViewModel.setState(mapState);
+//        mapViewModel.firePropertyChanged();//open map again
 
 
         AddEventState addEventState = addEventViewModel.getState();
         addEventState.setEventName(addEventState.getEventName());
         addEventViewModel.firePropertyChanged(); // having message about successful adding of event
 
-        viewManagerModel.setActiveView(mapViewModel.getViewName());
+//        viewManagerModel.setActiveView(mapViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 

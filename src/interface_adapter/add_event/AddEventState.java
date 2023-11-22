@@ -1,101 +1,81 @@
 package interface_adapter.add_event;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+
 public class AddEventState {
 
-    public AddEventState(String eventName, String eventNameError, String eventDate, String eventDateError, String eventTime, String eventTimeError, String eventDescription, String eventDescriptionError, String eventLongitude, String eventLongitudeError, String eventLatitude, String eventLatitudeError) {
-        this.eventName = eventName;
-        this.eventNameError = eventNameError;
-        this.eventDate = eventDate;
-        this.eventDateError = eventDateError;
-        this.eventTime = eventTime;
-        this.eventTimeError = eventTimeError;
-        this.eventDescription = eventDescription;
-        this.eventDescriptionError = eventDescriptionError;
-        this.eventLongitude = eventLongitude;
-        this.eventLongitudeError = eventLongitudeError;
-        this.eventLatitude = eventLatitude;
-        this.eventLatitudeError = eventLatitudeError;
-    }
 
     public String getEventName() {
         return eventName;
-    }
-
-    public String getEventNameError() {
-        return eventNameError;
-    }
-
-    public String getEventDate() {
-        return eventDate;
-    }
-
-    public String getEventDateError() {
-        return eventDateError;
-    }
-
-    public String getEventTime() {
-        return eventTime;
-    }
-
-    public String getEventTimeError() {
-        return eventTimeError;
-    }
-
-    public String getEventDescription() {
-        return eventDescription;
-    }
-
-    public String getEventDescriptionError() {
-        return eventDescriptionError;
     }
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
 
+    public String getEventNameError() {
+        return eventNameError;
+    }
+
     public void setEventNameError(String eventNameError) {
         this.eventNameError = eventNameError;
     }
 
-    public void setEventDate(String eventDate) {
+    public LocalDate getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public String getEventDateError() {
+        return eventDateError;
     }
 
     public void setEventDateError(String eventDateError) {
         this.eventDateError = eventDateError;
     }
 
-    public void setEventTime(String eventTime) {
+    public LocalTime getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(LocalTime eventTime) {
         this.eventTime = eventTime;
+    }
+
+    public String getEventTimeError() {
+        return eventTimeError;
     }
 
     public void setEventTimeError(String eventTimeError) {
         this.eventTimeError = eventTimeError;
     }
 
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
     public void setEventDescription(String eventDescription) {
         this.eventDescription = eventDescription;
+    }
+
+    public String getEventDescriptionError() {
+        return eventDescriptionError;
     }
 
     public void setEventDescriptionError(String eventDescriptionError) {
         this.eventDescriptionError = eventDescriptionError;
     }
 
-    private String eventName = "";
-    private String eventNameError = null;
-    private String eventDate = "";
-    private String eventDateError = null;
-
-    private String eventTime = "";
-    private String eventTimeError = null;
-    private String eventDescription = "";
-    private String eventDescriptionError = null;
-
-    public String getEventLongitude() {
+    public int getEventLongitude() {
         return eventLongitude;
     }
 
-    public void setEventLongitude(String eventLongitude) {
+    public void setEventLongitude(int eventLongitude) {
         this.eventLongitude = eventLongitude;
     }
 
@@ -107,11 +87,11 @@ public class AddEventState {
         this.eventLongitudeError = eventLongitudeError;
     }
 
-    public String getEventLatitude() {
+    public int getEventLatitude() {
         return eventLatitude;
     }
 
-    public void setEventLatitude(String eventLatitude) {
+    public void setEventLatitude(int eventLatitude) {
         this.eventLatitude = eventLatitude;
     }
 
@@ -123,11 +103,19 @@ public class AddEventState {
         this.eventLatitudeError = eventLatitudeError;
     }
 
-    private String eventLongitude = "";
+    private String eventName = "";
+    private String eventNameError = null;
+    private LocalDate eventDate = null;
+    private String eventDateError = null;
+    private LocalTime eventTime = null;
+    private String eventTimeError = null;
+    private String eventDescription = "";
+    private String eventDescriptionError = null;
+    private int eventLongitude = 0;
 
     private String eventLongitudeError = null;
 
-    private String eventLatitude = "";
+    private int eventLatitude = 0;
     private String eventLatitudeError = null;
 
 

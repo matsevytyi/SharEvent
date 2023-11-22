@@ -16,6 +16,9 @@ import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class AddEventView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -32,7 +35,7 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
     final JTextField descriptionInputField = new JTextField(15);
 
     final JButton addEvent;
-    private MapView mapView;
+    //private MapView mapView;
 
     public AddEventView(AddEventViewModel addEventViewModel, AddEventController addEventController, JButton addEvent) {
         this.addEventViewModel = addEventViewModel;
@@ -60,25 +63,28 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
         buttons.add(addEvent);
 
 
-        mapView = new MapView();
-        mapView.addMapClickListener(new MapClickListener() {
-            @Override
-            public void onMapClick(LatLng point) {
-                // Handle map click, pass latitude and longitude to the controller
-                addEventController.executeMapClick(point.getLatitude(), point.getLongitude());
-            }
-        });
+//        mapView = new MapView();
+//        mapView.addMapClickListener(new MapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng point) {
+//                // Handle map click, pass latitude and longitude to the controller
+//                addEventController.executeMapClick(point.getLatitude(), point.getLongitude());
+//            }
+//        });
 
-        this.add(mapView);
+//        this.add(mapView);
 
+        JButton finalAddEvent = addEvent;
         addEvent.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(addEvent)) {
+                        if (evt.getSource().equals(finalAddEvent)) {
                             AddEventState currentState = addEventViewModel.getState();
 
                             addEventController.execute(
                                     currentState.getEventName(),
+                                    currentState.getEventLongitude(),
+                                    currentState.getEventLatitude(),
                                     currentState.getEventDate(),
                                     currentState.getEventTime(),
                                     currentState.getEventDescription()
@@ -114,7 +120,10 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void keyTyped(KeyEvent e) {
                 AddEventState currentState = addEventViewModel.getState();
-                currentState.setEventDate(eventDate.getText() + e.getKeyChar());
+
+                String dateString = eventDate.getText() + e.getKeyChar();
+                LocalDate parsedDate = LocalDate.parse(dateString);
+                currentState.setEventDate(parsedDate);
                 addEventViewModel.setState(currentState);
             }
 
@@ -132,7 +141,10 @@ public class AddEventView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void keyTyped(KeyEvent e) {
                 AddEventState currentState = addEventViewModel.getState();
-                currentState.setEventTime(eventTime.getText() + e.getKeyChar());
+                String timeString = eventTime.getText() + e.getKeyChar();
+                LocalTime parsedTime = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
+
+                currentState.setEventTime(parsedTime);
                 addEventViewModel.setState(currentState);
             }
 

@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface EventInterface {
@@ -12,7 +13,7 @@ public interface EventInterface {
     long getLongtitude();
 
 
-    Date getEventDate();
+    LocalDate getEventDate();
 
    String getDescription();
 
