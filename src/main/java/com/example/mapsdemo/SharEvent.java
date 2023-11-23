@@ -1,37 +1,66 @@
 
 package com.example.mapsdemo;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.login_adapter.LoginViewModel;
+import interface_adapter.map_adapter.LoggedInViewModel;
+import interface_adapter.signup_adapter.SignUpViewModel;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignUpView;
+import view.ViewManager;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
-public class HelloApplication extends Application {
+public class SharEvent extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Map Embed Example");
+        JFrame application = new JFrame("SharEvent");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // Create a JavaFX SwingNode to host the map component
-        SwingNode swingNode = new SwingNode();
+        CardLayout cardLayout = new CardLayout();
+        JPanel views = new JPanel(cardLayout);
+        application.add(views);
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
+        LoginViewModel loginViewModel = new LoginViewModel();
+        SignUpViewModel signupViewModel = new SignUpViewModel();
+        LoggedInViewModel mapViewModel = new LoggedInViewModel();
+
+        SignUpView signupView = SignUpUseCaseFactory.SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
+        views.add(signupView, signupView.viewName);
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
+        views.add(loginView, loginView.viewName);
+
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
+        views.add(loggedInView, loggedInView.viewName);
+
+        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.firePropertyChanged();
+
+        application.pack();
+        application.setVisible(true);
+
+       /* SwingNode swingNode = new SwingNode();
         createSwingContent(swingNode);
 
         StackPane pane = new StackPane();
         pane.getChildren().add(swingNode);
 
         primaryStage.setScene(new Scene(pane, 800, 600));
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
     private void createSwingContent(final SwingNode swingNode) {
