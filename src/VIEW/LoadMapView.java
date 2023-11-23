@@ -41,7 +41,10 @@ public class LoadMapView {
 
         setButtonListeners(pane, controller);
 
-        //Initial call of LOAD_EVENTS Use Case
+        //TODO: Here is the place to call the USER LOGIN Use Case
+
+        
+        //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
 
     }
