@@ -11,10 +11,10 @@ public class Temporary_entites {
         String time;
         String date;
         String creator;
-        float longitude;
-        float latitude;
+        double longitude;
+        double latitude;
 
-        public Event(int event_id, String event_name, String event_description, String type, String time, String date, String creator, float longitude, float latitude) {
+        public Event(int event_id, String event_name, String event_description, String type, String time, String date, String creator, double longitude, double latitude) {
             super(longitude, latitude);
             this.event_id = event_id;
             this.event_name = event_name;
@@ -56,11 +56,11 @@ public class Temporary_entites {
             return creator;
         }
 
-        public float getLongitude() {
+        public double getLongitude() {
             return longitude;
         }
 
-        public float getLatitude() {
+        public double getLatitude() {
             return latitude;
         }
     }

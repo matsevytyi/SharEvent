@@ -1,5 +1,6 @@
 package INTERFACE_ADAPTER;
 
+import USE_CASE.LoadMapInputBoundary;
 import USE_CASE.LoadMapInteractor;
 import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
@@ -9,7 +10,7 @@ public class LoadMapController {
 
     public void execute(LoadMapViewModel viewModel){
         LoadMapOutputData loadMapOutputData = new LoadMapOutputData();
-        LoadMapInteractor interactor = new LoadMapInteractor();
+        LoadMapInputBoundary interactor = new LoadMapInteractor();
 
         interactor.execute(loadMapOutputData, viewModel);
     }

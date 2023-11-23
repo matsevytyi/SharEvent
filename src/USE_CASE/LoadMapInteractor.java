@@ -10,13 +10,13 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import java.io.IOException;
 
-public class LoadMapInteractor {
+public class LoadMapInteractor implements LoadMapInputBoundary {
 
     public LoadMapInteractor() {
     }
     public void execute(LoadMapOutputData loadMapOutputData, LoadMapViewModel loadMapViewModel){
 
-        LoadMapPresenter loadMapPresenter = new LoadMapPresenter();
+        LoadMapOutputBoundary loadMapPresenter = new LoadMapPresenter();
 
         JXMapKit mapKit = loadMapOutputData.getMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);

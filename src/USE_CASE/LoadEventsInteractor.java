@@ -3,6 +3,7 @@ package USE_CASE;
 import DATA_ACCESS.LoadEventsDAO_InputData;
 import DATA_ACCESS.LoadEventsDAO_OutputData;
 import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
 import INTERFACE_ADAPTER.LoadEventsInputData;
 import INTERFACE_ADAPTER.LoadEventsOuputData;
 import INTERFACE_ADAPTER.LoadEventsPresenter;
@@ -19,7 +20,7 @@ import ENTITY.Temporary_entites.Event;
 
 
 
-public class LoadEventsInteractor implements LoadEventsInputBoundary {
+public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
     @Getter
     private Set<Event> events;
@@ -73,8 +74,9 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
         String problem = "";
 
         try{
+            LoadEventsDataAccessInterface databaseAccess = new DatabaseDAO();
             LoadEventsDAO_InputData inputDatabaseData = new LoadEventsDAO_InputData(loadEventsOuputData.getNewLocationPoint());
-            LoadEventsDAO_OutputData outputDatabaseData = new DatabaseDAO().getEventsInRange(inputDatabaseData);
+            LoadEventsDAO_OutputData outputDatabaseData = databaseAccess.getEventsInRange(inputDatabaseData);
             events = outputDatabaseData.getEvents();
         } catch (Exception e) {
             System.out.println("Exception while loading events from DB\n" + e.getMessage());
@@ -82,7 +84,7 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
         }
 
         LoadEventsInputData loadEventsInputData = new LoadEventsInputData(events);
-        LoadEventsPresenter presenter = new LoadEventsPresenter(loadEventsInputData, loadMapView);
+        LoadEventsInputBoundary presenter = new LoadEventsPresenter(loadEventsInputData, loadMapView);
 
         if(problem == "Database_error") {
             presenter.PrepareFailView(problem, loadMapView);
@@ -90,7 +92,8 @@ public class LoadEventsInteractor implements LoadEventsInputBoundary {
         }
 
         if(events == null) {
-            presenter.PrepareFailView("No_events", loadMapView);
+            problem = "No_events";
+            presenter.PrepareFailView(problem, loadMapView);
             return;
         }
 

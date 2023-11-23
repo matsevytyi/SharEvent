@@ -6,13 +6,15 @@ import org.jxmapviewer.JXMapViewer;
 
 import java.awt.*;
 
-import USE_CASE.LoadEventsInputBoundary;
+import USE_CASE.LoadEventsOutputBoundary;
 import USE_CASE.LoadEventsInteractor;
 
 public class LoadEventsController {
 
     @Getter
-    LoadEventsInputBoundary loadEventsInteractor;
+    LoadEventsOutputBoundary loadEventsInteractor;
+
+    //TODO: ALSO SHOULD BE MOVED TO VIEW_EVENT USE CASE
 
     public void checkForEvent(Point clickPoint, JXMapViewer mapViewer){
         loadEventsInteractor.checkForClickOnEvent(clickPoint, mapViewer);

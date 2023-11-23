@@ -1,27 +1,20 @@
 package INTERFACE_ADAPTER;
 
 import ENTITY.Temporary_entites.Event;
+import USE_CASE.LoadEventsInputBoundary;
 import VIEW_CREATOR.FailViewFactory;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import lombok.Getter;
-import org.jxmapviewer.JXMapKit;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.WaypointPainter;
-import USE_CASE.LoadEventsInteractor;
-import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
 
-import java.util.Objects;
+import javafx.scene.layout.StackPane;
+import lombok.Getter;
+
+import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.viewer.WaypointPainter;
+
+
 import java.util.Set;
 
-public class LoadEventsPresenter {
+public class LoadEventsPresenter implements LoadEventsInputBoundary {
 
     @Getter
     private final JXMapKit mapKit;
