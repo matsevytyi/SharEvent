@@ -1,6 +1,6 @@
 package INTERFACE_ADAPTER.filter;
-import use_case.filter.FilterInputBoundary;
-import use_case.filter.FilterInputData;
+import USE_CASE.filter.FilterInputBoundary;
+import USE_CASE.filter.FilterInputData;
 
 public class FilterController {
     final FilterInputBoundary filterUseCaseInteractor;

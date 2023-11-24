@@ -1,6 +1,6 @@
 package INTERFACE_ADAPTER.filter;
 
-import use_case.filter.FilterOutputData;
+import USE_CASE.filter.FilterOutputData;
 
 public class FilterPresenter {
     private final LoadMapViewModel loadMapViewModel;

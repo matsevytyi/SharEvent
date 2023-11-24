@@ -8,20 +8,17 @@ class User implements UserInterface{
     private final int userId;
     private final String name;
     private final String password;
-
     private final String email;
     private final List<EventInterface> registered_events;
     private final List<EventInterface> hosted_events;
-    User(String name, String password, String email, int userId){
+    User(String name, String password, String email, int userId) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.userId = userId;
-        this.registered_events = new ArrayList<EventInterface>();
-        this.hosted_events = new ArrayList<EventInterface>();
     }
 
-    public String getName(){return this.name;}
+    public String getName() { return this.name;}
 
     public String getPassword(){return this.password;}
 
@@ -52,6 +49,5 @@ class User implements UserInterface{
     public void remove_hosted_event(EventInterface event) {
         this.hosted_events.remove(event);
     }
-
 
 }

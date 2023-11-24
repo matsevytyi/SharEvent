@@ -1,7 +1,7 @@
 package INTERFACE_ADAPTER.search;
 
-import use_case.search.SearchOutputBoundary;
-import use_case.search.SearchOutputData;
+import USE_CASE.search.SearchOutputBoundary;
+import USE_CASE.search.SearchOutputData;
 
 public class SearchPresenter implements SearchOutputBoundary {
 

@@ -1,6 +1,5 @@
 package ENTITY;
 
-
 public class UserFactory implements UserFactoryInterface {
 
     // should this be override?

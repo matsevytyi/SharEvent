@@ -1,4 +1,5 @@
 package ENTITY;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,6 @@ public interface UserInterface {
     String getPassword();
 
     String getEmail();
-
     int getUserId();
 
     List<EventInterface> getRegisteredEvents();

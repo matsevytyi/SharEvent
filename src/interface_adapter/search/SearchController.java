@@ -1,7 +1,7 @@
 package INTERFACE_ADAPTER.search;
 
-import use_case.search.SearchInputBoundary;
-import use_case.search.SearchInputData;
+import USE_CASE.search.SearchInputBoundary;
+import USE_CASE.search.SearchInputData;
 
 public class SearchController {
     final SearchInputBoundary searchUseCaseInteractor;
