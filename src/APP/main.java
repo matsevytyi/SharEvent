@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import view2.LoadMapView;
+import VIEW.LoadMapView;
 
 public class main extends Application {
 

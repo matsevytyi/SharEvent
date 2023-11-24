@@ -1,7 +1,7 @@
 package DATA_ACCESS;
 
 import java.util.Set;
-import entity2.Temporary_entites.Event;
+import ENTITY.Temporary_entites.Event;
 import lombok.Getter;
 
 public class LoadEventsDAO_OutputData {
