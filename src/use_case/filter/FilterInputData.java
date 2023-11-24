@@ -1,4 +1,4 @@
-package use_case.filter;
+package USE_CASE.filter;
 
 import java.util.ArrayList;
 

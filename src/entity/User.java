@@ -1,4 +1,5 @@
-package entity;
+package ENTITY;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +8,15 @@ class User implements UserInterface{
     private final int userId;
     private final String name;
     private final String password;
-    private final List<UserInterface> friends;
+
+    private final String email;
     private final List<EventInterface> registered_events;
     private final List<EventInterface> hosted_events;
-    User(String name, String password, int userId){
+    User(String name, String password, String email, int userId){
         this.name = name;
         this.password = password;
+        this.email = email;
         this.userId = userId;
-        this.friends = new ArrayList<UserInterface>();
         this.registered_events = new ArrayList<EventInterface>();
         this.hosted_events = new ArrayList<EventInterface>();
     }
@@ -23,9 +25,9 @@ class User implements UserInterface{
 
     public String getPassword(){return this.password;}
 
-    public List<UserInterface> getFriends() {
-        return this.friends;
-    }
+    public String getEmail(){return this.email;}
+
+    public int getUserId(){return this.userId;}
 
     public List<EventInterface> getRegisteredEvents() {
         return this.registered_events;
@@ -33,17 +35,6 @@ class User implements UserInterface{
 
     public List<EventInterface> getHostedEvents() {
         return this.hosted_events;
-    }
-
-
-    public int getUserId(){return this.userId;}
-
-    public void add_friend(UserInterface friend){
-        this.friends.add(friend);
-    }
-
-    public void remove_friend(UserInterface friend){
-        this.friends.remove(friend);
     }
 
     public void add_registered_event(EventInterface event) {

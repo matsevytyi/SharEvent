@@ -1,4 +1,4 @@
-package interface_adapter.filter;
+package INTERFACE_ADAPTER.filter;
 
 import use_case.filter.FilterOutputData;
 

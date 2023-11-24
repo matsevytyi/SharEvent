@@ -1,4 +1,4 @@
-package use_case.search;
+package USE_CASE.search;
 
 import entity.User;
 import entity.UserFactory;

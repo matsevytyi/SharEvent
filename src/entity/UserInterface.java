@@ -1,4 +1,4 @@
-package entity;
+package ENTITY;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,14 +6,12 @@ public interface UserInterface {
     String getName();
     String getPassword();
 
-    List<UserInterface> getFriends();
+    String getEmail();
+
+    int getUserId();
 
     List<EventInterface> getRegisteredEvents();
-
     List<EventInterface> getHostedEvents();
-    int getUserId();
-    void add_friend(UserInterface friend);
-    void remove_friend(UserInterface friend);
 
     void add_registered_event(EventInterface event);
 

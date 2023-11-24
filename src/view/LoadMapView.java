@@ -1,133 +1,90 @@
-package view;
+package VIEW;
 
-import interface_adapter.search.SearchController;
+import INTERFACE_ADAPTER.LoadMapController;
+import INTERFACE_ADAPTER.LoadMapPresenter;
+import VIEW_CREATOR.LoadMapViewFactory;
+import VIEW_CREATOR.LoadMapViewModel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.beans.PropertyChangeListener;
-import java.util.Set;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 
-public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
+import lombok.Getter;
 
-    private final JTextField searchInputField = new JTextField(15);
+public class LoadMapView {
 
-    private final JButton search;
-    private final JButton filter;
-    private final SearchController searchController;
-    public LoadMapView(SearchController searchController) {
+    @Getter
+    private LoadMapPresenter presenter;
 
-        this.searchController = searchController;
-        LabelTextPanel searchInfo = new LabelTextPanel(new JLabel(LoadMapViewModel.SEARCH_LABEL), searchInputField);
+    @Getter
+    private LoadMapController controller;
 
-        JPanel buttons = new JPanel();
-        search = new JButton(LoadMapViewModel.SEARCH_BUTTON_LABEL);
-        buttons.add(search);
-        filter = new JButton(LoadMapViewModel.FILTER_BUTTON_LABEL);
-        buttons.add(filter);
+    @Getter
+    private LoadMapViewModel viewModel;
 
-        search.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(search)) {
-                            SearchState currentState = LoadMapViewModel.getState();
+    @Getter
+    private static StackPane pane;
 
-                            searchController.execute(
-                                    currentState.getSearch(),
-                                    currentState.getEvents()
-                            );
-                        }
-                    }
-                }
-        );
 
-        searchInputField.addKeyListener(
-                new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        SearchState currentState = LoadMapViewModel.getState();
-                        String text = searchInputField.getText() + e.getKeyChar();
-                        currentState.setSearch(text);
-                        LoadMapViewModel.setState(currentState);
-                    }
+    public LoadMapView() {
 
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
+        viewModel = new LoadMapViewModel();
 
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-                });
+        presenter = new LoadMapPresenter();
 
-        filter.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(filter)) {
-                            createFilterFrame();
-//                            Set<String> usernames = clearController.execute();
-//                            String message = String.join(",", usernames);
-//                            JOptionPane.showMessageDialog(null, message);
-                        }
-                    }
-                }
-        );
+        pane = new StackPane();
+
+        controller =  new LoadMapController();
+
+        controller.execute(viewModel);
+
+        pane = new LoadMapViewFactory().createView(pane, viewModel);
+
+        setButtonListeners(pane, controller);
+
+        //TODO: Here is the place to call the USER LOGIN Use Case
+
+
+        //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
+        controller.updateEvents(this);
+
     }
 
-    private static void createFilterFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame filterFrame = new JFrame("Filter");
-                JButton apply = new JButton("Apply");
-                filterFrame.add(apply);
-                JButton cancel = new JButton("Cancel");
-                filterFrame.add(cancel);
+    public StackPane getStackPane() {
+        return pane;
+    }
 
+    private void setButtonListeners(StackPane pane, LoadMapController controller) {
 
+        Button viewProfileButton = (Button) pane.getChildren().get(1);
+        Button filterEventsButton = (Button) pane.getChildren().get(2);
+        Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        Button viewEventsButton = (Button) pane.getChildren().get(4);
+        Button addEventButton = (Button) pane.getChildren().get(5);
+        Button updateEventsButton = (Button) pane.getChildren().get(6);
 
-
-                JRadioButton sportsButton = new JRadioButton("Sports");
-                sportsButton.setActionCommand("Sports");
-                filterFrame.add(sportsButton);
-
-                JRadioButton musicButton = new JRadioButton("Music");
-                musicButton.setActionCommand("Music");
-                filterFrame.add(musicButton);
-
-                JRadioButton foodButton = new JRadioButton("Food");
-                musicButton.setActionCommand("Food");
-                filterFrame.add(foodButton);
-
-                JRadioButton otherButton = new JRadioButton("Other");
-                musicButton.setActionCommand("Other");
-                filterFrame.add(otherButton);
-
-                JRadioButton gamingButton = new JRadioButton("Gaming");
-                musicButton.setActionCommand("Gaming");
-                filterFrame.add(gamingButton);
-
-                JRadioButton moreButton = new JRadioButton("More");
-                musicButton.setActionCommand("More");
-                filterFrame.add(moreButton);
-
-                ButtonGroup typeGroup = new ButtonGroup();
-                typeGroup.add(sportsButton);
-                typeGroup.add(musicButton);
-                typeGroup.add(foodButton);
-                typeGroup.add(otherButton);
-                typeGroup.add(gamingButton);
-                typeGroup.add(moreButton);
-
-            }
+        viewProfileButton.setOnAction(e -> {
+            controller.viewProfile();
         });
 
+        filterEventsButton.setOnAction(e -> {
+            controller.filterEvents();
+        });
+
+        viewFriendsButton.setOnAction(e -> {
+            controller.viewFriends();
+        });
+
+        viewEventsButton.setOnAction(e -> {
+            controller.viewEvents();
+        });
+
+        addEventButton.setOnAction(e -> {
+            controller.addEvent();
+        });
+
+        updateEventsButton.setOnAction(e -> {
+            controller.updateEvents(this);
+        });
     }
-
-
-
 }
+
