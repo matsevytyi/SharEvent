@@ -3,16 +3,15 @@ package DATA_ACCESS;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.LinkedList;
 
-import lombok.SneakyThrows;
+import ENTITY.User;
 import java.util.List;
 import java.util.Set;
 import ENTITY.Temporary_entites.*;
 
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
     Database database = new Database();
 
     public void addEvent(String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
@@ -139,37 +138,25 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
 
 
-        while (resultSet.next()) {
-            events.add(extractEvent(resultSet));
-        }
-        database.closeConnection();
-
-
         return new LoadEventsDAO_OutputData(events);
-    }
-
-    private void closeResultSet(ResultSet resultSet) {
-        try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error closing the ResultSet");
-            // TODO: Handle the exception or log it as needed
-        }
     }
 
 
     //TODO: implement GetEventFunction for VIEW_EVENT use case
 
+    // User
+
+    @Override
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
 
+
         return result != null;
     }
 
+
+    @Override
     public boolean save(User user) {
 
         String query = "INSERT INTO public.user (username, name, email, password)" +
@@ -179,10 +166,15 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
     }
 
     public User getUserByUsername(String username) {
-        String query = "select * from user where username=?";
-        Object result = database.executeQuery(query, false, username);
+        String query = "select * from public.user where username=?";
+        Object result = database.executeQueryUser(query, username);
 
-        return extractUser((ResultSet) result);
+        return (User) result;
+    }
+
+    @Override
+    public boolean checkPassword(String password) {
+        return false;
     }
 
     public List<User> FindFollowersOfUser(String username) throws SQLException {
@@ -191,15 +183,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
                 "                  from public.following\n" +
                 "                  where target_user = ?)";
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+        Object userList = database.executeQueryUserList(query, username);
 
-        List<User> userList = new LinkedList<>();
-
-        while (resultSet.next()) {
-            userList.add(extractUser(resultSet));
-        }
-
-        return userList;
+        return (List<User>) userList;
     }
 
     public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
@@ -208,15 +194,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
                 "                    from public.attendedEvents\n" +
                 "                    where visitor = ?)";
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+        Object eventList = database.executeQueryEventList(query, username);
 
-        List<Event> eventList = new LinkedList<>();
-
-        while (resultSet.next()) {
-            eventList.add(extractEvent(resultSet));
-        }
-
-        return eventList;
+        return (List<Event>) eventList;
     }
 
     public List<Event> FindEventsUserHosts(String username) throws SQLException {
@@ -225,15 +205,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
                 "                  from public.user\n" +
                 "                  where username = ?)\n";
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+        Object eventList = database.executeQueryEventList(query, username);
 
-        List<Event> eventList = new LinkedList<>();
-
-        while (resultSet.next()) {
-            eventList.add(extractEvent(resultSet));
-        }
-
-        return eventList;
+        return (List<Event>) eventList;
     }
 
     public boolean FollowUser(String username) {
@@ -255,32 +229,72 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
     }
 
-    @SneakyThrows
-    private User extractUser(ResultSet resultSet) {
-        String username = resultSet.getString("username");
-        String name = resultSet.getString("name");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
 
-        // need to somehow deal with nulls
-        return new User(username, name, email, password, null, null);
+
+    /*static Connection connection;
+    public static UserDataAccessObject dt = new UserDataAccessObject();
+    private final Map<String, User> accounts = new HashMap<>();
+
+    public static void connect() {
+
+        String url = "jdbc:mysql://localhost:3306/sharEvent";
+        String user = "root";
+        String password = "loppp888";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Connection is Successful to the database" + url);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    @SneakyThrows
-    private Event extractEvent(ResultSet resultSet) {
-        int id_event = resultSet.getInt("id_event ");
-        String event_name = resultSet.getString("event_name");
-        String description = resultSet.getString("description");
-        String type = resultSet.getString("type");
-        String time = resultSet.getString("time");
-        String date = resultSet.getString("date");
-        float longitude = resultSet.getFloat("longitude");
-        float latitude = resultSet.getFloat("latitude");
-        String creator = resultSet.getString("creator");
+    @Override
+    public boolean existsByName(String identifier) {
+        String query = "SELECT * FROM User WHERE username=?";
 
-        // треба якось переробити з цими налами
-        return new Event(id_event, event_name, description, type, time, date, creator, longitude, latitude);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, identifier);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            System.out.println(resultSet.getString(1));
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Не вірний SQL запит existsByName");
+            return false;
+        }
+
     }
+
+    public boolean save(User user) {
+        String query = "INSERT INTO User (username, name, email, password)" +
+                "VALUES (?,?,?,?)";
+        try(PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getEmail());
+
+            int rows = statement.executeUpdate();
+
+            if (rows == 0) {
+                System.out.println("Failed to save");
+            }
+
+        }catch(SQLException e){
+            System.out.println("Не вірний SQL запит на вибірку даних");
+            e.printStackTrace();
+        }
+        return true;
+
+    }*/
+
+
 
 
 
