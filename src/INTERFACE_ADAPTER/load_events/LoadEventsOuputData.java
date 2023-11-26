@@ -1,4 +1,4 @@
-package INTERFACE_ADAPTER;
+package interface_adapter.load_events;
 
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;

@@ -1,10 +1,11 @@
-package INTERFACE_ADAPTER;
+package interface_adapter.load_map;
 
-import USE_CASE.LoadMapInputBoundary;
-import USE_CASE.LoadMapInteractor;
-import VIEW.LoadEventsView;
-import VIEW.LoadMapView;
 import VIEW_CREATOR.LoadMapViewModel;
+import use_case.load_map.LoadMapInputBoundary;
+import use_case.load_map.LoadMapInteractor;
+import view.LoadEventsView;
+import view.LoadMapView;
+
 
 public class LoadMapController {
 
@@ -31,9 +32,9 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_EVENTS)
     }
 
-    public void addEvent(){
-        //TODO: switch to another Usecase (ADD_EVENT)
-    }
+//    public void addEvent(){
+//        //TODO: switch to another Usecase (ADD_EVENT)
+//    }
 
     public void updateEvents(LoadMapView loadMapView){
         //TODO: switch to another Usecase (UPDATE_EVENTS)

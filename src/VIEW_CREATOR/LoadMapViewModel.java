@@ -54,11 +54,11 @@ public class LoadMapViewModel {
     public LoadMapViewModel() {
         mapKit = new JXMapKit();
 
-        viewProfileButtonImgPath = "/UI_elements/DefaultProfilePicture.png";
-        filterEventsButtonImgPath = "/UI_elements/MapFiltersButton.png";
-        viewFriendsButtonImgPath = "/UI_elements/ViewFriendsButtonBg.png";
-        viewEventsButtonImgPath = "/UI_elements/ViewMyEventsButtonBg.png";
-        addEventButtonImgPath = "/UI_elements/AddEventButtonBg.png";
+        viewProfileButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/DefaultProfilePicture.png";
+        filterEventsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/MapFiltersButton.png";
+        viewFriendsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/ViewMyEventsButtonBg.png";
+        viewEventsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/ViewFriendsButtonBg.png";
+        addEventButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/AddEventButtonBg.png";
         updateEventsButtonName = "Update Events";
 
         updateEventsButtonStyle = "-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;";

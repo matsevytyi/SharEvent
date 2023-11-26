@@ -9,8 +9,8 @@ public interface EventInterface {
 
     String getEventName();
 
-   long getLatitude();
-    long getLongtitude();
+  double getLatitude();
+    double getLongitude();
 
 
     LocalDate getEventDate();
@@ -18,5 +18,5 @@ public interface EventInterface {
    String getDescription();
 
 
-     User getCreator();
+     UserInterface getCreator();
 }

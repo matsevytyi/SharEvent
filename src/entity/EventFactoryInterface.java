@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EventFactoryInterface {
 
-   Event create(int eventId, String eventName, long latitude, long longtitude, LocalDate eventDate, LocalTime eventTime, String description, User creator, List<User> attendants);
+ Event create(String eventName, String type, String description,  LocalDate eventDate, LocalTime eventTime,  User creator, List<User> attendants, double latitude, double longitude);
 }

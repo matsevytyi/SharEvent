@@ -1,6 +1,7 @@
 package interface_adapter.add_event;
 
 import interface_adapter.ViewModel;
+import org.jxmapviewer.viewer.GeoPosition;
 
 
 import java.beans.PropertyChangeListener;
@@ -36,4 +37,11 @@ public class AddEventViewModel extends ViewModel {
     public  AddEventState getState() {
         return state;
     }
+
+    public void setClickedPosition(GeoPosition clickedPosition) {
+        state.setEventLatitude(clickedPosition.getLatitude());
+        state.setEventLongitude(clickedPosition.getLongitude());
+    }
+
+
 }

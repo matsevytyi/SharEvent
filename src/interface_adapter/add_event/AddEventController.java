@@ -1,11 +1,13 @@
 package interface_adapter.add_event;
 
+import entity.User;
 import use_case.add_event.AddEventInputBoundary;
 import use_case.add_event.AddEventInputData;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 public class AddEventController {
     final AddEventInputBoundary addEventUseCaseInteractor;
@@ -13,16 +15,12 @@ public class AddEventController {
         this.addEventUseCaseInteractor = addEventUseCaseInteractor;
     }
 
-    public void execute(String eventName, long latitude, long longtitude, LocalDate eventDate, LocalTime eventTime, String description) {
+    public void execute(String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, User creator, double latitude, double longitude) {
         AddEventInputData signupInputData = new AddEventInputData(
-                eventName, latitude, eventTime, longtitude, eventDate, description);
+                eventName, type, description, eventDate, eventTime, creator, null, latitude, longitude);
 
         addEventUseCaseInteractor.execute(signupInputData);
     }
 
-    public void executeMapClick(double latitude, double longitude) {
-        // Handle map clicks if needed
-        // For example, show a dialog for additional event details
-        // or navigate to the screen where the user can provide more information.
-    }
+
 }

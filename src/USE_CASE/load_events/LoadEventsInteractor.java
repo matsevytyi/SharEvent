@@ -1,13 +1,13 @@
-package USE_CASE;
+package use_case.load_events;
 
-import DATA_ACCESS.LoadEventsDAO_InputData;
-import DATA_ACCESS.LoadEventsDAO_OutputData;
-import DATA_ACCESS.DatabaseDAO;
-import DATA_ACCESS.LoadEventsDataAccessInterface;
-import INTERFACE_ADAPTER.LoadEventsInputData;
-import INTERFACE_ADAPTER.LoadEventsOuputData;
-import INTERFACE_ADAPTER.LoadEventsPresenter;
-import VIEW.LoadMapView;
+
+import data_access.DatabaseDAO;
+import data_access.LoadEventsDAO_InputData;
+import data_access.LoadEventsDAO_OutputData;
+import data_access.LoadEventsDataAccessInterface;
+import interface_adapter.load_events.LoadEventsInputData;
+import interface_adapter.load_events.LoadEventsOuputData;
+import interface_adapter.load_events.LoadEventsPresenter;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -16,14 +16,14 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Set;
 
-import ENTITY.Temporary_entites.Event;
-
+import entity.Event;
+import view.LoadMapView;
 
 
 public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
     @Getter
-    private Set<Event> events;
+    private Set<entity.Event> events;
 
     @Getter
     private GeoPosition currentGeoposition;
@@ -69,7 +69,7 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
     }
 
     //TODO: --- till here ---
-
+@Override
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView) {
         String problem = "";
 

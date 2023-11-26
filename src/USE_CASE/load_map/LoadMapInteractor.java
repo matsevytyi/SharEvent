@@ -1,10 +1,10 @@
-package USE_CASE;
+package use_case.load_map;
 
 import API.LoadMap_API;
-import INTERFACE_ADAPTER.LoadMapInputData;
-import INTERFACE_ADAPTER.LoadMapOutputData;
-import INTERFACE_ADAPTER.LoadMapPresenter;
 import VIEW_CREATOR.LoadMapViewModel;
+import interface_adapter.load_map.LoadMapInputData;
+import interface_adapter.load_map.LoadMapOutputData;
+import interface_adapter.load_map.LoadMapPresenter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -14,6 +14,7 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
 
     public LoadMapInteractor() {
     }
+    @Override
     public void execute(LoadMapOutputData loadMapOutputData, LoadMapViewModel loadMapViewModel){
 
         LoadMapOutputBoundary loadMapPresenter = new LoadMapPresenter();

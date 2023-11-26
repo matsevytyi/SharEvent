@@ -1,59 +1,42 @@
 package use_case.add_event;
 
+import entity.User;
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
+@Getter
 public class AddEventInputData {
 
-   // private final int eventId;
+
+
     private final String eventName;
-    private final long latitude;
-
-    public LocalTime getEventTime() {
-        return eventTime;
-    }
-
-    private final  LocalTime eventTime;
-
-    public LocalDate getEventDate() {
-        return eventDate;
-    }
-
-    private final LocalDate eventDate;
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public long getLatitude() {
-        return latitude;
-    }
-
-    public long getLongitude() {
-        return longitude;
-    }
-
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    private final long longitude;
-
+    private final  String type;
+    private final LocalDate eventDate ;
+    private final LocalTime eventTime;
     private final String description;
-   // private final User creator;
+    private final User creator;
+    private final List<User> eventAttendants;
+    private final double latitude;
+    private final double longitude;
 
-    public AddEventInputData(String eventName, long latitude, LocalTime eventTime, long longitude, LocalDate eventDate, String description) {
-       // this.eventId = eventId;
+    public AddEventInputData(String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, User creator, List<User> eventAttendants, double latitude, double longitude) {
+
         this.eventName = eventName;
-        this.latitude = latitude;
-        this.eventTime = eventTime;
-        this.longitude = longitude;
+        this.type = type;
         this.eventDate = eventDate;
+        this.eventTime = eventTime;
         this.description = description;
-      //  this.creator = creator;
+        this.eventAttendants = eventAttendants;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.creator = creator;
     }
+
+
+
 
 }

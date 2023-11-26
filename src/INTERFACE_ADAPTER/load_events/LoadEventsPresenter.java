@@ -1,15 +1,15 @@
-package INTERFACE_ADAPTER;
+package interface_adapter.load_events;
 
-import ENTITY.Temporary_entites.Event;
-import USE_CASE.LoadEventsInputBoundary;
+
 import VIEW_CREATOR.FailViewFactory;
-import VIEW.LoadMapView;
-
+import entity.Event;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
+import use_case.load_events.LoadEventsInputBoundary;
+import view.LoadMapView;
 
 
 import java.util.Set;
@@ -25,6 +25,7 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         mapKit = loadMapView.getViewModel().getMapKit();
         this.loadEventsInputData = loadEventsInputData;
     }
+    @Override
     public boolean PrepareSuccesView() {
 
         Set<Event> localEvents = loadEventsInputData.getEvents();
@@ -36,7 +37,7 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
 
         return true;
     }
-
+@Override
     public void PrepareFailView(String reason, LoadMapView loadMapView) {
         FailViewFactory failViewFactory = new FailViewFactory();
 

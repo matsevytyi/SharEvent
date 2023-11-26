@@ -1,7 +1,8 @@
-package INTERFACE_ADAPTER;
+package interface_adapter.load_events;
 
+import entity.Event;
 import lombok.Getter;
-import ENTITY.Temporary_entites.Event;
+
 
 import java.util.Set;
 

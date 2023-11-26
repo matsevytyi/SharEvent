@@ -1,8 +1,9 @@
-package USE_CASE;
+package use_case.load_events;
 
-import INTERFACE_ADAPTER.LoadEventsOuputData;
-import VIEW.LoadMapView;
+
+import interface_adapter.load_events.LoadEventsOuputData;
 import org.jxmapviewer.JXMapViewer;
+import view.LoadMapView;
 
 import java.awt.*;
 

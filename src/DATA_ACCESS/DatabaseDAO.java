@@ -1,33 +1,31 @@
-package DATA_ACCESS;
+package data_access;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import entity.User;
 import lombok.SneakyThrows;
 import java.util.List;
 import java.util.Set;
-import ENTITY.Temporary_entites.*;
+import entity.Event;
 
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface {
     Database database = new Database();
 
-    public void addEvent(String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
+    @Override
+    public Event getEventById(int id) {
 
-        //TODO: implement additional logic if needed (fof holding unappropriate cases)
+        String query = "select * from public.event where id_event=?";
 
-        String query = "INSERT INTO events (event_name, event_description, type, time, date, creator, longitude, latitude) VALUES (" + event_name + ", " + event_description + ", " + type + ", " + time + ", " + date + ", " + creator + ", " + longitude + ", " + latitude + ")";
-
-        database.executeQuery(query, true);
+        Event event = (Event) database.executeQueryEvent(query, id);
+        return event;
     }
 
     public void deleteEvent(String event_id) {
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-        // + only event creator can perform such operation for particular event
 
         String query = "DELETE FROM events WHERE event_id = " + event_id;
 
@@ -35,10 +33,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
     }
 
     public void updateEvent(String old_event_name, String old_event_time, String old_event_date, String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-        // + only event creator can perform such operation for particular event
-        // + consider adding event_id to the event entity and simplify the query
 
         String query = "update public.event" +
                 " set " +
@@ -61,9 +55,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
     public void registerUserForEvent(String username, String event_id) {
 
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-
         String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (" + username + ", " + event_id + ")";
 
         database.executeQuery(query, true);
@@ -72,19 +63,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
     public void unregisterUserFromEvent(String username, String event_id) {
 
-        //TODO: implement additional logic if needed (for holding unappropriate cases) --
-        // + only particular visitor or event creator can perform such operation for particular event
-
         String query = "DELETE FROM public.attendedEvents WHERE visitor = " + username + " AND event = " + event_id;
 
         database.executeQuery(query, true);
 
     }
 
-    public void getUsersRegisteredForEvent(String event_id) {
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases) --
-        // + write query to get event_id or add event_id to the event class
+    public List<User> getUsersRegisteredForEvent(int event_id) {
 
         String query = "SELECT * " +
                 " FROM public.user JOIN public.attendedEvents " +
@@ -92,9 +77,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
                 ";";
 
 
-        database.executeQuery(query, false);
+        Object userList = database.executeQueryUserListForEvent(query, event_id);
 
-        //TODO return List<User>
+        return (List<User>) userList;
     }
 
     public void FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
@@ -128,40 +113,56 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
+        String query = "SELECT * FROM public.event ";
+
+        //String q = "SELECT * FROM public.user ";
+        //database.executeQueryEventList(q);
+
+        database.executeQueryEventList(query);
+
+        System.out.println(inputData.getLatitude1());
+        System.out.println(inputData.getLongitude1());
+        System.out.println(inputData.getLatitude2());
+        System.out.println(inputData.getLongitude2());
+
+        Set<Event> events = null;
+        return new LoadEventsDAO_OutputData(events);
+    }
+
+    /*public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
         String query = "SELECT * FROM public.event " +
                 "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
                 " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
                 ";";
 
-        Set<Event> events = new HashSet<>();
+        Set<Event> events = database.executeQueryEventList(query);
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
-
-
-
-        while (resultSet.next()) {
-            events.add(extractEvent(resultSet));
-        }
-        database.closeConnection();
+        System.out.println(inputData.getLatitude1());
+        System.out.println(inputData.getLongitude1());
+        System.out.println(inputData.getLatitude2());
+        System.out.println(inputData.getLongitude2());
 
 
         return new LoadEventsDAO_OutputData(events);
-    }
+    }*/
 
-    private void closeResultSet(ResultSet resultSet) {
-        try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error closing the ResultSet");
-            // TODO: Handle the exception or log it as needed
+    @Override
+    public void addEvent(Event event) {
+        String query = "INSERT INTO public.event (event_name, type, description, date, time, creator, latitude, longitude) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        int generatedId = database.executeInsertAndGetGeneratedId(query,
+                event.getEventName(), event.getType(), event.getDescription(),
+                event.getEventDate(), event.getEventTime(), event.getCreator().getUsername(),
+                event.getLatitude(), event.getLongitude());
+
+        if (generatedId != -1) {
+            System.out.println("Event added with ID: " + generatedId);
+            event.setEventId(generatedId);
+        } else {
+            System.out.println("Failed to add event");
+            // Handle failure (throw an exception or take appropriate action)
         }
     }
-
-
-    //TODO: implement GetEventFunction for VIEW_EVENT use case
 
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
@@ -170,71 +171,73 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
         return result != null;
     }
 
-    public boolean save(User user) {
-
-        String query = "INSERT INTO public.user (username, name, email, password)" +
-                "VALUES (?,?,?,?)";
-        database.executeQuery(query, true, user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
-        return true;
-    }
+//    public boolean save(User user) {
+//
+//        String query = "INSERT INTO public.user (username, name, email, password)" +
+//                "VALUES (?,?,?,?)";
+//        database.executeQuery(query, true, user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
+//        return true;
+//    }
 
     public User getUserByUsername(String username) {
-        String query = "select * from user where username=?";
-        Object result = database.executeQuery(query, false, username);
+        String query = "select * from public.user where username=?";
+        Object result = database.executeQueryUser(query, username);
 
-        return extractUser((ResultSet) result);
+        return (User) result;
     }
 
-    public List<User> FindFollowersOfUser(String username) throws SQLException {
-        String query = "select * from public.user \n" +
-                "\t where username in (select follower\n" +
-                "                  from public.following\n" +
-                "                  where target_user = ?)";
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
 
-        List<User> userList = new LinkedList<>();
+//    public List<User> FindFollowersOfUser(String username) throws SQLException {
+//        String query = "select * from public.user \n" +
+//                "\t where username in (select follower\n" +
+//                "                  from public.following\n" +
+//                "                  where target_user = ?)";
+//
+//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+//
+//        List<User> userList = new LinkedList<>();
+//
+//        while (resultSet.next()) {
+//            userList.add(extractUser(resultSet));
+//        }
+//
+//        return userList;
+//    }
 
-        while (resultSet.next()) {
-            userList.add(extractUser(resultSet));
-        }
+//    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
+//        String query = "select event.event_name from public.event\n" +
+//                "   where id_event in (select event\n" +
+//                "                    from public.attendedEvents\n" +
+//                "                    where visitor = ?)";
+//
+//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+//
+//        List<Event> eventList = new LinkedList<>();
+//
+//        while (resultSet.next()) {
+//            eventList.add(extractEvent(resultSet));
+//        }
+//
+//        return eventList;
+//    }
 
-        return userList;
-    }
-
-    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
-        String query = "select event.event_name from public.event\n" +
-                "   where id_event in (select event\n" +
-                "                    from public.attendedEvents\n" +
-                "                    where visitor = ?)";
-
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
-
-        List<Event> eventList = new LinkedList<>();
-
-        while (resultSet.next()) {
-            eventList.add(extractEvent(resultSet));
-        }
-
-        return eventList;
-    }
-
-    public List<Event> FindEventsUserHosts(String username) throws SQLException {
-        String query = "select event_name from public.event\n" +
-                "   where creator in (select username\n" +
-                "                  from public.user\n" +
-                "                  where username = ?)\n";
-
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
-
-        List<Event> eventList = new LinkedList<>();
-
-        while (resultSet.next()) {
-            eventList.add(extractEvent(resultSet));
-        }
-
-        return eventList;
-    }
+//    public List<Event> FindEventsUserHosts(String username) throws SQLException {
+//        String query = "select event_name from public.event\n" +
+//                "   where creator in (select username\n" +
+//                "                  from public.user\n" +
+//                "                  where username = ?)\n";
+//
+//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
+//
+//        List<Event> eventList = new LinkedList<>();
+//
+//        while (resultSet.next()) {
+//            eventList.add(extractEvent(resultSet));
+//        }
+//
+//        return eventList;
+//    }
 
     public boolean FollowUser(String username) {
         String query = "insert into public.following (id_relation, target_user, follower)\n" +
@@ -255,32 +258,11 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
     }
 
-    @SneakyThrows
-    private User extractUser(ResultSet resultSet) {
-        String username = resultSet.getString("username");
-        String name = resultSet.getString("name");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
 
-        // need to somehow deal with nulls
-        return new User(username, name, email, password, null, null);
-    }
 
-    @SneakyThrows
-    private Event extractEvent(ResultSet resultSet) {
-        int id_event = resultSet.getInt("id_event ");
-        String event_name = resultSet.getString("event_name");
-        String description = resultSet.getString("description");
-        String type = resultSet.getString("type");
-        String time = resultSet.getString("time");
-        String date = resultSet.getString("date");
-        float longitude = resultSet.getFloat("longitude");
-        float latitude = resultSet.getFloat("latitude");
-        String creator = resultSet.getString("creator");
 
-        // треба якось переробити з цими налами
-        return new Event(id_event, event_name, description, type, time, date, creator, longitude, latitude);
-    }
+
+
 
 
 

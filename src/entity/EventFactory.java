@@ -2,13 +2,12 @@ package entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 public class EventFactory implements EventFactoryInterface{
 
-    public Event create(int eventId, String eventName, long latitude, long longtitude, LocalDate eventDate, LocalTime eventTime, String description, User creator, List<User> attendants) {
-        return new Event(eventId, eventName,  latitude, longtitude,  eventDate, eventTime, description, creator, null);
+    public Event create( String eventName, String type, String description,  LocalDate eventDate, LocalTime eventTime,  User creator, List<User> attendants, double latitude, double longitude) {
+        return new Event( 0, eventName, type,  description,   eventDate, eventTime,   creator, attendants, latitude, longitude);
     }
 
 

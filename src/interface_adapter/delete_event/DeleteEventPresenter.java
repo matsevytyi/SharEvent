@@ -1,4 +1,4 @@
-package interface_adapter.delete_event;
-
-public class DeleteEventPresenter {
-}
+//package interface_adapter.delete_event;
+//
+//public class DeleteEventPresenter {
+//}

@@ -2,19 +2,18 @@ package interface_adapter.add_event;
 
 import use_case.add_event.AddEventOutputBoundary;
 import use_case.add_event.AddEventOutputData;
-import view.MapViewModel;
 import view.ViewManagerModel;
 
 
 public class AddEventPresenter implements AddEventOutputBoundary {
 
     private final AddEventViewModel addEventViewModel;
-    private final MapViewModel mapViewModel;
+//    private final MapViewModel mapViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public AddEventPresenter(AddEventViewModel signupViewModel, MapViewModel mapViewModel, ViewManagerModel viewManagerModel) {
+    public AddEventPresenter(AddEventViewModel signupViewModel, ViewManagerModel viewManagerModel) {
         this.addEventViewModel = signupViewModel;
-        this.mapViewModel = mapViewModel;
+//        this.mapViewModel = mapViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 

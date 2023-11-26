@@ -1,13 +1,14 @@
 package use_case.view_event;
 
-import data_access.EventDataAccessInterface;
+
+import data_access.LoadEventsDataAccessInterface;
 import entity.Event;
 
 public class ViewEventInteractor implements ViewEventInputBoundary {
-    private final EventDataAccessInterface eventDataAccessInterface;
+    private final LoadEventsDataAccessInterface eventDataAccessInterface;
     private final ViewEventOutputBoundary viewEventPresenter;
 
-    public ViewEventInteractor(EventDataAccessInterface eventDataAccessInterface, ViewEventOutputBoundary viewEventPresenter) {
+    public ViewEventInteractor(LoadEventsDataAccessInterface eventDataAccessInterface, ViewEventOutputBoundary viewEventPresenter) {
         this.eventDataAccessInterface = eventDataAccessInterface;
         this.viewEventPresenter = viewEventPresenter;
     }
