@@ -1,13 +1,15 @@
 package com.example.mapsdemo;
 
-import entity.UserFactory;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.login_adapter.LoginViewModel;
-import interface_adapter.logout_adapter.LogOutController;
-import interface_adapter.logout_adapter.LogOutPresenter;
-import interface_adapter.map_adapter.LoggedInViewModel;
-import use_case.logout.LogOutInteractor;
-import view.LoggedInView;
+import ENTITY.UserFactory;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
+import INTERFACE_ADAPTER.logout_adapter.LogOutController;
+import INTERFACE_ADAPTER.logout_adapter.LogOutPresenter;
+import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import USE_CASE.logout.LogOutInteractor;
+import VIEW.LoadMapView;
+import VIEW.LoggedInView;
+import VIEW_CREATOR.LoadMapViewModel;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -16,8 +18,8 @@ public class LoggedInUseCaseFactory {
 
     private LoggedInUseCaseFactory() {}
 
-    public static LoggedInView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoggedInViewModel loggedInViewModel) { //ClearInputBoundary clearInputBoundary) {
+    public static LoadMapView create(
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoadMapViewModel loggedInViewModel) { //ClearInputBoundary clearInputBoundary) {
 
 
         LogOutPresenter logoutPresenter = new LogOutPresenter (loginViewModel, viewManagerModel);
@@ -28,7 +30,7 @@ public class LoggedInUseCaseFactory {
         LogOutController logoutController = new LogOutController (logoutInteractor);
         // LoggedController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
 
-        return new LoggedInView(loggedInViewModel, logoutController);
+        return new LoadMapView(loggedInViewModel);
 
     }
 }

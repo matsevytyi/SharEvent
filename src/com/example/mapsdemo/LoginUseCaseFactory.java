@@ -1,19 +1,20 @@
 package com.example.mapsdemo;
 
-import data_access.DatabaseDAO;
-import data_access.UserLoginDataAccessInterface;
-import data_access.UserSignUpDataAccessInterface;
-import entity.UserFactory;
-import entity.UserFactoryImplementation;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.login_adapter.LoginController;
-import interface_adapter.login_adapter.LoginPresenter;
-import interface_adapter.login_adapter.LoginViewModel;
-import interface_adapter.map_adapter.LoggedInViewModel;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInteractor;
-import use_case.login.LoginOutputDataBoundary;
-import view.LoginView;
+import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.UserLoginDataAccessInterface;
+import DATA_ACCESS.UserSignUpDataAccessInterface;
+import ENTITY.UserFactory;
+import ENTITY.UserFactoryImplementation;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import INTERFACE_ADAPTER.login_adapter.LoginController;
+import INTERFACE_ADAPTER.login_adapter.LoginPresenter;
+import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
+import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import USE_CASE.login.LoginInputBoundary;
+import USE_CASE.login.LoginInteractor;
+import USE_CASE.login.LoginOutputDataBoundary;
+import VIEW.LoginView;
+import VIEW_CREATOR.LoadMapViewModel;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class LoginUseCaseFactory {
 
     private LoginUseCaseFactory() {}
 
-    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoggedInViewModel mapViewModel) {
+    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoadMapViewModel mapViewModel) {
 
         try {
             LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, mapViewModel);
@@ -34,7 +35,7 @@ public class LoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoggedInViewModel loggedViewModel) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoadMapViewModel loggedViewModel) throws IOException {
         UserLoginDataAccessInterface userDataAccessObject = new DatabaseDAO();
 
         // Notice how we pass this method's parameters to the Presenter.

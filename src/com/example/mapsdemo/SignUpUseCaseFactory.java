@@ -1,18 +1,18 @@
 package com.example.mapsdemo;
 
-import data_access.DatabaseDAO;
-import data_access.UserSignUpDataAccessInterface;
-import entity.UserFactory;
-import entity.UserFactoryImplementation;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.login_adapter.LoginViewModel;
-import interface_adapter.signup_adapter.SighUpController;
-import interface_adapter.signup_adapter.SignUpPresenter;
-import interface_adapter.signup_adapter.SignUpViewModel;
-import use_case.signup.SignUpInputBoundary;
-import use_case.signup.SignUpInteractor;
-import use_case.signup.SignUpOutputBoundary;
-import view.SignUpView;
+import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.UserSignUpDataAccessInterface;
+import ENTITY.UserFactory;
+import ENTITY.UserFactoryImplementation;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
+import INTERFACE_ADAPTER.signup_adapter.SighUpController;
+import INTERFACE_ADAPTER.signup_adapter.SignUpPresenter;
+import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
+import USE_CASE.signup.SignUpInputBoundary;
+import USE_CASE.signup.SignUpInteractor;
+import USE_CASE.signup.SignUpOutputBoundary;
+import VIEW.SignUpView;
 
 import javax.swing.*;
 import java.io.IOException;
