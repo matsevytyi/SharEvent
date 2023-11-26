@@ -19,6 +19,7 @@ public class Database {
         String user = "basic_user";
         String password = "pass1111";
 
+
         try {
             Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(url, user, password);
@@ -82,6 +83,8 @@ public class Database {
             }
         }
     }
+
+    // USER
     public Object executeQueryUserList(String query, String username) {
         connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {

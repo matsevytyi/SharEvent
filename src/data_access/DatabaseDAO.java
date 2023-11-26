@@ -3,10 +3,8 @@ package DATA_ACCESS;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 import ENTITY.User;
-import lombok.SneakyThrows;
 import java.util.List;
 import java.util.Set;
 import ENTITY.Temporary_entites.*;
@@ -145,6 +143,8 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
 
     //TODO: implement GetEventFunction for VIEW_EVENT use case
+
+    // User
 
     @Override
     public boolean existsByName(String identifier) throws SQLException {
