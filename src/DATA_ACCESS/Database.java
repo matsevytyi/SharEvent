@@ -197,9 +197,10 @@ public class Database {
     public List<User> getUsersRegisteredForEvent(int event_id) {
         connection = connect();
         String query = "SELECT * " +
-                " FROM public.user JOIN public.attendedEvents " +
-                " WHERE public.attendedEvents.event = " + event_id +
+                "FROM public.user JOIN public.attendedEvents " +
+                "WHERE public.attendedEvents.event = " + event_id +
                 ";";
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
@@ -227,16 +228,18 @@ public class Database {
 
     // EVENT
 
-    public Set<Event> executeQueryEventList(String query) {
+    public Set<Event> executeQueryEventList() {
         // шось не так з табличкою event, бо до юзера все норм доступається
+        String query = "SELECT * FROM public.event";
         connection = connect();
         Set<Event> eventSet = new HashSet<>();  // Use HashSet to represent a Set
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                eventSet.add(extractE(resultSet));
+            while (resultSet.next()){
+                Event ev = extractEvent(resultSet);
+                eventSet.add(ev);
 
             }
 

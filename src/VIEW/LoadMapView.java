@@ -3,10 +3,13 @@ package view;
 import API.LoadMap_API;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
+import VIEW_CREATOR.OtherViewFactory;
 import interface_adapter.add_event.AddEventController;
 import interface_adapter.add_event.AddEventViewModel;
 import interface_adapter.load_map.LoadMapController;
 import interface_adapter.load_map.LoadMapPresenter;
+import interface_adapter.view_event.ViewEventController;
+import interface_adapter.view_event.ViewEventViewModel;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -34,6 +37,10 @@ public class LoadMapView {
 
     @Getter
     private LoadMapViewModel viewModel;
+    @Getter
+    private ViewEventViewModel viewEventViewModel;
+    @Getter
+    private ViewEventController viewEventController;
 
     @Getter
     private static StackPane pane;
@@ -49,7 +56,7 @@ public class LoadMapView {
 
     private CompletableFuture<GeoPosition> mapClickFuture;
 
-    public LoadMapView(AddEventViewModel addEventViewModel, AddEventController addEventController) {
+    public LoadMapView(AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController) {
 
         viewModel = new LoadMapViewModel();
 
@@ -67,23 +74,12 @@ public class LoadMapView {
 
         this.addEventViewModel = addEventViewModel;
         this.addEventController = addEventController;
-       // addEventViewModel.addPropertyChangeListener((PropertyChangeListener) this);
+        this.viewEventViewModel = viewEventViewModel;
+        this.viewEventController = viewEventController;
+
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
-
-//        mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-//            @Override
-//            public void mouseClicked(java.awt.event.MouseEvent e) {
-//                Point clickPoint = e.getPoint();
-//
-//                // Оновлено: Встановлення значення у CompletableFuture
-//                mapClickFuture.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
-//                mapViewer.removeMouseListener(this);
-//            }
-//        });
-
-        // Оновлено: Ініціалізація CompletableFuture
         mapClickFuture = new CompletableFuture<>();
 
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
@@ -112,12 +108,12 @@ public class LoadMapView {
             controller.filterEvents();
         });
 
-        viewFriendsButton.setOnAction(e -> {
-            controller.viewFriends();
-        });
+//        viewFriendsButton.setOnAction(e -> {
+//            controller.viewFriends();
+//        });
 
         viewEventsButton.setOnAction(e -> {
-            controller.viewEvents();
+
         });
 
 
@@ -172,9 +168,8 @@ public class LoadMapView {
                 GeoPosition clickedPosition = mapClickFuture.get();
 
                 addEventViewModel.setClickedPosition(clickedPosition);
-                System.out.println(clickedPosition.getLatitude());
-                System.out.println(clickedPosition.getLongitude());
-                // Create a new AddEventView
+
+
                 AddEventView addEventView = new AddEventView(addEventViewModel, addEventController);
 
                 // Set the scene for the AddEventView stage
@@ -189,6 +184,9 @@ public class LoadMapView {
 
                 // Show the AddEventView stage
                 addEventStage.show();
+
+//                OtherViewFactory otherViewFactory = new OtherViewFactory();
+//              otherViewFactory.createOtherView(pane, new AddEventView(addEventViewModel, addEventController));
 
             } catch (InterruptedException | ExecutionException ex) {
                 ex.printStackTrace(); // Обробка відповідно до вашого випадку

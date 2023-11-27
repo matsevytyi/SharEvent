@@ -113,19 +113,19 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
-        String query = "SELECT * FROM public.event ";
+//        String query = "SELECT * " +
+//                "FROM public.event ";
 
         //String q = "SELECT * FROM public.user ";
         //database.executeQueryEventList(q);
+Set<Event> events = database.executeQueryEventList();
 
-        database.executeQueryEventList(query);
+//        System.out.println(inputData.getLatitude1());
+//        System.out.println(inputData.getLongitude1());
+//        System.out.println(inputData.getLatitude2());
+//        System.out.println(inputData.getLongitude2());
 
-        System.out.println(inputData.getLatitude1());
-        System.out.println(inputData.getLongitude1());
-        System.out.println(inputData.getLatitude2());
-        System.out.println(inputData.getLongitude2());
 
-        Set<Event> events = null;
         return new LoadEventsDAO_OutputData(events);
     }
 
