@@ -82,7 +82,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController) {
 
 
-        viewModel = loggedInViewModel; // here was new LoadMapViewModel();
+      viewModel = loggedInViewModel; // here was new LoadMapViewModel();
         this.deleteEventViewModel = deleteEventViewModel;
         this.deleteEventController = deleteEventController;
 

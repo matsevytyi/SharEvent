@@ -25,6 +25,7 @@ import java.awt.*;
 public class main extends Application {
     int primaryStageWidth;
     int primaryStageHeight;
+public static LoadMapView loadMapView;
     public static void main(String[] args) {
         launch(args);
     }
@@ -56,8 +57,8 @@ public class main extends Application {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
         views.add(loginView, loginView.viewName);
 
-        LoadMapView loggedInView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel);
-        views.add(loggedInView, loggedInView.viewName);
+       loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel);
+        views.add(loadMapView, loadMapView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();

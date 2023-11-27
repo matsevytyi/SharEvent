@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import ENTITY.User;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import ENTITY.Event;
@@ -107,44 +108,17 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
-//        String query = "SELECT * " +
-//                "FROM public.event ";
-
-        //String q = "SELECT * FROM public.user ";
-        //database.executeQueryEventList(q);
-        Set<Event> events = database.executeQueryEventList();
-
-
-//        System.out.println(inputData.getLatitude1());
-//        System.out.println(inputData.getLongitude1());
-//        System.out.println(inputData.getLatitude2());
-//        System.out.println(inputData.getLongitude2());
-
-//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
-
-
-
-
-        return new LoadEventsDAO_OutputData(events);
-    }
-
-
-    /*public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
         String query = "SELECT * FROM public.event " +
                 "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
                 " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
                 ";";
 
-        Set<Event> events = database.executeQueryEventList(query);
-
-        System.out.println(inputData.getLatitude1());
-        System.out.println(inputData.getLongitude1());
-        System.out.println(inputData.getLatitude2());
-        System.out.println(inputData.getLongitude2());
-
+        Set<Event> events = (Set<Event>) database.executeQueryEvent(query);
 
         return new LoadEventsDAO_OutputData(events);
-    }*/
+    }
+
+
 
     @Override
     public void addEvent(Event event) {
@@ -239,63 +213,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
 
 
-
-//    public List<User> FindFollowersOfUser(String username) throws SQLException {
-//        String query = "select * from public.user \n" +
-//                "\t where username in (select follower\n" +
-//                "                  from public.following\n" +
-//                "                  where target_user = ?)";
-//
-//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
-//
-//        List<User> userList = new LinkedList<>();
-//
-//        while (resultSet.next()) {
-//            userList.add(extractUser(resultSet));
-//        }
-//
-//        return userList;
-//    }
-
-//    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
-//        String query = "select event.event_name from public.event\n" +
-//                "   where id_event in (select event\n" +
-//                "                    from public.attendedEvents\n" +
-//                "                    where visitor = ?)";
-//
-//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
-//
-//        List<Event> eventList = new LinkedList<>();
-//
-//        while (resultSet.next()) {
-//            eventList.add(extractEvent(resultSet));
-//        }
-//
-//        return eventList;
-//    }
-
-//    public List<Event> FindEventsUserHosts(String username) throws SQLException {
-//        String query = "select event_name from public.event\n" +
-//                "   where creator in (select username\n" +
-//                "                  from public.user\n" +
-//                "                  where username = ?)\n";
-//
-//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false, username);
-//
-//        List<Event> eventList = new LinkedList<>();
-//
-//        while (resultSet.next()) {
-//            eventList.add(extractEvent(resultSet));
-//        }
-//
-//        return eventList;
-//    }
-
-//        Object userList = database.executeQueryUserList(query, username);
-//
-//        return (List<User>) userList;
-//    }
-
     public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
         String query = "select event.event_name from public.event\n" +
                 "   where id_event in (select event\n" +
@@ -336,73 +253,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return (boolean) result;
 
     }
-
-
-
-
-    /*static Connection connection;
-    public static UserDataAccessObject dt = new UserDataAccessObject();
-    private final Map<String, User> accounts = new HashMap<>();
-
-    public static void connect() {
-
-        String url = "jdbc:mysql://localhost:3306/sharEvent";
-        String user = "root";
-        String password = "loppp888";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection is Successful to the database" + url);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Override
-    public boolean existsByName(String identifier) {
-        String query = "SELECT * FROM User WHERE username=?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, identifier);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            System.out.println(resultSet.getString(1));
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Не вірний SQL запит existsByName");
-            return false;
-        }
-
-    }
->>>>>>> origin/main
-
-    public boolean save(User user) {
-        String query = "INSERT INTO User (username, name, email, password)" +
-                "VALUES (?,?,?,?)";
-        try(PreparedStatement statement = connection.prepareStatement(query)){
-
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
-
-            int rows = statement.executeUpdate();
-
-            if (rows == 0) {
-                System.out.println("Failed to save");
-            }
-
-        }catch(SQLException e){
-            System.out.println("Не вірний SQL запит на вибірку даних");
-            e.printStackTrace();
-        }
-        return true;
-
-    }*/
 
 
 }

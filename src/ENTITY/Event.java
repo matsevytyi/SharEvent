@@ -3,6 +3,7 @@ package ENTITY;
 
 import lombok.Getter;
 import org.jxmapviewer.viewer.DefaultWaypoint;
+import org.jxmapviewer.viewer.GeoPosition;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,10 +24,12 @@ public class Event extends DefaultWaypoint implements EventInterface {
     private final List<User> eventAttendants;
     private final double latitude;
     private final double longitude;
+    GeoPosition geoPosition;
 
     public Event(String eventName, String type, String description, LocalDate eventDate,
                  LocalTime eventTime, User creator, List<User> eventAttendants,
                  double latitude, double longitude) {
+        super(latitude, longitude);
         this.eventId = ++lastAssignedId;
         this.eventName = eventName;
         this.type = type;
@@ -37,9 +40,11 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.eventAttendants = eventAttendants;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.geoPosition = new GeoPosition(latitude, longitude);
     }
 
     public Event(int eventId, String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, User creator, List<User> eventAttendants, double latitude, double longitude) {
+        super(latitude, longitude);
         this.eventId = eventId;
         this.eventName = eventName;
         this.type = type;
@@ -50,6 +55,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.eventAttendants = eventAttendants;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.geoPosition = new GeoPosition(latitude, longitude);
     }
 
     public void setEventId(int eventId) {
