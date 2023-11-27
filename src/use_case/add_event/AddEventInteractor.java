@@ -1,10 +1,9 @@
-package use_case.add_event;
+package USE_CASE.add_event;
 
 
-import data_access.LoadEventsDataAccessInterface;
-import entity.Event;
-import entity.EventFactory;
-import entity.User;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
+import ENTITY.Event;
+import ENTITY.EventFactory;
 
 public class AddEventInteractor implements AddEventInputBoundary{
 

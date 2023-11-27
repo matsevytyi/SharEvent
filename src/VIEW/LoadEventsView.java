@@ -1,13 +1,12 @@
-package view;
+package VIEW;
 
 
-import interface_adapter.load_events.LoadEventsController;
-import interface_adapter.load_events.LoadEventsPresenter;
+
+import INTERFACE_ADAPTER.load_events.LoadEventsController;
+import INTERFACE_ADAPTER.load_events.LoadEventsPresenter;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
-
-import java.awt.*;
 
 public class LoadEventsView {
 
@@ -46,7 +45,7 @@ public class LoadEventsView {
 
     //TODO: think of changing LoadMapView to LoadEventsView, where StackPane will be accessed via appropriate Getter, in future
 
-    public void reloadEvents(view.LoadMapView loadMapView){
+    public void reloadEvents(VIEW.LoadMapView loadMapView){
         controller.execute(loadMapView);
     }
 

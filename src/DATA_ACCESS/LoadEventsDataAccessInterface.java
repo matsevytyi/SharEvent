@@ -1,6 +1,6 @@
-package data_access;
+package DATA_ACCESS;
 
-import entity.Event;
+import ENTITY.Event;
 import org.jxmapviewer.JXMapViewer;
 
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package use_case.view_event;
+package USE_CASE.view_event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

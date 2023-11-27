@@ -1,4 +1,4 @@
-package use_case.delete_event;
+package USE_CASE.delete_event;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,7 @@
-package interface_adapter.view_event;
+package INTERFACE_ADAPTER.view_event;
 
-import interface_adapter.ViewModel;
+
+import INTERFACE_ADAPTER.ViewModel;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -20,7 +21,7 @@ public class ViewEventViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("view", null, this.state);
+        support.firePropertyChange("VIEW", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

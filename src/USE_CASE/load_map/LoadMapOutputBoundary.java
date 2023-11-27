@@ -1,8 +1,9 @@
-package use_case.load_map;
+package USE_CASE.load_map;
 
 
+import INTERFACE_ADAPTER.load_map.LoadMapInputData;
 import VIEW_CREATOR.LoadMapViewModel;
-import interface_adapter.load_map.LoadMapInputData;
+
 import org.jxmapviewer.JXMapKit;
 
 public interface LoadMapOutputBoundary {

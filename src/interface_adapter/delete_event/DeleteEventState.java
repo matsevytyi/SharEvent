@@ -1,4 +1,4 @@
-package interface_adapter.delete_event;
+package INTERFACE_ADAPTER.delete_event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

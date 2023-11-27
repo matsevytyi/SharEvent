@@ -1,4 +1,4 @@
-package interface_adapter.view_event;
+package INTERFACE_ADAPTER.view_event;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class ViewEventState {
         setRegisteredUsers(registeredUsers);
         setType(type);
         setEventId(eventId);
-    }z
+    }
 
 
 private int eventId;

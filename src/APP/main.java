@@ -1,25 +1,29 @@
 package APP;
 
-import data_access.DatabaseDAO;
-import data_access.LoadEventsDataAccessInterface;
-import entity.Event;
-import entity.User;
-import interface_adapter.add_event.AddEventViewModel;
-import interface_adapter.view_event.ViewEventViewModel;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.util.converter.LocalDateStringConverter;
-import view.AddEventView;
-import view.LoadMapView;
-import view.ViewManagerModel;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import INTERFACE_ADAPTER.add_event.AddEventViewModel;
+import INTERFACE_ADAPTER.delete_event.DeleteEventController;
+import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
+import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
+import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
+import VIEW.*;
+import VIEW_CREATOR.LoadMapViewModel;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+import VIEW.LoadMapView;
+
+import javax.swing.*;
+import java.awt.*;
+
 
 public class main extends Application {
-int primaryStageWidth;
+    int primaryStageWidth;
     int primaryStageHeight;
     public static void main(String[] args) {
         launch(args);
@@ -27,25 +31,39 @@ int primaryStageWidth;
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("SharEvent");
+
+        primaryStage.setTitle("Map Embed Example");
+        JFrame application = new JFrame("SharEvent");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        CardLayout cardLayout = new CardLayout();
+        JPanel views = new JPanel(cardLayout);
+        application.add(views);
         ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
+
+        LoginViewModel loginViewModel = new LoginViewModel();
+        SignUpViewModel signupViewModel = new SignUpViewModel();
+        LoadMapViewModel mapViewModel = new LoadMapViewModel();
         AddEventViewModel addEventViewModel = new AddEventViewModel();
         ViewEventViewModel viewEventViewModel = new ViewEventViewModel();
         DatabaseDAO databaseDAO = new DatabaseDAO();
+        DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
 
-        LoadMapView loadMapView = MapUseCasesFactory.create(addEventViewModel , viewEventViewModel, databaseDAO, viewManagerModel);
-        //LoadMapView loadMapView = new LoadMapView();
+        SignUpView signupView = SignUpUseCaseFactory.SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
+        views.add(signupView, signupView.viewName);
 
-        StackPane pane = loadMapView.getStackPane();
-        primaryStageWidth = 1600;
-        primaryStageHeight = 1200;
-        primaryStage.setScene(new Scene(pane, primaryStageWidth, primaryStageWidth));
-//        LocalDate localDate = LocalDate.of(2023, 12, 3);
-//        LocalTime localTime = LocalTime.of(12, 12, 12);
-//        Event event = new Event("music show", "music", "jdhjvhf", localDate, localTime, new User("ff","ff","ff", "ff"), null, 43.66171701890102, -79.40012991428375
-//        );
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
+        views.add(loginView, loginView.viewName);
 
-        primaryStage.show();
+        LoadMapView loggedInView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel);
+        views.add(loggedInView, loggedInView.viewName);
+
+        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.firePropertyChanged();
+
+        application.pack();
+        application.setVisible(true);
+
     }
 }

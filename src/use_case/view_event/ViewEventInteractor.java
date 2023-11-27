@@ -1,13 +1,8 @@
-package use_case.view_event;
+package USE_CASE.view_event;
 
 
-import data_access.LoadEventsDataAccessInterface;
-import entity.Event;
-import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.GeoPosition;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
+import ENTITY.Event;
 
 public class ViewEventInteractor implements ViewEventInputBoundary {
     private final LoadEventsDataAccessInterface eventDataAccessInterface;

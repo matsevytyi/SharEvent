@@ -1,14 +1,22 @@
-package view;
+package VIEW;
 
 import API.LoadMap_API;
+
+
+import INTERFACE_ADAPTER.LoadMapState;
+
+import INTERFACE_ADAPTER.add_event.AddEventController;
+import INTERFACE_ADAPTER.add_event.AddEventViewModel;
+import INTERFACE_ADAPTER.delete_event.DeleteEventController;
+import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.load_map.LoadMapController;
+import INTERFACE_ADAPTER.load_map.LoadMapPresenter;
+import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import INTERFACE_ADAPTER.view_event.ViewEventController;
+import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
-import interface_adapter.add_event.AddEventController;
-import interface_adapter.add_event.AddEventViewModel;
-import interface_adapter.load_map.LoadMapController;
-import interface_adapter.load_map.LoadMapPresenter;
-import interface_adapter.view_event.ViewEventController;
-import interface_adapter.view_event.ViewEventViewModel;
+
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,15 +31,18 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
+public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
 
-
-public class LoadMapView {
-
+    public final String viewName = "logged in";
     @Getter
     private LoadMapPresenter presenter;
 
@@ -45,12 +56,21 @@ public class LoadMapView {
     @Getter
     private ViewEventController viewEventController;
 
+    // private final LogOutController logOutController;
+
     @Getter
     private static StackPane pane;
 
     private final AddEventViewModel addEventViewModel;
 
     private final AddEventController addEventController;
+
+
+
+    private final DeleteEventViewModel deleteEventViewModel;
+
+    private final DeleteEventController deleteEventController;
+
 
     private final JXMapViewer mapViewer ;
 
@@ -59,9 +79,12 @@ public class LoadMapView {
 
     private CompletableFuture<GeoPosition> mapClickFuture;
 
-    public LoadMapView(AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController) {
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController) {
 
-        viewModel = new LoadMapViewModel();
+
+        viewModel = loggedInViewModel; // here was new LoadMapViewModel();
+        this.deleteEventViewModel = deleteEventViewModel;
+        this.deleteEventController = deleteEventController;
 
         presenter = new LoadMapPresenter();
 
@@ -73,7 +96,6 @@ public class LoadMapView {
 
         pane = new LoadMapViewFactory().createView(pane, viewModel);
         setButtonListeners(pane, controller);
-
 
         this.addEventViewModel = addEventViewModel;
         this.addEventController = addEventController;
@@ -98,10 +120,15 @@ public class LoadMapView {
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
-      //  Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        //  Button viewFriendsButton = (Button) pane.getChildren().get(3);
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
+        //Button logOut = (Button) pane.getChildren().get(7);
+
+//        logOut.setOnAction(e -> {
+//            logOutController.execute();
+//        });
 
         viewProfileButton.setOnAction(e -> {
             controller.viewProfile();
@@ -116,7 +143,7 @@ public class LoadMapView {
 //        });
 
         viewEventsButton.setOnAction(e -> {
-           handleMapClickForViewing();
+            handleMapClickForViewing();
         });
 
 
@@ -231,10 +258,10 @@ public class LoadMapView {
             try {
 
                 GeoPosition clickedPosition = mapClickFuture.get();
-            viewEventViewModel.setClickedPosition(clickedPosition);
-            viewEventViewModel.setMapViewer(mapViewer);
+                viewEventViewModel.setClickedPosition(clickedPosition);
+                viewEventViewModel.setMapViewer(mapViewer);
 
-             viewEventController.execute(viewEventViewModel.getState().getLatitude(), viewEventViewModel.getState().getLongitude(), viewEventViewModel.getState().getMapViewer());
+                viewEventController.execute(viewEventViewModel.getState().getLatitude(), viewEventViewModel.getState().getLongitude(), viewEventViewModel.getState().getMapViewer());
 
 
                 ViewEventView viewEventView = new ViewEventView(viewEventViewModel, deleteEventController, deleteEventViewModel);
@@ -260,6 +287,16 @@ public class LoadMapView {
 
         });
     }
+
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        LoadMapState state = (LoadMapState) evt.getNewValue();
+
+    }
+
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        System.out.println("Click " + e.getActionCommand());
+    }
 }
-
-

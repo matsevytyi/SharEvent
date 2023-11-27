@@ -1,9 +1,10 @@
-package interface_adapter.delete_event;
+package INTERFACE_ADAPTER.delete_event;
 
+import INTERFACE_ADAPTER.ViewManagerModel;
+import USE_CASE.delete_event.DeleteEventOutputBoundary;
+import USE_CASE.delete_event.DeleteEventOutputData;
 import javafx.scene.control.Alert;
-import use_case.delete_event.DeleteEventOutputBoundary;
-import use_case.delete_event.DeleteEventOutputData;
-import view.ViewManagerModel;
+
 
 public class DeleteEventPresenter implements DeleteEventOutputBoundary {
 

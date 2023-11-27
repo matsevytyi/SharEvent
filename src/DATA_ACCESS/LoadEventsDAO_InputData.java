@@ -1,4 +1,4 @@
-package data_access;
+package DATA_ACCESS;
 
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;

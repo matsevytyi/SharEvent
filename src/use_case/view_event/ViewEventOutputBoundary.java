@@ -1,6 +1,4 @@
-package use_case.view_event;
-
-import entity.Event;
+package USE_CASE.view_event;
 
 public interface ViewEventOutputBoundary {
     void successesView(ViewEventOutputData viewEventOutputData);

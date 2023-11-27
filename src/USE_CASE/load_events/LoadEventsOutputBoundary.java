@@ -1,11 +1,8 @@
-package use_case.load_events;
+package USE_CASE.load_events;
 
 
-import interface_adapter.load_events.LoadEventsOuputData;
-import org.jxmapviewer.JXMapViewer;
-import view.LoadMapView;
-
-import java.awt.*;
+import INTERFACE_ADAPTER.load_events.LoadEventsOuputData;
+import VIEW.LoadMapView;
 
 public interface LoadEventsOutputBoundary {
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView);

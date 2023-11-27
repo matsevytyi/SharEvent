@@ -1,11 +1,10 @@
-package interface_adapter.view_event;
+package INTERFACE_ADAPTER.view_event;
 
 
+import USE_CASE.view_event.ViewEventInputBoundary;
+import USE_CASE.view_event.ViewEventInputData;
 import org.jxmapviewer.JXMapViewer;
-import use_case.add_event.AddEventInputBoundary;
-import use_case.add_event.AddEventInputData;
-import use_case.view_event.ViewEventInputBoundary;
-import use_case.view_event.ViewEventInputData;
+
 
 import java.awt.*;
 import java.time.LocalDate;

@@ -1,7 +1,8 @@
-package interface_adapter.delete_event;
+package INTERFACE_ADAPTER.delete_event;
 
-import use_case.delete_event.DeleteEventInputBoundary;
-import use_case.delete_event.DeleteEventInputData;
+
+import USE_CASE.delete_event.DeleteEventInputBoundary;
+import USE_CASE.delete_event.DeleteEventInputData;
 
 public class DeleteEventController {
 

@@ -1,7 +1,7 @@
-package use_case.load_events;
+package USE_CASE.load_events;
 
 
-import view.LoadMapView;
+import VIEW.LoadMapView;
 
 public interface LoadEventsInputBoundary {
     public boolean PrepareSuccesView();

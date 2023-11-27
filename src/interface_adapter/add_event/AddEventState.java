@@ -1,13 +1,11 @@
-package interface_adapter.add_event;
+package INTERFACE_ADAPTER.add_event;
 
-import entity.User;
+import ENTITY.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 @Getter @Setter
 public class AddEventState {

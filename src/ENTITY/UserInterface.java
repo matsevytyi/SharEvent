@@ -1,5 +1,4 @@
-package entity;
-import java.util.ArrayList;
+package ENTITY;
 import java.util.List;
 
 public interface UserInterface {

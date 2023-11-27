@@ -1,8 +1,9 @@
-package interface_adapter.add_event;
+package INTERFACE_ADAPTER.add_event;
 
-import use_case.add_event.AddEventOutputBoundary;
-import use_case.add_event.AddEventOutputData;
-import view.ViewManagerModel;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import USE_CASE.add_event.AddEventOutputBoundary;
+import USE_CASE.add_event.AddEventOutputData;
+
 
 
 public class AddEventPresenter implements AddEventOutputBoundary {

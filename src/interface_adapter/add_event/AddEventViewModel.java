@@ -1,6 +1,7 @@
-package interface_adapter.add_event;
+package INTERFACE_ADAPTER.add_event;
 
-import interface_adapter.ViewModel;
+
+import INTERFACE_ADAPTER.ViewModel;
 import org.jxmapviewer.viewer.GeoPosition;
 
 

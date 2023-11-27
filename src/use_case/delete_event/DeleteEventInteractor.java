@@ -1,8 +1,6 @@
-package use_case.delete_event;
+package USE_CASE.delete_event;
 
-import data_access.LoadEventsDataAccessInterface;
-
-import java.util.Set;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
 
 public class DeleteEventInteractor implements DeleteEventInputBoundary {
 

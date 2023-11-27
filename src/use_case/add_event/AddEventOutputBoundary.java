@@ -1,4 +1,4 @@
-package use_case.add_event;
+package USE_CASE.add_event;
 
 public interface AddEventOutputBoundary {
 

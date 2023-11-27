@@ -1,33 +1,27 @@
-package use_case.load_events;
+package USE_CASE.load_events;
 
 
-import data_access.DatabaseDAO;
-import data_access.LoadEventsDAO_InputData;
-import data_access.LoadEventsDAO_OutputData;
-import data_access.LoadEventsDataAccessInterface;
-import entity.User;
-import interface_adapter.load_events.LoadEventsInputData;
-import interface_adapter.load_events.LoadEventsOuputData;
-import interface_adapter.load_events.LoadEventsPresenter;
+import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.LoadEventsDAO_InputData;
+import DATA_ACCESS.LoadEventsDAO_OutputData;
+import DATA_ACCESS.LoadEventsDataAccessInterface;
+
+import INTERFACE_ADAPTER.load_events.LoadEventsInputData;
+import INTERFACE_ADAPTER.load_events.LoadEventsOuputData;
+import INTERFACE_ADAPTER.load_events.LoadEventsPresenter;
 import lombok.Getter;
-import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import entity.Event;
-import view.LoadMapView;
+import VIEW.LoadMapView;
 
 
 public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
     @Getter
-    private Set<entity.Event> events;
+    private Set<ENTITY.Event> events;
 //    LocalDate localDate = LocalDate.of(2023, 12, 3);
 //    LocalTime localTime = LocalTime.of(12, 12, 12);
 //    Event event = new Event("music show", "music", "jdhjvhf", localDate, localTime, new User("ff","ff","ff", "ff"), null, 43.66171701890102, -79.40012991428375

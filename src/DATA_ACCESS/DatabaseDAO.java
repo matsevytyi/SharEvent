@@ -1,21 +1,20 @@
-package data_access;
+package DATA_ACCESS;
 
 import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.LinkedList;
 
-import entity.User;
-import lombok.SneakyThrows;
+
+import ENTITY.User;
+
 import java.util.List;
 import java.util.Set;
-import entity.Event;
+import ENTITY.Event;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
     Database database = new Database();
 
 
@@ -113,16 +112,22 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface {
 
         //String q = "SELECT * FROM public.user ";
         //database.executeQueryEventList(q);
-Set<Event> events = database.executeQueryEventList();
+        Set<Event> events = database.executeQueryEventList();
+
 
 //        System.out.println(inputData.getLatitude1());
 //        System.out.println(inputData.getLongitude1());
 //        System.out.println(inputData.getLatitude2());
 //        System.out.println(inputData.getLongitude2());
 
+//        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
+
+
+
 
         return new LoadEventsDAO_OutputData(events);
     }
+
 
     /*public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
         String query = "SELECT * FROM public.event " +
@@ -174,6 +179,12 @@ Set<Event> events = database.executeQueryEventList();
         // If no matching event is found, return null or another appropriate value
         return null;
     }
+
+    @Override
+    public Event deleteEvent(int eventId) {
+        return null;
+    }
+
     private boolean isClickNearWaypoint(GeoPosition clickPosition, GeoPosition waypointPosition, JXMapViewer mapViewer) {
         // Convert GeoPositions to screen coordinates
         Point2D.Double clickPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(clickPosition, mapViewer.getZoom());
@@ -188,27 +199,44 @@ Set<Event> events = database.executeQueryEventList();
 
 
 
+
+    // User
+
+    @Override
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
 
+
         return result != null;
     }
 
-//    public boolean save(User user) {
-//
-//        String query = "INSERT INTO public.user (username, name, email, password)" +
-//                "VALUES (?,?,?,?)";
-//        database.executeQuery(query, true, user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
-//        return true;
-//    }
+
+
+    @Override
+    public boolean save(User user) {
+
+        String query = "INSERT INTO public.user (username, name, email, password)" +
+                "VALUES (?,?,?,?)";
+        database.executeQuery(query, true, user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
+        return true;
+    }
+
 
     public User getUserByUsername(String username) {
         String query = "select * from public.user where username=?";
         Object result = database.executeQueryUser(query, username);
 
         return (User) result;
+
     }
+
+    @Override
+    public boolean checkPassword(String password) {
+        return false;
+
+    }
+
 
 
 
@@ -263,6 +291,33 @@ Set<Event> events = database.executeQueryEventList();
 //        return eventList;
 //    }
 
+//        Object userList = database.executeQueryUserList(query, username);
+//
+//        return (List<User>) userList;
+//    }
+
+    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
+        String query = "select event.event_name from public.event\n" +
+                "   where id_event in (select event\n" +
+                "                    from public.attendedEvents\n" +
+                "                    where visitor = ?)";
+
+        Object eventList = database.executeQueryEventList(query, username);
+
+        return (List<Event>) eventList;
+    }
+
+    public List<Event> FindEventsUserHosts(String username) throws SQLException {
+        String query = "select event_name from public.event\n" +
+                "   where creator in (select username\n" +
+                "                  from public.user\n" +
+                "                  where username = ?)\n";
+
+        Object eventList = database.executeQueryEventList(query, username);
+
+        return (List<Event>) eventList;
+    }
+
     public boolean FollowUser(String username) {
         String query = "insert into public.following (id_relation, target_user, follower)\n" +
                 "\t values (?, ?, ?)\n";
@@ -285,16 +340,69 @@ Set<Event> events = database.executeQueryEventList();
 
 
 
+    /*static Connection connection;
+    public static UserDataAccessObject dt = new UserDataAccessObject();
+    private final Map<String, User> accounts = new HashMap<>();
 
+    public static void connect() {
 
+        String url = "jdbc:mysql://localhost:3306/sharEvent";
+        String user = "root";
+        String password = "loppp888";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Connection is Successful to the database" + url);
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
 
+    @Override
+    public boolean existsByName(String identifier) {
+        String query = "SELECT * FROM User WHERE username=?";
 
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, identifier);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            System.out.println(resultSet.getString(1));
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Не вірний SQL запит existsByName");
+            return false;
+        }
 
+    }
+>>>>>>> origin/main
 
+    public boolean save(User user) {
+        String query = "INSERT INTO User (username, name, email, password)" +
+                "VALUES (?,?,?,?)";
+        try(PreparedStatement statement = connection.prepareStatement(query)){
 
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getEmail());
 
+            int rows = statement.executeUpdate();
+
+            if (rows == 0) {
+                System.out.println("Failed to save");
+            }
+
+        }catch(SQLException e){
+            System.out.println("Не вірний SQL запит на вибірку даних");
+            e.printStackTrace();
+        }
+        return true;
+
+    }*/
 
 
 }

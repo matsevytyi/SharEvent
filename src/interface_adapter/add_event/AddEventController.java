@@ -1,13 +1,12 @@
-package interface_adapter.add_event;
+package INTERFACE_ADAPTER.add_event;
 
-import entity.User;
-import use_case.add_event.AddEventInputBoundary;
-import use_case.add_event.AddEventInputData;
+import ENTITY.User;
+import USE_CASE.add_event.AddEventInputBoundary;
+import USE_CASE.add_event.AddEventInputData;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
 
 public class AddEventController {
     final AddEventInputBoundary addEventUseCaseInteractor;

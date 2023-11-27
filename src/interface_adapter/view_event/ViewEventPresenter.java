@@ -1,9 +1,10 @@
-package interface_adapter.view_event;
+package INTERFACE_ADAPTER.view_event;
 
 
-import use_case.view_event.ViewEventOutputBoundary;
-import use_case.view_event.ViewEventOutputData;
-import view.ViewManagerModel;
+import INTERFACE_ADAPTER.ViewManagerModel;
+import USE_CASE.view_event.ViewEventOutputBoundary;
+import USE_CASE.view_event.ViewEventOutputData;
+
 
 
 public class ViewEventPresenter implements ViewEventOutputBoundary {

@@ -1,6 +1,8 @@
-package interface_adapter.delete_event;
+package INTERFACE_ADAPTER.delete_event;
 
-import interface_adapter.ViewModel;
+
+
+import INTERFACE_ADAPTER.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

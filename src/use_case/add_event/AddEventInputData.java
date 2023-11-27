@@ -1,11 +1,10 @@
-package use_case.add_event;
+package USE_CASE.add_event;
 
-import entity.User;
+import ENTITY.User;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Getter
