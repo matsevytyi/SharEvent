@@ -5,6 +5,7 @@ import ENTITY.User;
 import lombok.SneakyThrows;
 
 import java.sql.*;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -148,7 +149,7 @@ public class Database {
     }
 
 
-    public Object executeQueryEventList(String query, String username) {
+    public Collection<Event> executeQueryEventList(String query, String username) {
 
         Connection connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -178,14 +179,16 @@ public class Database {
 
     @SneakyThrows
     private Event extractEvent(ResultSet resultSet) {
-        int id_event = resultSet.getInt("id_event ");
+        int id_event = resultSet.getInt("id_event");
         String event_name = resultSet.getString("event_name");
         String description = resultSet.getString("description");
         String type = resultSet.getString("type");
         String time = resultSet.getString("time");
         String date = resultSet.getString("date");
-        float longitude = resultSet.getFloat("longitude");
-        float latitude = resultSet.getFloat("latitude");
+        double longitude = resultSet.getDouble("longitude");
+        System.out.println("double long" + longitude);
+        double latitude = resultSet.getDouble("latitude");
+        System.out.println("double lat" + latitude);
         String creator = resultSet.getString("creator");
 
         // треба якось переробити з цими налами

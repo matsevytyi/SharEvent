@@ -1,6 +1,6 @@
-package USE_CASE;
+package USE_CASE.loadevents;
 
-import INTERFACE_ADAPTER.LoadEventsOuputData;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import VIEW.LoadMapView;
 import org.jxmapviewer.JXMapViewer;
 

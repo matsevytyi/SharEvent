@@ -1,7 +1,7 @@
-package INTERFACE_ADAPTER;
+package INTERFACE_ADAPTER.loadevents_adapter;
 
-import ENTITY.Temporary_entites.Event;
-import USE_CASE.LoadEventsInputBoundary;
+import ENTITY.Event;
+import USE_CASE.loadevents.LoadEventsInputBoundary;
 import VIEW_CREATOR.FailViewFactory;
 import VIEW.LoadMapView;
 

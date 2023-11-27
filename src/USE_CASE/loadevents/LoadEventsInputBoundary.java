@@ -1,4 +1,4 @@
-package USE_CASE;
+package USE_CASE.loadevents;
 
 import VIEW.LoadMapView;
 

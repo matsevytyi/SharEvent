@@ -1,23 +1,22 @@
-package USE_CASE;
+package USE_CASE.loadevents;
 
-import DATA_ACCESS.LoadEventsDAO_InputData;
-import DATA_ACCESS.LoadEventsDAO_OutputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
 import DATA_ACCESS.DatabaseDAO;
-import DATA_ACCESS.LoadEventsDataAccessInterface;
-import INTERFACE_ADAPTER.LoadEventsInputData;
-import INTERFACE_ADAPTER.LoadEventsOuputData;
-import INTERFACE_ADAPTER.LoadEventsPresenter;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsInputData;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
 import VIEW.LoadMapView;
 import lombok.Getter;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import ENTITY.Event;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Set;
-
-import ENTITY.Temporary_entites.Event;
-
 
 
 public class LoadEventsInteractor implements LoadEventsOutputBoundary {
@@ -83,8 +82,16 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
             problem = "Database_error";
         }
 
+        System.out.println("events are in interactor");
+
         LoadEventsInputData loadEventsInputData = new LoadEventsInputData(events);
+        System.out.println("loadEventsInputData: ");
         LoadEventsInputBoundary presenter = new LoadEventsPresenter(loadEventsInputData, loadMapView);
+        System.out.println("presenter: ");
+
+        for(Event event : events) {
+            System.out.println(event.getEventName()+" "+event.getGeoPosition().toString());
+        }
 
         if(problem == "Database_error") {
             presenter.PrepareFailView(problem, loadMapView);
@@ -93,6 +100,7 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
         if(events == null) {
             problem = "No_events";
+            System.out.println("No events at this location");
             presenter.PrepareFailView(problem, loadMapView);
             return;
         }

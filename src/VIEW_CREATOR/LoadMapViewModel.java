@@ -1,8 +1,7 @@
 package VIEW_CREATOR;
 
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
-import INTERFACE_ADAPTER.map_adapter.LoggedInState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import USE_CASE.login.LoginOutputData;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import org.jxmapviewer.JXMapKit;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.LinkedList;
 
 public class LoadMapViewModel {
 

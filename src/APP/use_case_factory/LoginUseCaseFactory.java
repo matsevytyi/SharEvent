@@ -1,4 +1,4 @@
-package APP;
+package APP.use_case_factory;
 
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.UserLoginDataAccessInterface;

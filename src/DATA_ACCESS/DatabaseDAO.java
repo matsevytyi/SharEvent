@@ -1,14 +1,15 @@
 package DATA_ACCESS;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.User;
+import ENTITY.Event;
 import java.util.List;
 import java.util.Set;
-import ENTITY.Temporary_entites.*;
-
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
@@ -134,9 +135,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         Set<Event> events = new HashSet<>();
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
-
-
+        events.addAll(database.executeQueryEventList(query, "TODO"));
 
         return new LoadEventsDAO_OutputData(events);
     }

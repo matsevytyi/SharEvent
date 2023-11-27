@@ -1,11 +1,8 @@
 package VIEW;
 
-import INTERFACE_ADAPTER.LoadMapController;
-import INTERFACE_ADAPTER.LoadMapPresenter;
-import INTERFACE_ADAPTER.LoadMapState;
-import INTERFACE_ADAPTER.logout_adapter.LogOutController;
-import INTERFACE_ADAPTER.map_adapter.LoggedInState;
-import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -54,7 +51,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         pane = new LoadMapViewFactory().createView(pane, viewModel);
 
         setButtonListeners(pane, controller);
-        
+
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
 

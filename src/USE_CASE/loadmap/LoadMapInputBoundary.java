@@ -1,6 +1,6 @@
-package USE_CASE;
+package USE_CASE.loadmap;
 
-import INTERFACE_ADAPTER.LoadMapOutputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
 import VIEW_CREATOR.LoadMapViewModel;
 
 public interface LoadMapInputBoundary {

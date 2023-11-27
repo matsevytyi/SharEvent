@@ -1,4 +1,4 @@
-package APP;
+package APP.use_case_factory;
 
 import ENTITY.UserFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;

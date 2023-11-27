@@ -1,9 +1,9 @@
-package USE_CASE;
+package USE_CASE.loadmap;
 
 import API.LoadMap_API;
-import INTERFACE_ADAPTER.LoadMapInputData;
-import INTERFACE_ADAPTER.LoadMapOutputData;
-import INTERFACE_ADAPTER.LoadMapPresenter;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapInputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import VIEW_CREATOR.LoadMapViewModel;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;

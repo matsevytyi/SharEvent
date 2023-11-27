@@ -1,11 +1,8 @@
 package INTERFACE_ADAPTER.login_adapter;
 
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.ViewManagerModel;
-import INTERFACE_ADAPTER.map_adapter.LoggedInState;
-import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
-import INTERFACE_ADAPTER.signup_adapter.SignUpState;
 import USE_CASE.login.LoginOutputData;
 import USE_CASE.login.LoginOutputDataBoundary;
 import VIEW.LoadMapView;
