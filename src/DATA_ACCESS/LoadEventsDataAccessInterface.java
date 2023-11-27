@@ -12,5 +12,7 @@ void addEvent(Event event);
 
     Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer);
 
-    Event deleteEvent(int eventId);
+    void deleteEvent(int eventId);
+
+    String getEventById(int eventId);
 }

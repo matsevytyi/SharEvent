@@ -1,12 +1,11 @@
 package VIEW;
 
-import ENTITY.User;
-
-import INTERFACE_ADAPTER.LoadMapState;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventState;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.view_event.ViewEventState;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
+import VIEW_CREATOR.LoadMapViewModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -37,6 +36,7 @@ public class ViewEventView extends VBox {
         this.viewEventViewModel = viewEventViewModel;
         this.deleteEventController = deleteEventController;
         this.deleteEventViewModel = deleteEventViewModel;
+
         initUI();
     }
 
@@ -74,8 +74,8 @@ public class ViewEventView extends VBox {
 
     private boolean isUserCreator(String eventCreator) {
         // Get the logged-in user from your authentication system
-        LoadMapState l = new LoadMapState();
-        String loggedInUser = l.getUsername(); // Adjust this according to your actual implementation
+
+        String loggedInUser = viewEventViewModel.getLoggedInUser(); // Adjust this according to your actual implementation
 
         // Compare the usernames
         return loggedInUser != null && loggedInUser.equals(eventCreator);
@@ -90,7 +90,8 @@ public class ViewEventView extends VBox {
 
             if (alert.getResult() == ButtonType.YES) {
                 DeleteEventState deleteEventState = new DeleteEventState();
-                deleteEventController.execute(deleteEventState.getDeletedEventId());
+                ViewEventState viewEventState = viewEventViewModel.getState();
+                deleteEventController.execute(viewEventState.getEventId());
 
             }
         } else if ("Register for Event".equals(buttonText)) {

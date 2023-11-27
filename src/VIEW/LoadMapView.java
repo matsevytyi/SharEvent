@@ -12,7 +12,6 @@ import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.load_map.LoadMapController;
 import INTERFACE_ADAPTER.load_map.LoadMapPresenter;
-import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;
@@ -37,7 +36,6 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -79,12 +77,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
 
     private final JXMapViewer mapViewer ;
-
+    private final JXMapViewer mapViewerforViewing ;
 
     private GeoPosition addEvent = null;
 
     private CompletableFuture<GeoPosition> mapClickFuture;
-
+    private CompletableFuture<GeoPosition> mapClickFutureForViewing;
     public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController) {
 
 
@@ -111,7 +109,9 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
+        mapViewerforViewing = this.getViewModel().getMapKit().getMainMap();
         mapClickFuture = new CompletableFuture<>();
+        mapClickFutureForViewing = new CompletableFuture<>();
 
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
@@ -315,7 +315,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         alert.showAndWait();
 
         // Оновлено: Встановлення нового об'єкту CompletableFuture для нового натискання на карті
-        CompletableFuture<GeoPosition> mapClickFuture = new CompletableFuture<>();
+        CompletableFuture<GeoPosition> mapClickFutureForViewing = new CompletableFuture<>();
 
         // Оновлено: Встановлення обробника подій для нового натискання на карті
         mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -324,22 +324,25 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 Point clickPoint = e.getPoint();
 
                 // Set the value in CompletableFuture for the new click on the map
-                mapClickFuture.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
+                mapClickFutureForViewing.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
                 mapViewer.removeMouseListener(this);
+
+                handleClosedEventForViewing(mapClickFutureForViewing);
             }
         });
 
-        handleClosedEventForViewing(mapClickFuture);
+
     }
 
-    private void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFuture) {
+    private void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFutureForViewing) {
         Platform.runLater(() -> {
 
             try {
 
-                GeoPosition clickedPosition = mapClickFuture.get();
+                GeoPosition clickedPosition = mapClickFutureForViewing.get();
                 viewEventViewModel.setClickedPosition(clickedPosition);
                 viewEventViewModel.setMapViewer(mapViewer);
+                viewEventViewModel.setLoggedInUser(viewModel.getLoggedInUser());
 
                 viewEventController.execute(viewEventViewModel.getState().getLatitude(), viewEventViewModel.getState().getLongitude(), viewEventViewModel.getState().getMapViewer());
 
@@ -358,9 +361,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
                 // Show the AddEventView stage
                 viewEventStage.show();
+                controller.updateEvents(LoadMapView.this);
 
-//                OtherViewFactory otherViewFactory = new OtherViewFactory();
-//              otherViewFactory.createOtherView(pane, new AddEventView(addEventViewModel, addEventController));
             } catch (InterruptedException | ExecutionException ex) {
                 ex.printStackTrace(); // Обробка відповідно до вашого випадку
             }

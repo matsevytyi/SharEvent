@@ -307,14 +307,17 @@ public class Database {
 
     }
 
-    public Object executeQueryEvent(String query, int event_id) {
+    public Event executeQueryEvent(String query, int event_id) {
         connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, event_id);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
 
-            return extractEvent(resultSet);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                return extractEvent(resultSet);
+            }
+
+
+               return null;
 
         }  catch (SQLException e) {
             System.out.println("Error executing SQL query");

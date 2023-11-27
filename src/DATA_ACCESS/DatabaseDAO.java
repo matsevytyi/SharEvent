@@ -20,11 +20,21 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
 
 
-    public void deleteEvent(String event_id) {
+    public void deleteEvent(int event_id) {
 
-        String query = "DELETE FROM events WHERE event_id = " + event_id;
+        String query = "DELETE FROM public.event WHERE id_event = " + event_id;
 
         database.executeQuery(query, true);
+
+    }
+
+    @Override
+    public String getEventById(int eventId) {
+        String query = "select * from public.event where id_event = " + eventId;
+
+        Event event = database.executeQueryEvent(query, eventId);
+
+        return event.getEventName();
     }
 
     public void updateEvent(String old_event_name, String old_event_time, String old_event_date, String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
@@ -129,6 +139,10 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         database.executeQuery(query, true, event.getEventName(), event.getType(), event.getDescription(), event.getEventDate(), event.getEventTime(), event.getCreator().getName(), event.getLatitude(), event.getLongitude());
     }
 
+//    @Override
+//    public Event deleteEvent(int eventId) {
+//
+//    }
 
     @Override
     public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {
@@ -146,10 +160,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return null;
     }
 
-    @Override
-    public Event deleteEvent(int eventId) {
-        return null;
-    }
+
 
     private boolean isClickNearWaypoint(GeoPosition clickPosition, GeoPosition waypointPosition, JXMapViewer mapViewer) {
         // Convert GeoPositions to screen coordinates
