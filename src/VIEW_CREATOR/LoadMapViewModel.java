@@ -1,9 +1,15 @@
 package VIEW_CREATOR;
 
+import ENTITY.User;
+import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.map_adapter.LoggedInState;
+import USE_CASE.login.LoginOutputData;
 import lombok.Getter;
 import lombok.Setter;
 import org.jxmapviewer.JXMapKit;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
 
 public class LoadMapViewModel {
@@ -49,6 +55,12 @@ public class LoadMapViewModel {
     private String Map_Load_Error;
 
 
+    private LoadMapState state = new LoadMapState ();
+
+
+    private String loggedInUser;
+
+    private User loggedInUserObject;
 
 
     public LoadMapViewModel() {
@@ -73,5 +85,48 @@ public class LoadMapViewModel {
         API_error = null;
         Map_Load_Error = null;
 
+    }
+
+    public void setState(LoadMapState state) {
+        this.state = state;
+    }
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    // This is what the Login Presenter will call to let the ViewModel know
+    // to alert the View
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public LoadMapState getState() {
+        return state;
+    }
+
+
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(LoginOutputData loggedInUser) {
+        this.loggedInUser = loggedInUser.getUsername();
+    }
+
+
+    public void setLoggedInUserObject(User user) {
+        loggedInUserObject = user;
+    }
+
+    public User getLoggedInUserObject() {
+        return loggedInUserObject;
+    }
+
+    public String getViewName() {
+
+        return "";
     }
 }

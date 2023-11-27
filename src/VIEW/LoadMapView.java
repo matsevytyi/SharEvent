@@ -2,6 +2,10 @@ package VIEW;
 
 import INTERFACE_ADAPTER.LoadMapController;
 import INTERFACE_ADAPTER.LoadMapPresenter;
+import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.logout_adapter.LogOutController;
+import INTERFACE_ADAPTER.map_adapter.LoggedInState;
+import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -10,8 +14,15 @@ import javafx.scene.layout.StackPane;
 
 import lombok.Getter;
 
-public class LoadMapView {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
+
+    public final String viewName = "logged in";
     @Getter
     private LoadMapPresenter presenter;
 
@@ -21,13 +32,16 @@ public class LoadMapView {
     @Getter
     private LoadMapViewModel viewModel;
 
+   // private final LogOutController logOutController;
+
     @Getter
     private static StackPane pane;
 
 
-    public LoadMapView() {
+    public LoadMapView(LoadMapViewModel loggedInViewModel) {
+        //this.logOutController = logOutController;
 
-        viewModel = new LoadMapViewModel();
+        viewModel = loggedInViewModel; // here was new LoadMapViewModel();
 
         presenter = new LoadMapPresenter();
 
@@ -40,9 +54,6 @@ public class LoadMapView {
         pane = new LoadMapViewFactory().createView(pane, viewModel);
 
         setButtonListeners(pane, controller);
-
-        //TODO: Here is the place to call the USER LOGIN Use Case
-
         
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
@@ -61,6 +72,11 @@ public class LoadMapView {
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
+        //Button logOut = (Button) pane.getChildren().get(7);
+
+//        logOut.setOnAction(e -> {
+//            logOutController.execute();
+//        });
 
         viewProfileButton.setOnAction(e -> {
             controller.viewProfile();
@@ -85,6 +101,16 @@ public class LoadMapView {
         updateEventsButton.setOnAction(e -> {
             controller.updateEvents(this);
         });
+    }
+
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        LoadMapState state = (LoadMapState) evt.getNewValue();
+
     }
 }
 
