@@ -9,5 +9,5 @@ public interface UserLoginDataAccessInterface {
 
     User getUserByUsername(String username);
 
-    boolean checkPassword(String password);
+    boolean checkPassword(String username, String password);
 }
