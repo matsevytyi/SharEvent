@@ -9,7 +9,7 @@ public class SearchController {
         this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
 
-    public void execute(String search_input, Array<EventInterface> events) {
+    public void execute(String search_input, ArrayList<EventInterface> events) {
         SearchInputData searchInputData = new SearchInputData(
                 search_input, events);
 
