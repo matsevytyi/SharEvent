@@ -1,4 +1,4 @@
-package com.example.mapsdemo;
+package APP;
 
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.UserLoginDataAccessInterface;

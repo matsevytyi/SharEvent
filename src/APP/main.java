@@ -2,16 +2,10 @@ package APP;
 
 import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
-import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 import VIEW.*;
 import VIEW_CREATOR.LoadMapViewModel;
-import com.example.mapsdemo.LoggedInUseCaseFactory;
-import com.example.mapsdemo.LoginUseCaseFactory;
-import com.example.mapsdemo.SignUpUseCaseFactory;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javax.swing.*;

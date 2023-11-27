@@ -1,4 +1,4 @@
-package com.example.mapsdemo;
+package APP;
 
 import ENTITY.UserFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;
