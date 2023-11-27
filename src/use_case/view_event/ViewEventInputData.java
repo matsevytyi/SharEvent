@@ -1,14 +1,14 @@
 package use_case.view_event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.jxmapviewer.JXMapViewer;
+
+@Getter @AllArgsConstructor
 public class ViewEventInputData {
 
-    public int getEventId() {
-        return eventId;
-    }
+    private final double latitude;
+    private final double longitude;
+    private final JXMapViewer mapViewer;
 
-    private final int eventId;
-
-    public ViewEventInputData(int eventId) {
-        this.eventId = eventId;
-    }
 }

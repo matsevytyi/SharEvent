@@ -28,9 +28,9 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_FRIENDS)
     }
 
-    public void viewEvents(){
-        //TODO: switch to another Usecase (VIEW_EVENTS)
-    }
+//    public void viewEvents(){
+//        //TODO: switch to another Usecase (VIEW_EVENTS)
+//    }
 
 //    public void addEvent(){
 //        //TODO: switch to another Usecase (ADD_EVENT)

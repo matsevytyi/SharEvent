@@ -55,5 +55,5 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.eventId = eventId;
     }
 
-    // Other methods and getters as needed
+
 }

@@ -1,52 +1,34 @@
 package use_case.view_event;
 
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+@Getter
 public class ViewEventOutputData {
-    public String getEventName() {
-        return eventName;
-    }
 
-    public LocalTime getEventTime() {
-        return eventTime;
-    }
-
-    public LocalDate getEventDate() {
-        return eventDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-
-
-    public String getRegisteredUsers() {
-        return registeredUsers;
-    }
 
     private final String eventName;
+    private final String type;
+    private final String description;
+    private final LocalDate eventDate;
+    private final LocalTime eventTime;
+    private final String creator;
+    private final String registeredUsers ;
 
-    public ViewEventOutputData(String eventName, String description, LocalTime eventTime, LocalDate eventDate,  String creator, String registeredUsers) {
+
+
+
+    public ViewEventOutputData(String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, String creator, String registeredUsers) {
         this.eventName = eventName;
-        this.eventTime = eventTime;
-        this.eventDate = eventDate;
+        this.type = type;
         this.description = description;
+        this.eventDate = eventDate;
+        this.eventTime = eventTime;
         this.creator = creator;
         this.registeredUsers = registeredUsers;
     }
 
-    private final LocalTime eventTime;
-    private final LocalDate eventDate;
 
-    private final String description;
 
-    public String getCreator() {
-        return creator;
-    }
-
-    private final String creator;
-
-    private final String registeredUsers ;
 }
