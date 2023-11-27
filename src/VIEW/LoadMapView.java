@@ -35,6 +35,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     private static StackPane pane;
 
 
+
+
     public LoadMapView(LoadMapViewModel loggedInViewModel) {
         //this.logOutController = logOutController;
 
