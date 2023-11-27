@@ -56,6 +56,7 @@ public class LoadMapViewModel {
     private LoadMapState state = new LoadMapState ();
 
 
+
     private String loggedInUser;
 
     private User loggedInUserObject;

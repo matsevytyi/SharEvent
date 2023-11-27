@@ -111,9 +111,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                                 throw new RuntimeException(e);
                             }
 
-                            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginView.this);
+                            if (loginViewModel.getLogged()) {
+                                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginView.this);
 
-                            frame.dispose();
+                                frame.dispose();
+
+                            }
                         }
                     }
                 }
@@ -137,7 +140,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void keyTyped(KeyEvent e) {
                 LoginState currentState = loginViewModel.getState();
-                currentState.setPassword(passwordErrorField.getText() + e.getKeyChar());
+                currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
                 loginViewModel.setState(currentState);
             }
 
@@ -164,10 +167,20 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println("Click " + evt.getActionCommand());
     }
 
-    @Override
+   /* @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
+    }*/
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        LoginState state = (LoginState) evt.getNewValue();
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        }
+
     }
 
     private void setFields(LoginState state) {

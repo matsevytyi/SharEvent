@@ -6,6 +6,7 @@ import INTERFACE_ADAPTER.ViewManagerModel;
 import USE_CASE.login.LoginOutputData;
 import USE_CASE.login.LoginOutputDataBoundary;
 import VIEW.LoadMapView;
+import VIEW.LoginView;
 import VIEW_CREATOR.LoadMapViewModel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -31,8 +32,6 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     public void prepareSuccessView(LoginOutputData user) {
 
         // On success, switch to the user's map.
-        //dispose();// Close the login view
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -48,10 +47,10 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         mapViewModel.setLoggedInUserObject(curruser);
         mapViewModel.firePropertyChanged();
 
-        // Assuming that your map view has a unique name, replace "mapViewName" with the actual name.
+        loginViewModel.setLogged();
+
         viewManagerModel.setActiveView("mapViewName");
         viewManagerModel.firePropertyChanged();
-
 
 
 //        User curruser = user.getUser();

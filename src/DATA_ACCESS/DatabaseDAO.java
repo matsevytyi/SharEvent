@@ -150,6 +150,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
 
+        System.out.println(result);
 
         return result != null;
     }
@@ -164,6 +165,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return true;
     }
 
+    @Override
     public User getUserByUsername(String username) {
         String query = "select * from public.user where username=?";
         Object result = database.executeQueryUser(query, username);
@@ -171,9 +173,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return (User) result;
     }
 
+
     @Override
-    public boolean checkPassword(String password) {
-        return false;
+    public boolean checkPassword(String username, String password) {
+        String query = "select * from public.user where username=?";
+        boolean result = database.executeQueryCheckPassword(query, username, password);
+
+        return result;
     }
 
     public List<User> FindFollowersOfUser(String username) throws SQLException {
