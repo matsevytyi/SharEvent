@@ -1,22 +1,11 @@
 package use_case.delete_event;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class DeleteEventOutputData {
 
-    public String getDeletedEvent() {
-        return deletedEvent;
-    }
-
-    public void setDeletedEvent(String deletedEvent) {
-        this.deletedEvent = deletedEvent;
-    }
-
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
-    }
-
-    public void setUseCaseFailed(boolean useCaseFailed) {
-        this.useCaseFailed = useCaseFailed;
-    }
 
     private String deletedEvent;
 

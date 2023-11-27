@@ -7,7 +7,7 @@ import java.time.LocalTime;
 @Getter
 public class ViewEventOutputData {
 
-
+private final int eventId;
     private final String eventName;
     private final String type;
     private final String description;
@@ -19,7 +19,7 @@ public class ViewEventOutputData {
 
 
 
-    public ViewEventOutputData(String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, String creator, String registeredUsers) {
+    public ViewEventOutputData(int eventId, String eventName, String type, String description, LocalDate eventDate, LocalTime eventTime, String creator, String registeredUsers) {
         this.eventName = eventName;
         this.type = type;
         this.description = description;
@@ -27,6 +27,7 @@ public class ViewEventOutputData {
         this.eventTime = eventTime;
         this.creator = creator;
         this.registeredUsers = registeredUsers;
+        this.eventId = eventId;
     }
 
 

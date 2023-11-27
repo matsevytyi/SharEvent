@@ -3,7 +3,6 @@ package view;
 import API.LoadMap_API;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
-import VIEW_CREATOR.OtherViewFactory;
 import interface_adapter.add_event.AddEventController;
 import interface_adapter.add_event.AddEventViewModel;
 import interface_adapter.load_map.LoadMapController;
@@ -16,16 +15,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.awt.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+
+
+
 
 public class LoadMapView {
 
@@ -95,7 +98,7 @@ public class LoadMapView {
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
-        Button viewFriendsButton = (Button) pane.getChildren().get(3);
+      //  Button viewFriendsButton = (Button) pane.getChildren().get(3);
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
@@ -113,12 +116,12 @@ public class LoadMapView {
 //        });
 
         viewEventsButton.setOnAction(e -> {
-
+           handleMapClickForViewing();
         });
 
 
         addEventButton.setOnAction(e -> {
-            handleMapClick();
+            handleMapClickForAdding();
         });
 
         updateEventsButton.setOnAction(e -> {
@@ -126,13 +129,13 @@ public class LoadMapView {
         });
 
 
-
-
-
-
     }
 
-    private void handleMapClick() {
+
+
+
+
+    private void handleMapClickForAdding() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Choose Map Point");
         alert.setHeaderText(null);
@@ -155,20 +158,18 @@ public class LoadMapView {
                 mapViewer.removeMouseListener(this);
 
                 // Оновлено: Виклик методу для обробки координат після закриття вікна
-                handleClosedEvent(mapClickFuture);
+                handleClosedEventForAdding(mapClickFuture);
             }
         });
     }
 
-    // Оновлено: Метод для обробки координат після закриття вікна
-    private void handleClosedEvent(CompletableFuture<GeoPosition> mapClickFuture) {
+
+    private void handleClosedEventForAdding(CompletableFuture<GeoPosition> mapClickFuture) {
         Platform.runLater(() -> {
-            // Використовуйте значення mapClickFuture як потрібно
+
             try {
                 GeoPosition clickedPosition = mapClickFuture.get();
-
                 addEventViewModel.setClickedPosition(clickedPosition);
-
 
                 AddEventView addEventView = new AddEventView(addEventViewModel, addEventController);
 
@@ -191,6 +192,72 @@ public class LoadMapView {
             } catch (InterruptedException | ExecutionException ex) {
                 ex.printStackTrace(); // Обробка відповідно до вашого випадку
             }
+        });
+    }
+
+    @SneakyThrows
+    private void handleMapClickForViewing() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Choose Map Point");
+        alert.setHeaderText(null);
+        alert.setContentText("Please choose an event you want to look at.");
+
+        // Показати спливаюче вікно та зачекати його закриття
+        alert.showAndWait();
+
+        // Оновлено: Встановлення нового об'єкту CompletableFuture для нового натискання на карті
+        CompletableFuture<GeoPosition> mapClickFuture = new CompletableFuture<>();
+
+        // Оновлено: Встановлення обробника подій для нового натискання на карті
+        mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                Point clickPoint = e.getPoint();
+
+                // Оновлено: Встановлення значення у CompletableFuture при новому натисканні на карті
+                mapClickFuture.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
+                mapViewer.removeMouseListener(this);
+
+
+
+            }
+        });
+        handleClosedEventForViewing(mapClickFuture);
+    }
+
+    private void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFuture) {
+        Platform.runLater(() -> {
+
+            try {
+
+                GeoPosition clickedPosition = mapClickFuture.get();
+            viewEventViewModel.setClickedPosition(clickedPosition);
+            viewEventViewModel.setMapViewer(mapViewer);
+
+             viewEventController.execute(viewEventViewModel.getState().getLatitude(), viewEventViewModel.getState().getLongitude(), viewEventViewModel.getState().getMapViewer());
+
+
+                ViewEventView viewEventView = new ViewEventView(viewEventViewModel, deleteEventController, deleteEventViewModel);
+                viewEventView.updateView();
+                // Set the scene for the AddEventView stage
+                Scene scene = new Scene(viewEventView, 500, 500);
+
+                // Create a new stage for AddEventView
+                Stage viewEventStage = new Stage();
+                viewEventStage.initModality(Modality.APPLICATION_MODAL);
+                viewEventStage.setScene(scene);
+                viewEventStage.setX(1600);
+                viewEventStage.setY(1200);
+
+                // Show the AddEventView stage
+                viewEventStage.show();
+
+//                OtherViewFactory otherViewFactory = new OtherViewFactory();
+//              otherViewFactory.createOtherView(pane, new AddEventView(addEventViewModel, addEventController));
+            } catch (InterruptedException | ExecutionException ex) {
+                ex.printStackTrace(); // Обробка відповідно до вашого випадку
+            }
+
         });
     }
 }

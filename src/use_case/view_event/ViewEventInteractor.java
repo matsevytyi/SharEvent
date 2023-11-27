@@ -25,6 +25,7 @@ public class ViewEventInteractor implements ViewEventInputBoundary {
 
         if (event != null) {
             ViewEventOutputData outputData = new ViewEventOutputData(
+                    event.getEventId(),
                     event.getEventName(),
                     event.getType(),
                     event.getDescription(),

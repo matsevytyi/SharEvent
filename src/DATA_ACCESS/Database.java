@@ -265,16 +265,47 @@ public class Database {
     }
 
 
-    public Object executeQueryEvent(String query, int event_id) {
+//    public Object executeQueryEvent(String query, int event_id) {
+//        connection = connect();
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setInt(1, event_id);
+//            ResultSet resultSet = statement.executeQuery();
+//            resultSet.next();
+//
+//            return extractEvent(resultSet);
+//
+//        }  catch (SQLException e) {
+//            System.out.println("Error executing SQL query");
+//            e.printStackTrace();
+//            return null;
+//        } finally {
+//            try {
+//                connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
+
+    public Object executeQueryEvent(String query) {
+
+        Set<Event> events = new HashSet<>();
+
         connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, event_id);
+
+
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
+            if (resultSet.next()) {
+                events.add(extractEvent(resultSet));
 
-            return extractEvent(resultSet);
+            } else {
+                System.out.println("No results found");
+                return null;
+            }
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error executing SQL query");
             e.printStackTrace();
             return null;
@@ -286,7 +317,11 @@ public class Database {
             }
         }
 
+        System.out.println("our event set: " + events.isEmpty());
+
+        return events;
     }
+
 
     @SneakyThrows
     private User extractUser(ResultSet resultSet) {

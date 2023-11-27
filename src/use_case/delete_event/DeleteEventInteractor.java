@@ -1,29 +1,30 @@
 package use_case.delete_event;
 
+import data_access.LoadEventsDataAccessInterface;
+
 import java.util.Set;
 
 public class DeleteEventInteractor implements DeleteEventInputBoundary {
 
 
 
-    final DeleteEventDataAccessInterface eventDataAccessObject;
+    final LoadEventsDataAccessInterface loadEventsDataAccessInterface;
     final DeleteEventOutputBoundary deleteEventPresenter;
 
-    public DeleteEventInteractor(DeleteEventDataAccessInterface eventDataAccessObject, DeleteEventOutputBoundary deleteEventPresenter) {
-        this.eventDataAccessObject = eventDataAccessObject;
+    public DeleteEventInteractor(LoadEventsDataAccessInterface loadEventsDataAccessInterface, DeleteEventOutputBoundary deleteEventPresenter) {
+        this.loadEventsDataAccessInterface = loadEventsDataAccessInterface;
         this.deleteEventPresenter = deleteEventPresenter;
     }
 
 
     @Override
-    public void execute() {
-
-       String deletedEvent = eventDataAccessObject.deletedEvent();
-       eventDataAccessObject.deleteEvent();
+    public void execute(DeleteEventInputData deleteEventInputData) {
 
 
-        DeleteEventOutputData clearOutputData = new DeleteEventOutputData(deletedEvent,false);
-        deleteEventPresenter.prepareSuccessCase(clearOutputData);
+      String deletedEventId = loadEventsDataAccessInterface.deleteEvent(deleteEventInputData.getEventId()).getEventName();
+
+        DeleteEventOutputData deleteEventOutputData = new DeleteEventOutputData(deletedEventId,false);
+        deleteEventPresenter.prepareSuccessCase(deleteEventOutputData);
     }
 
 }

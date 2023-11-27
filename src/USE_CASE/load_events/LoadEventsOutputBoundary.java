@@ -10,5 +10,4 @@ import java.awt.*;
 public interface LoadEventsOutputBoundary {
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView);
 
-    public boolean checkForClickOnEvent(Point clickPoint, JXMapViewer mapViewer);
 }

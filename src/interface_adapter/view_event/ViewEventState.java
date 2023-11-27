@@ -10,7 +10,7 @@ import java.time.LocalTime;
 public class ViewEventState {
 
 
-    public void setDetails(String eventName, String type, String description,LocalDate date, LocalTime time, String createdBy, String registeredUsers ){
+    public void setDetails(int eventId, String eventName, String type, String description,LocalDate date, LocalTime time, String createdBy, String registeredUsers ){
         setDate(date);
         setTime(time);
         setDescription(description);
@@ -18,10 +18,11 @@ public class ViewEventState {
         setEventName(eventName);
         setRegisteredUsers(registeredUsers);
         setType(type);
-    }
+        setEventId(eventId);
+    }z
 
 
-
+private int eventId;
     private  String eventName ;
     private String description ;
     private String type;

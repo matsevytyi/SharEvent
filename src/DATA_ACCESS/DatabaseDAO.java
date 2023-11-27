@@ -1,5 +1,6 @@
 package data_access;
 
+import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -10,20 +11,14 @@ import lombok.SneakyThrows;
 import java.util.List;
 import java.util.Set;
 import entity.Event;
-
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.viewer.GeoPosition;
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface {
     Database database = new Database();
 
-    @Override
-    public Event getEventById(int id) {
 
-        String query = "select * from public.event where id_event=?";
-
-        Event event = (Event) database.executeQueryEvent(query, id);
-        return event;
-    }
 
     public void deleteEvent(String event_id) {
 
@@ -163,6 +158,35 @@ Set<Event> events = database.executeQueryEventList();
             // Handle failure (throw an exception or take appropriate action)
         }
     }
+
+    @Override
+    public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {
+
+        Set<Event> events = LoadEventsDAO_OutputData.getEvents();
+        for (Event event : events) {
+            GeoPosition eventPosition = event.getPosition();
+            GeoPosition clickedPosition = new GeoPosition(latitude, longitude);
+            if (isClickNearWaypoint(clickedPosition, eventPosition, mapViewer)) {
+                return event;
+            }
+        }
+
+        // If no matching event is found, return null or another appropriate value
+        return null;
+    }
+    private boolean isClickNearWaypoint(GeoPosition clickPosition, GeoPosition waypointPosition, JXMapViewer mapViewer) {
+        // Convert GeoPositions to screen coordinates
+        Point2D.Double clickPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(clickPosition, mapViewer.getZoom());
+        Point2D.Double waypointPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(waypointPosition, mapViewer.getZoom());
+
+        // Define a threshold for considering the click as near the waypoint
+        int threshold = 23;
+
+        // Check if the click is within the threshold distance of the waypoint
+        return clickPoint.distance(waypointPoint) < threshold;
+    }
+
+
 
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
