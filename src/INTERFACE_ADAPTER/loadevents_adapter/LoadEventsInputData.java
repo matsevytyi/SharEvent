@@ -1,9 +1,10 @@
-package INTERFACE_ADAPTER;
+package INTERFACE_ADAPTER.loadevents_adapter;
 
 import lombok.Getter;
-import ENTITY.Temporary_entites.Event;
 
 import java.util.Set;
+
+import ENTITY.Event;
 
 public class LoadEventsInputData {
 

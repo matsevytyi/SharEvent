@@ -1,14 +1,15 @@
 package DATA_ACCESS;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.User;
+import ENTITY.Event;
 import java.util.List;
 import java.util.Set;
-import ENTITY.Temporary_entites.*;
-
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
@@ -134,9 +135,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         Set<Event> events = new HashSet<>();
 
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
-
-
+        events.addAll(database.executeQueryEventList(query, "TODO"));
 
         return new LoadEventsDAO_OutputData(events);
     }
@@ -151,6 +150,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
 
+        System.out.println(result);
 
         return result != null;
     }
@@ -165,6 +165,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return true;
     }
 
+    @Override
     public User getUserByUsername(String username) {
         String query = "select * from public.user where username=?";
         Object result = database.executeQueryUser(query, username);
@@ -172,9 +173,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return (User) result;
     }
 
+
     @Override
-    public boolean checkPassword(String password) {
-        return false;
+    public boolean checkPassword(String username, String password) {
+        String query = "select * from public.user where username=?";
+        boolean result = database.executeQueryCheckPassword(query, username, password);
+
+        return result;
     }
 
     public List<User> FindFollowersOfUser(String username) throws SQLException {

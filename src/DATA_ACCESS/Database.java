@@ -5,6 +5,7 @@ import ENTITY.User;
 import lombok.SneakyThrows;
 
 import java.sql.*;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -118,9 +119,11 @@ public class Database {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
+            if(resultSet.next()) {
+                return extractUser(resultSet);
+            }
 
-            return extractUser(resultSet);
+            return null;
 
         }  catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -136,6 +139,31 @@ public class Database {
 
     }
 
+    public boolean executeQueryCheckPassword(String query, String username, String password) {
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            User user = extractUser(resultSet);
+            if (password.equals(user.getPassword())) {
+                return true;
+            }
+
+        }  catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     @SneakyThrows
     private User extractUser(ResultSet resultSet) {
         String username = resultSet.getString("username");
@@ -148,7 +176,7 @@ public class Database {
     }
 
 
-    public Object executeQueryEventList(String query, String username) {
+    public Collection<Event> executeQueryEventList(String query, String username) {
 
         Connection connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -178,14 +206,16 @@ public class Database {
 
     @SneakyThrows
     private Event extractEvent(ResultSet resultSet) {
-        int id_event = resultSet.getInt("id_event ");
+        int id_event = resultSet.getInt("id_event");
         String event_name = resultSet.getString("event_name");
         String description = resultSet.getString("description");
         String type = resultSet.getString("type");
         String time = resultSet.getString("time");
         String date = resultSet.getString("date");
-        float longitude = resultSet.getFloat("longitude");
-        float latitude = resultSet.getFloat("latitude");
+        double longitude = resultSet.getDouble("longitude");
+        System.out.println("double long" + longitude);
+        double latitude = resultSet.getDouble("latitude");
+        System.out.println("double lat" + latitude);
         String creator = resultSet.getString("creator");
 
         // треба якось переробити з цими налами

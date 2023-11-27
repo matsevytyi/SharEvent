@@ -1,4 +1,4 @@
-package INTERFACE_ADAPTER;
+package INTERFACE_ADAPTER.loadevents_adapter;
 
 import VIEW.LoadMapView;
 import lombok.Getter;
@@ -6,8 +6,8 @@ import org.jxmapviewer.JXMapViewer;
 
 import java.awt.*;
 
-import USE_CASE.LoadEventsOutputBoundary;
-import USE_CASE.LoadEventsInteractor;
+import USE_CASE.loadevents.LoadEventsOutputBoundary;
+import USE_CASE.loadevents.LoadEventsInteractor;
 
 public class LoadEventsController {
 

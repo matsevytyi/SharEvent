@@ -1,14 +1,12 @@
 package INTERFACE_ADAPTER.login_adapter;
 
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.ViewManagerModel;
-import INTERFACE_ADAPTER.map_adapter.LoggedInState;
-import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
-import INTERFACE_ADAPTER.signup_adapter.SignUpState;
 import USE_CASE.login.LoginOutputData;
 import USE_CASE.login.LoginOutputDataBoundary;
 import VIEW.LoadMapView;
+import VIEW.LoginView;
 import VIEW_CREATOR.LoadMapViewModel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -16,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class LoginPresenter implements LoginOutputDataBoundary {
@@ -34,8 +33,6 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     public void prepareSuccessView(LoginOutputData user) {
 
         // On success, switch to the user's map.
-        //dispose();// Close the login view
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -51,10 +48,10 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         mapViewModel.setLoggedInUserObject(curruser);
         mapViewModel.firePropertyChanged();
 
-        // Assuming that your map view has a unique name, replace "mapViewName" with the actual name.
+        loginViewModel.setLogged();
+
         viewManagerModel.setActiveView("mapViewName");
         viewManagerModel.firePropertyChanged();
-
 
 
 //        User curruser = user.getUser();
@@ -80,14 +77,22 @@ public class LoginPresenter implements LoginOutputDataBoundary {
 
     private void openJavaFXMapView() {
 
-        JFXPanel jfxPanel = new JFXPanel();
         Platform.runLater(() -> {
-            LoadMapView loadMapView = new LoadMapView(mapViewModel);  // Replace with your actual JavaFX view class
-            Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);  // Set width and height
+            LoadMapView loadMapView = new LoadMapView(mapViewModel);
+            Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);
 
             Stage stage = new Stage();
             stage.setTitle("Map View: " + mapViewModel.getLoggedInUser());
             stage.setScene(scene);
+            stage.setResizable(false);
+
+            stage.setOnCloseRequest(event -> {
+
+                System.out.println("Window is closing. Stopping the program.");
+
+                Platform.exit();
+                System.exit(0);
+            });
 
             stage.show();
         });

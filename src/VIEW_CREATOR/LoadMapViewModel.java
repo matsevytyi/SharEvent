@@ -1,8 +1,7 @@
 package VIEW_CREATOR;
 
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
-import INTERFACE_ADAPTER.map_adapter.LoggedInState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import USE_CASE.login.LoginOutputData;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import org.jxmapviewer.JXMapKit;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.LinkedList;
 
 public class LoadMapViewModel {
 
@@ -58,6 +56,7 @@ public class LoadMapViewModel {
     private LoadMapState state = new LoadMapState ();
 
 
+
     private String loggedInUser;
 
     private User loggedInUserObject;
@@ -76,7 +75,7 @@ public class LoadMapViewModel {
         updateEventsButtonStyle = "-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;";
 
 
-        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;";
+        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40; -fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-font-alignment: center;";
         rightMenuButtonSize = 170;
 
         viewProfileButtonStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 100;";

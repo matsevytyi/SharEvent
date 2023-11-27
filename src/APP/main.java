@@ -1,5 +1,8 @@
 package APP;
 
+import APP.use_case_factory.LoggedInUseCaseFactory;
+import APP.use_case_factory.LoginUseCaseFactory;
+import APP.use_case_factory.SignUpUseCaseFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;

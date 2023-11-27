@@ -1,4 +1,4 @@
-package INTERFACE_ADAPTER;
+package INTERFACE_ADAPTER.loadmap_adapter;
 
 import lombok.Getter;
 import org.jxmapviewer.JXMapKit;
