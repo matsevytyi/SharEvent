@@ -1,5 +1,6 @@
 package INTERFACE_ADAPTER.login_adapter;
 
+import APP.main;
 import ENTITY.User;
 import INTERFACE_ADAPTER.LoadMapState;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -28,24 +29,14 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     private final LoadMapViewModel mapViewModel;
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
-    private ViewEventViewModel viewEventViewModel;
 
-    private ViewEventController viewEventController;
 
     // private final LogOutController logOutController;
 
 
     private static StackPane pane;
 
-    private AddEventViewModel addEventViewModel;
 
-    private  AddEventController addEventController;
-
-
-
-    private DeleteEventViewModel deleteEventViewModel;
-
-    private  DeleteEventController deleteEventController;
 
 
     public LoginPresenter(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, LoadMapViewModel mapViewModel) {
@@ -106,7 +97,8 @@ public class LoginPresenter implements LoginOutputDataBoundary {
 
         JFXPanel jfxPanel = new JFXPanel();
         Platform.runLater(() -> {
-            LoadMapView loadMapView = new LoadMapView(mapViewModel,addEventViewModel, addEventController, viewEventViewModel, viewEventController, deleteEventViewModel, deleteEventController );  // Replace with your actual JavaFX view class
+//       LoadMapView loadMapView = (mapViewModel,addEventViewModel, addEventController, viewEventViewModel, viewEventController, deleteEventViewModel, deleteEventController );  // Replace with your actual JavaFX view class
+            LoadMapView loadMapView = main.loadMapView;
             Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);  // Set width and height
 
             Stage stage = new Stage();

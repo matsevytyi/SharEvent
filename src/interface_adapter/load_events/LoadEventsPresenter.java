@@ -26,7 +26,7 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         mapKit = loadMapView.getViewModel().getMapKit();
         this.loadEventsInputData = loadEventsInputData;
     }
-    @Override
+
     public boolean PrepareSuccesView() {
 
         Set<Event> localEvents = loadEventsInputData.getEvents();
@@ -38,21 +38,19 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
 
         return true;
     }
-@Override
+
     public void PrepareFailView(String reason, LoadMapView loadMapView) {
         FailViewFactory failViewFactory = new FailViewFactory();
 
         StackPane initialPane = loadMapView.getStackPane();
 
-        if(reason == "Database_error") {
+        if (reason == "Database_error") {
             failViewFactory.createFailView(initialPane, "Database error", "Error connecting to the database. Check your connection and if your app is up-to-date");
             System.out.println("Error connecting to the database. Check your connection and if your app is up-to-date");
-        }
-        else if (reason == "No_events") {
+        } else if (reason == "No_events") {
             failViewFactory.createFailView(initialPane, "No events at this location", "NTry to search in another location or be the first to create your own event here");
             System.out.println("No events at this location");
         }
+
     }
-
-
 }
