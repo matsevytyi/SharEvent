@@ -5,8 +5,10 @@ import ENTITY.User;
 import lombok.SneakyThrows;
 
 import java.sql.*;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Database {
     Connection connection;
@@ -205,18 +207,52 @@ public class Database {
 
     @SneakyThrows
     private Event extractEvent(ResultSet resultSet) {
-        int id_event = resultSet.getInt("id_event ");
+        int id_event = resultSet.getInt("id_event");
         String event_name = resultSet.getString("event_name");
         String description = resultSet.getString("description");
         String type = resultSet.getString("type");
         String time = resultSet.getString("time");
         String date = resultSet.getString("date");
-        float longitude = resultSet.getFloat("longitude");
-        float latitude = resultSet.getFloat("latitude");
+        double longitude = resultSet.getFloat("longitude");
+        double latitude = resultSet.getFloat("latitude");
         String creator = resultSet.getString("creator");
 
         // треба якось переробити з цими налами
         return new Event(id_event, event_name, description, type, time, date, longitude, latitude, creator);
+    }
+
+    public Object executeQueryEvent(String query) {
+
+        Set<Event> events = new HashSet<>();
+
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                events.add(extractEvent(resultSet));
+
+            } else {
+                System.out.println("No results found");
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("our event set: " + events.isEmpty());
+
+        return events;
     }
 
 

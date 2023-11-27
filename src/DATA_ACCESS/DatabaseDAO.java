@@ -132,11 +132,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
                 " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
                 ";";
 
-        Set<Event> events = new HashSet<>();
-
-        ResultSet resultSet = (ResultSet) database.executeQuery(query, false);
-
-
+        Set<Event> events = (Set<Event>) database.executeQueryEvent(query);
 
         return new LoadEventsDAO_OutputData(events);
     }

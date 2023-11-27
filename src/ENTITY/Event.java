@@ -3,11 +3,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Event {
+public class Event extends DefaultWaypoint {
 
     int idEvent;
     String eventName;
@@ -15,8 +16,8 @@ public class Event {
     String type;
     String time;
     String date;
-    float longitude;
-    float latitude;
+    double longitude;
+    double latitude;
     String creator;
 
 
