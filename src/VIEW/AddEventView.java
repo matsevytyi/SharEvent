@@ -11,10 +11,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
+@Getter @Setter
 public class AddEventView extends StackPane {
 
     private final AddEventViewModel addEventViewModel;
@@ -55,7 +57,7 @@ public class AddEventView extends StackPane {
         StackPane.setAlignment(contentBox, javafx.geometry.Pos.CENTER);
 
         getChildren().add(contentBox);
-        addEventButton.setOnAction(new EventHandler<ActionEvent>() {
+          addEventButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 AddEventState currentState = addEventViewModel.getState();

@@ -169,9 +169,10 @@ public class Database {
     public List<User> getUsersRegisteredForEvent(int event_id) {
         connection = connect();
         String query = "SELECT * " +
-                "FROM public.user JOIN public.attendedEvents " +
-                "WHERE public.attendedEvents.event = " + event_id +
-                ";";
+                "FROM public.user AS u " +
+                "JOIN public.attendedevents AS ae ON u.username = ae.visitor " +
+                "WHERE ae.event = " + event_id + ";";
+
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -338,13 +339,15 @@ public class Database {
 
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+
+            while(resultSet.next()) {
                 events.add(extractEvent(resultSet));
 
-            } else {
-                System.out.println("No results found");
-                return null;
-            }
+          }
+//            else {
+//                System.out.println("No results found");
+//                return null;
+//            }
 
         } catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -388,38 +391,39 @@ public class Database {
         return new Event(id_event, event_name, type, description, date, time, creatorUser, attendants, latitude, longitude);
     }
 
-    public int executeInsertAndGetGeneratedId(String query, Object... parameters) {
-        connection = connect();
-        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            for (int i = 0; i < parameters.length; i++) {
-                statement.setObject(i + 1, parameters[i]);
-            }
 
-            int affectedRows = statement.executeUpdate();
-
-            if (affectedRows == 0) {
-                System.out.println("Failed to insert event");
-                return -1; // Or throw an exception
-            }
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                } else {
-                    System.out.println("Failed to retrieve generated ID");
-                    return -1; // Or throw an exception
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
-            e.printStackTrace();
-            return -1; // Or throw an exception
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public int executeInsertAndGetGeneratedId(String query, Object... parameters) {
+//        connection = connect();
+//        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+//            for (int i = 0; i < parameters.length; i++) {
+//                statement.setObject(i + 1, parameters[i]);
+//            }
+//
+//            int affectedRows = statement.executeUpdate();
+//
+//            if (affectedRows == 0) {
+//                System.out.println("Failed to insert event");
+//                return -1; // Or throw an exception
+//            }
+//
+//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+//                if (generatedKeys.next()) {
+//                    return generatedKeys.getInt(1);
+//                } else {
+//                    System.out.println("Failed to retrieve generated ID");
+//                    return -1; // Or throw an exception
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error executing SQL query");
+//            e.printStackTrace();
+//            return -1; // Or throw an exception
+//        } finally {
+//            try {
+//                connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

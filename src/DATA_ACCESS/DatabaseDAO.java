@@ -108,11 +108,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
-        String query = "SELECT * FROM public.event " +
-                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
-                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
-                ";";
+//        String query = "SELECT * FROM public.event " +
+//                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
+//                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
+//                ";";
 
+        String query = "SELECT * FROM public.event;";
         Set<Event> events = (Set<Event>) database.executeQueryEvent(query);
 
         return new LoadEventsDAO_OutputData(events);
@@ -124,19 +125,10 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     public void addEvent(Event event) {
         String query = "INSERT INTO public.event (event_name, type, description, date, time, creator, latitude, longitude) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        int generatedId = database.executeInsertAndGetGeneratedId(query,
-                event.getEventName(), event.getType(), event.getDescription(),
-                event.getEventDate(), event.getEventTime(), event.getCreator().getUsername(),
-                event.getLatitude(), event.getLongitude());
 
-        if (generatedId != -1) {
-            System.out.println("Event added with ID: " + generatedId);
-            event.setEventId(generatedId);
-        } else {
-            System.out.println("Failed to add event");
-            // Handle failure (throw an exception or take appropriate action)
-        }
+        database.executeQuery(query, true, event.getEventName(), event.getType(), event.getDescription(), event.getEventDate(), event.getEventTime(), event.getCreator().getName(), event.getLatitude(), event.getLongitude());
     }
+
 
     @Override
     public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {

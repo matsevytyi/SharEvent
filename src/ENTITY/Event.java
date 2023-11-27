@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class Event extends DefaultWaypoint implements EventInterface {
 
-    private static int lastAssignedId = 0;
+   // private static int lastAssignedId = 0;
 
     private int eventId;
     private final String eventName;
@@ -30,7 +30,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
                  LocalTime eventTime, User creator, List<User> eventAttendants,
                  double latitude, double longitude) {
         super(latitude, longitude);
-        this.eventId = ++lastAssignedId;
+       // this.eventId = ++lastAssignedId;
         this.eventName = eventName;
         this.type = type;
         this.eventDate = eventDate;
@@ -58,9 +58,9 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.geoPosition = new GeoPosition(latitude, longitude);
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-
-    // Other methods and getters as needed
+//    public void setEventId(int eventId) {
+//        this.eventId = eventId;
+//    }
+//
+//    // Other methods and getters as needed
 }

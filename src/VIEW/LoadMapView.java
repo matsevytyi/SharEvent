@@ -6,6 +6,7 @@ import API.LoadMap_API;
 import INTERFACE_ADAPTER.LoadMapState;
 
 import INTERFACE_ADAPTER.add_event.AddEventController;
+import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
@@ -18,9 +19,12 @@ import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 
 import javafx.stage.Modality;
@@ -32,6 +36,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -159,9 +165,6 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     }
 
 
-
-
-
     private void handleMapClickForAdding() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Choose Map Point");
@@ -213,6 +216,85 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 // Show the AddEventView stage
                 addEventStage.show();
 
+                addEventView.getEventNameInputField().setOnKeyTyped(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        String text = addEventView.getEventNameInputField().getText() + event.getCharacter();
+                        currentState.setEventName(text);
+                        addEventViewModel.setState(currentState);
+                    }
+                });
+
+                addEventView.getEventDatePicker().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        currentState.setEventDate(addEventView.getEventDatePicker().getValue());
+                        addEventViewModel.setState(currentState);
+                    }
+                });
+
+                addEventView.getEventTimeField().setOnKeyTyped(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        String text =  addEventView.getEventTimeField().getText() + event.getCharacter();
+//                        currentState.setEventTime(LocalTime.parse(text, TimeFormatter.ofPattern("HH:mm a")));
+                        LocalTime localTime = LocalTime.of(12, 0);
+                        currentState.setEventTime(localTime);
+                        addEventViewModel.setState(currentState);
+                    }
+                });
+
+                addEventView.getDescriptionInputField().setOnKeyTyped(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        String text = addEventView.getDescriptionInputField().getText() + event.getCharacter();
+                        currentState.setEventDescription(text);
+                        addEventViewModel.setState(currentState);
+                    }
+                });
+
+                addEventView.getEventTypeComboBox().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        currentState.setEventType(addEventView.getEventTypeComboBox().getValue());
+                        addEventViewModel.setState(currentState);
+                    }
+                });
+                addEventView.getAddEventButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        AddEventState currentState = addEventViewModel.getState();
+                        currentState.setCreator(viewModel.getLoggedInUserObject());
+                        addEventController.execute(
+                                currentState.getEventName(),
+                                currentState.getEventType(),
+                                currentState.getEventDescription(),
+                                currentState.getEventDate(),
+                                currentState.getEventTime(),
+                                currentState.getCreator(),
+                                currentState.getEventLatitude(),
+                                currentState.getEventLongitude()
+
+                        );
+                        // Close the current stage
+
+                       addEventStage.close();
+
+                        // Reload events (Assuming loadEvents is a method that reloads events)
+                        controller.updateEvents(LoadMapView.this);
+                    }
+
+                });
+
+
+
+
+
 //                OtherViewFactory otherViewFactory = new OtherViewFactory();
 //              otherViewFactory.createOtherView(pane, new AddEventView(addEventViewModel, addEventController));
 
@@ -241,14 +323,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 Point clickPoint = e.getPoint();
 
-                // Оновлено: Встановлення значення у CompletableFuture при новому натисканні на карті
+                // Set the value in CompletableFuture for the new click on the map
                 mapClickFuture.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
                 mapViewer.removeMouseListener(this);
-
-
-
             }
         });
+
         handleClosedEventForViewing(mapClickFuture);
     }
 
