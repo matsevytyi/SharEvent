@@ -19,6 +19,7 @@ public class ViewEventState {
         setRegisteredUsers(registeredUsers);
         setType(type);
         setEventId(eventId);
+        setLoggedinuser(loggedinuser);
     }
 
 
@@ -33,6 +34,8 @@ private int eventId;
     private double latitude;
     private double longitude;
     private JXMapViewer mapViewer;
+
+    private String loggedinuser;
 
     }
 

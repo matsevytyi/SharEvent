@@ -49,4 +49,12 @@ public class ViewEventViewModel extends ViewModel {
     public void setMapViewer(JXMapViewer mapViewer) {
         state.setMapViewer(mapViewer);
     }
+
+    public void setLoggedInUser(String loggedInUser) {
+        state.setLoggedinuser(loggedInUser);
+    }
+
+    public String getLoggedInUser() {
+       return state.getLoggedinuser();
+    }
 }
