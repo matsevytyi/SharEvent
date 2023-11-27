@@ -75,7 +75,7 @@ public class LoadMapViewModel {
         updateEventsButtonStyle = "-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;";
 
 
-        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;";
+        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40; -fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-font-alignment: center;";
         rightMenuButtonSize = 170;
 
         viewProfileButtonStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 100;";
