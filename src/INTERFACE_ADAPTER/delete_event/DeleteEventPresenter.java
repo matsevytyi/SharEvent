@@ -21,7 +21,7 @@ private final DeleteEventViewModel deleteEventViewModel;
         deleteEventState.setDeletedEventName(event.getDeletedEvent());
         deleteEventViewModel.firePropertyChanged();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event deleted successfully!");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event " +  event.getDeletedEvent() + "deleted successfully!");
         alert.showAndWait();
     }
 

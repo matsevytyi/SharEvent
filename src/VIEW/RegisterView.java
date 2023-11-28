@@ -1,4 +1,4 @@
-package VIEW;
-
-public class RegisterView {
-}
+//package VIEW;
+//
+//public class RegisterView {
+//}

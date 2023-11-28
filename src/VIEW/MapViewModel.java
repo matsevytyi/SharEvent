@@ -1,4 +1,4 @@
-package VIEW;
-
-public class MapViewModel {
-}
+//package VIEW;
+//
+//public class MapViewModel {
+//}

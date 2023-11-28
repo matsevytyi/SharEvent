@@ -60,7 +60,7 @@ public class AddEventView extends StackPane {
           addEventButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                AddEventState currentState = addEventViewModel.getState();
+                 AddEventState currentState = addEventViewModel.getState();
                 addEventController.execute(
                         currentState.getEventName(),
                         currentState.getEventType(),

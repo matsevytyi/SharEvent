@@ -10,6 +10,7 @@ import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
+import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;
@@ -79,9 +80,11 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     private GeoPosition addEvent = null;
 
-    private CompletableFuture<GeoPosition> mapClickFuture;
-    private CompletableFuture<GeoPosition> mapClickFutureForViewing;
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController) {
+    private final RegisterController registerController;
+
+
+
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController) {
 
 
       viewModel = loggedInViewModel; // here was new LoadMapViewModel();
@@ -103,13 +106,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         this.addEventController = addEventController;
         this.viewEventViewModel = viewEventViewModel;
         this.viewEventController = viewEventController;
-
+        this.registerController = registerController;
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
         mapViewerforViewing = this.getViewModel().getMapKit().getMainMap();
-        mapClickFuture = new CompletableFuture<>();
-        mapClickFutureForViewing = new CompletableFuture<>();
+
 
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
@@ -345,7 +347,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 viewEventController.execute(viewEventViewModel.getState().getLatitude(), viewEventViewModel.getState().getLongitude(), viewEventViewModel.getState().getMapViewer());
 
 
-                ViewEventView viewEventView = new ViewEventView(viewEventViewModel, deleteEventController, deleteEventViewModel);
+                ViewEventView viewEventView = new ViewEventView(viewEventViewModel, deleteEventController, deleteEventViewModel, registerController);
                 viewEventView.updateView();
                 // Set the scene for the AddEventView stage
                 Scene scene = new Scene(viewEventView, 500, 500);

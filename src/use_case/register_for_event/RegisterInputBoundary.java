@@ -1,8 +1,7 @@
-//package use_case.register_for_event;
-//
-//import use_case.add_event.AddEventInputData;
-//
-//public interface RegisterInputBoundary {
-//
-//    void execute(RegisterInputData registerInputData);
-//}
+package USE_CASE.register_for_event;
+
+
+public interface RegisterInputBoundary {
+
+    void execute(RegisterInputData registerInputData);
+}

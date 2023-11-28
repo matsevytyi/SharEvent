@@ -10,6 +10,8 @@ import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.map_adapter.LoggedInViewModel;
+import INTERFACE_ADAPTER.register_for_event.RegisterController;
+import INTERFACE_ADAPTER.register_for_event.RegisterViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW.*;
@@ -51,6 +53,7 @@ public static LoadMapView loadMapView;
         ViewEventViewModel viewEventViewModel = new ViewEventViewModel();
         DatabaseDAO databaseDAO = new DatabaseDAO();
         DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
+        RegisterViewModel registerViewModel = new RegisterViewModel();
 
         SignUpView signupView = SignUpUseCaseFactory.SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
         views.add(signupView, signupView.viewName);
@@ -58,7 +61,7 @@ public static LoadMapView loadMapView;
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
         views.add(loginView, loginView.viewName);
 
-       loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel);
+       loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel, registerViewModel);
         views.add(loadMapView, loadMapView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

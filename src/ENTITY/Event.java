@@ -58,6 +58,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.geoPosition = new GeoPosition(latitude, longitude);
     }
 
+
 //    public void setEventId(int eventId) {
 //        this.eventId = eventId;
 //    }

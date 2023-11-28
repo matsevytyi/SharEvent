@@ -13,6 +13,9 @@ import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.logout_adapter.LogOutController;
 import INTERFACE_ADAPTER.logout_adapter.LogOutPresenter;
+import INTERFACE_ADAPTER.register_for_event.RegisterController;
+import INTERFACE_ADAPTER.register_for_event.RegisterPresenter;
+import INTERFACE_ADAPTER.register_for_event.RegisterViewModel;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventPresenter;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
@@ -21,6 +24,8 @@ import USE_CASE.add_event.AddEventOutputBoundary;
 import USE_CASE.delete_event.DeleteEventInteractor;
 import USE_CASE.delete_event.DeleteEventOutputBoundary;
 import USE_CASE.logout.LogOutInteractor;
+import USE_CASE.register_for_event.RegisterInteractor;
+import USE_CASE.register_for_event.RegisterOutputBoundary;
 import USE_CASE.view_event.ViewEventInteractor;
 import USE_CASE.view_event.ViewEventOutputBoundary;
 import VIEW.LoadMapView;
@@ -33,7 +38,7 @@ public class MapUseCasesFactory {
 
     private MapUseCasesFactory(){};
 
-    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel){
+    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel, RegisterViewModel registerViewModel){
         AddEventController addEventController = null;
         try {
             addEventController = addEventUseCase(addEventViewModel, loadEventsDataAccessInterface, viewManagerModel);
@@ -56,9 +61,16 @@ public class MapUseCasesFactory {
 
         LogOutInteractor logoutInteractor = new LogOutInteractor(logoutPresenter);
 
+         RegisterController registerController= null;
+
+        try {
+           registerController = registerUseCase(registerViewModel, loadEventsDataAccessInterface, viewManagerModel);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         LogOutController logoutController = new LogOutController (logoutInteractor);
-        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController);
+        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController, registerController);
     }
 
 
@@ -69,6 +81,15 @@ public class MapUseCasesFactory {
         AddEventInteractor addEventInteractor = new AddEventInteractor(loadEventsDataAccessInterfac,addEventOutputBoundary, eventFactory );
 
         return new AddEventController(addEventInteractor);
+
+    }
+
+    private static RegisterController registerUseCase(RegisterViewModel registerViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterfac, ViewManagerModel viewManagerModel ) throws IOException {
+        RegisterOutputBoundary registerOutputBoundary = new RegisterPresenter(registerViewModel, viewManagerModel);
+
+      RegisterInteractor registerInteractor = new RegisterInteractor(loadEventsDataAccessInterfac,registerOutputBoundary );
+
+        return new RegisterController(registerInteractor);
 
     }
 

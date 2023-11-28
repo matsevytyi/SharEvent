@@ -21,8 +21,6 @@ import org.jxmapviewer.viewer.GeoPosition;
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
     Database database = new Database();
 
-
-
     public void deleteEvent(int event_id) {
 
         String query = "DELETE FROM public.event WHERE id_event = " + event_id;
@@ -61,11 +59,11 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
-    public void registerUserForEvent(String username, String event_id) {
+    public void registerUserForEvent(String username, int event_id) {
 
-        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (" + username + ", " + event_id + ")";
+        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (?, ?)";
 
-        database.executeQuery(query, true);
+        database.executeQuery(query, true, username, event_id);
 
     }
 
@@ -75,19 +73,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         database.executeQuery(query, true);
 
-    }
-
-    public List<User> getUsersRegisteredForEvent(int event_id) {
-
-        String query = "SELECT * " +
-                " FROM public.user JOIN public.attendedEvents " +
-                " WHERE public.attendedEvents.event = " + event_id +
-                ";";
-
-
-        Object userList = database.executeQueryUserListForEvent(query, event_id);
-
-        return (List<User>) userList;
     }
 
     public void FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
@@ -142,11 +127,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         database.executeQuery(query, true, event.getEventName(), event.getType(), event.getDescription(), event.getEventDate(), event.getEventTime(), event.getCreator().getName(), event.getLatitude(), event.getLongitude());
     }
 
-//    @Override
-//    public Event deleteEvent(int eventId) {
-//
-//    }
-
     @Override
     public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {
 
@@ -159,7 +139,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
             }
         }
 
-        // If no matching event is found, return null or another appropriate value
         return null;
     }
 
@@ -177,16 +156,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return clickPoint.distance(waypointPoint) < threshold;
     }
 
-
-
-
     // User
 
     @Override
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
-
 
         return result != null;
     }
@@ -218,8 +193,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         return result;
     }
-
-
 
 
     public List<Event> FindUsersEventsToAttend(String username) throws SQLException {

@@ -10,7 +10,7 @@ public interface LoadEventsDataAccessInterface {
     //void addEvent(String event_name,  String type, String event_description, String date, String time,  String creator,  String latitude, String longitude) ;
     void addEvent(Event event);
 
-    void registerForEvent(int event_id, String username);
+    void registerUserForEvent(String username, int event_id);
 
     Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer);
 

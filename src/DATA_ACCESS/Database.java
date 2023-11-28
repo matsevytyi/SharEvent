@@ -340,9 +340,7 @@ public class Database {
             if (resultSet.next()){
                 return extractEvent(resultSet);
             }
-
-
-               return null;
+            return null;
 
         }  catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -417,6 +415,11 @@ public class Database {
 
         // Create and return the Event object
         return new Event(id_event, event_name, type, description, date, time, creatorUser, attendants, latitude, longitude);
+    }
+
+    public void executeQueryRegister(String query, String username, int eventId) {
+
+
     }
 
 

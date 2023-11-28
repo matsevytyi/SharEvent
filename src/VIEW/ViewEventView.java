@@ -94,7 +94,6 @@ public class ViewEventView extends VBox {
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
-                DeleteEventState deleteEventState = new DeleteEventState();
                 ViewEventState viewEventState = viewEventViewModel.getState();
                 deleteEventController.execute(viewEventState.getEventId());
 
@@ -102,13 +101,14 @@ public class ViewEventView extends VBox {
         } else if ("Register for Event".equals(buttonText)) {
             // Implement register for event logic
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this event?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to register this event?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
 
                 ViewEventState viewEventState = viewEventViewModel.getState();
                 registerEventController.execute(viewEventState.getEventId(), viewEventState.getLoggedinuser());
+
 
             }
         }

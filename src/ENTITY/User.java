@@ -59,4 +59,9 @@ public class User implements UserInterface {
     public void remove_hosted_event(EventInterface event) {
         this.hosted_events.remove(event);
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }
