@@ -11,8 +11,8 @@ public interface UserInterface {
 
     List<EventInterface> getHostedEvents();
 //    int getUsername();
-    void add_friend(UserInterface friend);
-    void remove_friend(UserInterface friend);
+//    void add_friend(UserInterface friend);
+//    void remove_friend(UserInterface friend);
 
     void add_registered_event(EventInterface event);
 

@@ -11,7 +11,7 @@ public class User implements UserInterface {
     private final String name;
     private final String password;
     private final String email;
-    private final List<UserInterface> friends;
+//    private final List<UserInterface> friends;
     private final List<EventInterface> registered_events;
     private final List<EventInterface> hosted_events;
 
@@ -21,7 +21,7 @@ public class User implements UserInterface {
         this.password = password;
         this.username = userId;
         this.email = email;
-        this.friends = new ArrayList<UserInterface>();
+//        this.friends = new ArrayList<UserInterface>();
         this.registered_events = new ArrayList<EventInterface>();
         this.hosted_events = new ArrayList<EventInterface>();
     }
@@ -36,13 +36,13 @@ public class User implements UserInterface {
     }
 
 
-    public void add_friend(UserInterface friend) {
-        this.friends.add(friend);
-    }
-
-    public void remove_friend(UserInterface friend) {
-        this.friends.remove(friend);
-    }
+//    public void add_friend(UserInterface friend) {
+//        this.friends.add(friend);
+//    }
+//
+//    public void remove_friend(UserInterface friend) {
+//        this.friends.remove(friend);
+//    }
 
     public void add_registered_event(EventInterface event) {
         this.registered_events.add(event);

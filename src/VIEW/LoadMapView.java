@@ -137,7 +137,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 //        });
 
         viewProfileButton.setOnAction(e -> {
-            controller.viewProfile();
+
         });
 
         filterEventsButton.setOnAction(e -> {
