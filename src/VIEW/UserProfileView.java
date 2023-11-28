@@ -33,20 +33,29 @@ public class UserProfileView extends VBox {
     private void initUI() {
         getChildren().addAll(
                 new Label("User Profile"),
-                usernameLabel,
-                nameLabel,
-                emailLabel,
-                registeredEventsLabel,
-                hostedEventsLabel,
-                logoutButton
+                new Label("Username"), usernameLabel,
+                new Label("Name "), nameLabel,
+                new Label("Email "),emailLabel,
+                new Label("Registered Events "),registeredEventsLabel,
+                new Label("Hosted Events"),hostedEventsLabel,
+                new Label("Log out "),logoutButton
         );
         setSpacing(5);
 
-        logoutButton.setOnAction(event -> {
-          //////////////////
-        });
+//        logoutButton.setOnAction(event -> handleActionButtonClick());
+//        logoutButton.setOnAction(event -> {
+//          //////////////////
+//        });
     }
 
+    public void updateProfile() {
+        // Встановлення нових значень для елементів інтерфейсу на основі даних користувача
+        usernameLabel.setText("Username: " + viewProfileViewModel.getState().getUsername());
+        nameLabel.setText("Name: " + viewProfileViewModel.getState().getName());
+        emailLabel.setText("Email: " + viewProfileViewModel.getState().getEmail());
+        registeredEventsLabel.setText("Registered Events: " + viewProfileViewModel.getState().getRegistered_events());
+        hostedEventsLabel.setText("Hosted Events: " + viewProfileViewModel.getState().getHosted_events());
+    }
 
 }
 

@@ -18,7 +18,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
     @Override
     public void execute(ViewProfileInputData username) {
 
-       User user = eventDataAccessInterface(username.getUsername());
+       User user = eventDataAccessInterface.getUserByUsername(username.getUsername());
 
         if (user != null) {
             ViewProfileOutputData outputData = new ViewProfileOutputData(

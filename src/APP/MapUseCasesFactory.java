@@ -19,6 +19,10 @@ import INTERFACE_ADAPTER.register_for_event.RegisterViewModel;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventPresenter;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
+import INTERFACE_ADAPTER.view_profile.ViewProfileController;
+import INTERFACE_ADAPTER.view_profile.ViewProfilePresenter;
+import INTERFACE_ADAPTER.view_profile.ViewProfileState;
+import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import USE_CASE.add_event.AddEventInteractor;
 import USE_CASE.add_event.AddEventOutputBoundary;
 import USE_CASE.delete_event.DeleteEventInteractor;
@@ -28,6 +32,8 @@ import USE_CASE.register_for_event.RegisterInteractor;
 import USE_CASE.register_for_event.RegisterOutputBoundary;
 import USE_CASE.view_event.ViewEventInteractor;
 import USE_CASE.view_event.ViewEventOutputBoundary;
+import USE_CASE.view_profile.ViewProfileInteractor;
+import USE_CASE.view_profile.ViewProfileOutputBoundary;
 import VIEW.LoadMapView;
 
 import VIEW_CREATOR.LoadMapViewModel;
@@ -38,7 +44,7 @@ public class MapUseCasesFactory {
 
     private MapUseCasesFactory(){};
 
-    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel, RegisterViewModel registerViewModel){
+    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel, RegisterViewModel registerViewModel, ViewProfileViewModel viewProfileViewModel){
         AddEventController addEventController = null;
         try {
             addEventController = addEventUseCase(addEventViewModel, loadEventsDataAccessInterface, viewManagerModel);
@@ -70,7 +76,16 @@ public class MapUseCasesFactory {
         }
 
         LogOutController logoutController = new LogOutController (logoutInteractor);
-        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController, registerController);
+
+        ViewProfileController viewProfileController = null;
+
+        try {
+            viewProfileController = viewProfileUseCase(viewProfileViewModel, loadEventsDataAccessInterface, viewManagerModel);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController, registerController, viewProfileViewModel, viewProfileController);
     }
 
 
@@ -106,6 +121,14 @@ public class MapUseCasesFactory {
         DeleteEventInteractor deleteEventInteractor = new DeleteEventInteractor(loadEventsDataAccessInterface, deleteEventOutputBoundary);
 
         return new DeleteEventController(deleteEventInteractor);
+
+    }
+
+    private static ViewProfileController viewProfileUseCase(ViewProfileViewModel viewProfileViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel ) throws IOException {
+        ViewProfileOutputBoundary viewProfileOutputBoundary = new ViewProfilePresenter(viewProfileViewModel, viewManagerModel);
+        ViewProfileInteractor viewProfileInteractor = new ViewProfileInteractor(loadEventsDataAccessInterface, viewProfileOutputBoundary);
+
+        return new ViewProfileController(viewProfileInteractor);
 
     }
 }

@@ -150,6 +150,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
             viewProfileState.setUsername(viewModel.getLoggedInUser());
 
             viewProfileController.execute(viewProfileState.getUsername());
+
+            userProfileView.updateProfile();
             // Set the scene for the AddEventView stage
             Scene scene = new Scene(userProfileView, 500, 500);
 
