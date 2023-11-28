@@ -8,7 +8,9 @@ import java.sql.SQLException;
 public interface LoadEventsDataAccessInterface {
      LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException;
     //void addEvent(String event_name,  String type, String event_description, String date, String time,  String creator,  String latitude, String longitude) ;
-void addEvent(Event event);
+    void addEvent(Event event);
+
+    void registerForEvent(int event_id, String username);
 
     Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer);
 

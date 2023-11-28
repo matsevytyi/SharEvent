@@ -3,6 +3,7 @@ package VIEW;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventState;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventState;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW_CREATOR.LoadMapViewModel;
@@ -30,12 +31,16 @@ public class ViewEventView extends VBox {
 
     private final DeleteEventViewModel deleteEventViewModel;
 
+    private final RegisterController registerEventController;
 
 
-    public ViewEventView(ViewEventViewModel viewEventViewModel, DeleteEventController deleteEventController, DeleteEventViewModel deleteEventViewModel) {
+
+    public ViewEventView(ViewEventViewModel viewEventViewModel, DeleteEventController deleteEventController, DeleteEventViewModel deleteEventViewModel, RegisterController registerEventController) {
         this.viewEventViewModel = viewEventViewModel;
         this.deleteEventController = deleteEventController;
         this.deleteEventViewModel = deleteEventViewModel;
+
+        this.registerEventController = registerEventController;
 
         initUI();
     }
@@ -95,8 +100,17 @@ public class ViewEventView extends VBox {
 
             }
         } else if ("Register for Event".equals(buttonText)) {
-
             // Implement register for event logic
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this event?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+
+                ViewEventState viewEventState = viewEventViewModel.getState();
+                registerEventController.execute(viewEventState.getEventId(), viewEventState.getLoggedinuser());
+
+            }
         }
     }
 }
