@@ -1,9 +1,10 @@
-package INTERFACE_ADAPTER.load_map;
 
-import USE_CASE.load_map.LoadMapInputBoundary;
-import USE_CASE.load_map.LoadMapInteractor;
+package INTERFACE_ADAPTER.loadmap_adapter;
+
 import VIEW_CREATOR.LoadMapViewModel;
 
+import USE_CASE.loadmap.LoadMapInputBoundary;
+import USE_CASE.loadmap.LoadMapInteractor;
 import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
 

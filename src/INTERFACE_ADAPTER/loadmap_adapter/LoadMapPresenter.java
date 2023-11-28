@@ -1,7 +1,8 @@
-package INTERFACE_ADAPTER.load_map;
+
+package INTERFACE_ADAPTER.loadmap_adapter;
 
 
-import USE_CASE.load_map.LoadMapOutputBoundary;
+import USE_CASE.loadmap.LoadMapOutputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
 
 

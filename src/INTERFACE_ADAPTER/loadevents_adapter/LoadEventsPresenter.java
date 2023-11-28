@@ -1,7 +1,9 @@
-package INTERFACE_ADAPTER.load_events;
 
+package INTERFACE_ADAPTER.loadevents_adapter;
 
-import USE_CASE.load_events.LoadEventsInputBoundary;
+import ENTITY.Event;
+import USE_CASE.loadevents.LoadEventsInputBoundary;
+
 import VIEW_CREATOR.FailViewFactory;
 import ENTITY.Event;
 import javafx.scene.layout.StackPane;
