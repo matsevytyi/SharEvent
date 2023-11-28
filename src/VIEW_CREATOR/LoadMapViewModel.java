@@ -1,7 +1,7 @@
 package VIEW_CREATOR;
 
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import USE_CASE.login.LoginOutputData;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +56,7 @@ public class LoadMapViewModel {
     private LoadMapState state = new LoadMapState ();
 
 
+
     private String loggedInUser;
 
     private User loggedInUserObject;
@@ -64,17 +65,17 @@ public class LoadMapViewModel {
     public LoadMapViewModel() {
         mapKit = new JXMapKit();
 
-        viewProfileButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/DefaultProfilePicture.png";
-        filterEventsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/MapFiltersButton.png";
-        viewFriendsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/ViewMyEventsButtonBg.png";
-        viewEventsButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/ViewFriendsButtonBg.png";
-        addEventButtonImgPath = "/Users/innaboiko/Desktop/CSC207/boikoinn/boikoinn/SharEvent/resources/UI_elements/AddEventButtonBg.png";
+        viewProfileButtonImgPath = "/UI_elements/DefaultProfilePicture.png";
+        filterEventsButtonImgPath = "/UI_elements/MapFiltersButton.png";
+        viewFriendsButtonImgPath = "/UI_elements/ViewFriendsButtonBg.png";
+        viewEventsButtonImgPath = "/UI_elements/ViewMyEventsButtonBg.png";
+        addEventButtonImgPath = "/UI_elements/AddEventButtonBg.png";
         updateEventsButtonName = "Update Events";
 
         updateEventsButtonStyle = "-fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 30;";
 
 
-        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40;";
+        rightMenuButtonsStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 40; -fx-font-size: 20px; -fx-font-family: 'Arial'; -fx-font-alignment: center;";
         rightMenuButtonSize = 170;
 
         viewProfileButtonStyle = "-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 100;";

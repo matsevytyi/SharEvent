@@ -1,9 +1,14 @@
-package USE_CASE.load_map;
 
+package USE_CASE.loadmap;
+
+import API.LoadMapAPIAccessInterface;
 import API.LoadMap_API;
-import INTERFACE_ADAPTER.load_map.LoadMapInputData;
-import INTERFACE_ADAPTER.load_map.LoadMapOutputData;
-import INTERFACE_ADAPTER.load_map.LoadMapPresenter;
+
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapInputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
+import USE_CASE.loadevents.LoadEventsInputBoundary;
+import USE_CASE.loadmap.LoadMapOutputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
 
 import org.jxmapviewer.JXMapKit;
@@ -24,14 +29,15 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
         mapKit.setZoom(4);
         try {
-            GeoPosition initialGeo = LoadMap_API.getCoord();
+            LoadMapAPIAccessInterface loadmapAPI = new LoadMap_API();
+            GeoPosition initialGeo = loadmapAPI.getCoord();
             mapKit.setAddressLocation(initialGeo);
             loadMapPresenter.PrepareSuccessView(new LoadMapInputData(mapKit), loadMapViewModel);
-        } catch (IOException e) { //adjust for API error
+        } catch (IOException e) {
             System.out.println(e);
             System.out.println("API Error");
             loadMapPresenter.PrepareFailView("API_error", loadMapViewModel);
-        } catch (Exception e) { //adjust for network error
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Network Error");
             loadMapPresenter.PrepareFailView("Map_Load_Error", loadMapViewModel);

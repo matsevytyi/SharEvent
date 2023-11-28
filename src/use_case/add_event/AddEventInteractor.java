@@ -1,7 +1,8 @@
 package USE_CASE.add_event;
 
 
-import DATA_ACCESS.LoadEventsDataAccessInterface;
+
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.Event;
 import ENTITY.EventFactory;
 

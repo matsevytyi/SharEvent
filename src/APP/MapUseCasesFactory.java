@@ -1,6 +1,7 @@
 package APP;
 
-import DATA_ACCESS.LoadEventsDataAccessInterface;
+
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.EventFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.add_event.AddEventController;
@@ -32,7 +33,7 @@ public class MapUseCasesFactory {
 
     private MapUseCasesFactory(){};
 
-    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel,  AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel){
+    public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel){
         AddEventController addEventController = null;
         try {
             addEventController = addEventUseCase(addEventViewModel, loadEventsDataAccessInterface, viewManagerModel);
@@ -79,9 +80,9 @@ public class MapUseCasesFactory {
 
     }
 
-    private static DeleteEventController deleteEventUseCase(DeleteEventViewModel deleteEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterfac, ViewManagerModel viewManagerModel ) throws IOException {
+    private static DeleteEventController deleteEventUseCase(DeleteEventViewModel deleteEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel ) throws IOException {
         DeleteEventOutputBoundary deleteEventOutputBoundary = new DeleteEventPresenter(deleteEventViewModel, viewManagerModel);
-        DeleteEventInteractor deleteEventInteractor = new DeleteEventInteractor(loadEventsDataAccessInterfac,deleteEventOutputBoundary);
+        DeleteEventInteractor deleteEventInteractor = new DeleteEventInteractor(loadEventsDataAccessInterface, deleteEventOutputBoundary);
 
         return new DeleteEventController(deleteEventInteractor);
 

@@ -1,7 +1,8 @@
-package USE_CASE.load_events;
+package USE_CASE.loadevents;
 
 
-import INTERFACE_ADAPTER.load_events.LoadEventsOuputData;
+
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import VIEW.LoadMapView;
 
 public interface LoadEventsOutputBoundary {

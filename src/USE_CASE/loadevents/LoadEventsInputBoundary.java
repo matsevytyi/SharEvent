@@ -1,5 +1,5 @@
-package USE_CASE.load_events;
 
+package USE_CASE.loadevents;
 
 import VIEW.LoadMapView;
 

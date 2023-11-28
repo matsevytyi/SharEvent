@@ -228,6 +228,31 @@ public class Database {
 
     }
 
+    public boolean executeQueryCheckPassword(String query, String username, String password) {
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            User user = extractUser(resultSet);
+            if (password.equals(user.getPassword())) {
+                return true;
+            }
+
+        }  catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 
     @SneakyThrows
     private User extractUser(ResultSet resultSet) {

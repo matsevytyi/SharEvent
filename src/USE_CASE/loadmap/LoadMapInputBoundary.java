@@ -1,7 +1,6 @@
-package USE_CASE.load_map;
+package USE_CASE.loadmap;
 
-
-import INTERFACE_ADAPTER.load_map.LoadMapOutputData;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
 import VIEW_CREATOR.LoadMapViewModel;
 
 

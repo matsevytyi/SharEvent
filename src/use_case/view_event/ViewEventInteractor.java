@@ -1,7 +1,8 @@
 package USE_CASE.view_event;
 
 
-import DATA_ACCESS.LoadEventsDataAccessInterface;
+
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.Event;
 
 public class ViewEventInteractor implements ViewEventInputBoundary {

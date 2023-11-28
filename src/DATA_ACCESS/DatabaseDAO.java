@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.User;
 
 import java.util.LinkedList;
@@ -209,10 +212,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
     @Override
-    public boolean checkPassword(String password) {
-        return false;
+    public boolean checkPassword(String username, String password) {
+        String query = "select * from public.user where username=?";
+        boolean result = database.executeQueryCheckPassword(query, username, password);
 
+        return result;
     }
+
 
 
 

@@ -2,26 +2,20 @@ package INTERFACE_ADAPTER.login_adapter;
 
 import APP.main;
 import ENTITY.User;
-import INTERFACE_ADAPTER.LoadMapState;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.ViewManagerModel;
-import INTERFACE_ADAPTER.add_event.AddEventController;
-import INTERFACE_ADAPTER.add_event.AddEventViewModel;
-import INTERFACE_ADAPTER.delete_event.DeleteEventController;
-import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
-import INTERFACE_ADAPTER.view_event.ViewEventController;
-import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import USE_CASE.login.LoginOutputData;
 import USE_CASE.login.LoginOutputDataBoundary;
 import VIEW.LoadMapView;
+import VIEW.LoginView;
 import VIEW_CREATOR.LoadMapViewModel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import lombok.Getter;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class LoginPresenter implements LoginOutputDataBoundary {
@@ -29,15 +23,6 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     private final LoadMapViewModel mapViewModel;
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
-
-
-    // private final LogOutController logOutController;
-
-
-    private static StackPane pane;
-
-
-
 
     public LoginPresenter(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, LoadMapViewModel mapViewModel) {
         this.loginViewModel = loginViewModel;
@@ -49,8 +34,6 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     public void prepareSuccessView(LoginOutputData user) {
 
         // On success, switch to the user's map.
-        //dispose();// Close the login view
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -66,10 +49,10 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         mapViewModel.setLoggedInUserObject(curruser);
         mapViewModel.firePropertyChanged();
 
-        // Assuming that your map view has a unique name, replace "mapViewName" with the actual name.
+        loginViewModel.setLogged();
+
         viewManagerModel.setActiveView("mapViewName");
         viewManagerModel.firePropertyChanged();
-
 
 
 //        User curruser = user.getUser();
@@ -95,15 +78,22 @@ public class LoginPresenter implements LoginOutputDataBoundary {
 
     private void openJavaFXMapView() {
 
-        JFXPanel jfxPanel = new JFXPanel();
         Platform.runLater(() -> {
-//       LoadMapView loadMapView = (mapViewModel,addEventViewModel, addEventController, viewEventViewModel, viewEventController, deleteEventViewModel, deleteEventController );  // Replace with your actual JavaFX view class
             LoadMapView loadMapView = main.loadMapView;
-            Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);  // Set width and height
+            Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);
 
             Stage stage = new Stage();
             stage.setTitle("Map View: " + mapViewModel.getLoggedInUser());
             stage.setScene(scene);
+            stage.setResizable(false);
+
+            stage.setOnCloseRequest(event -> {
+
+                System.out.println("Window is closing. Stopping the program.");
+
+                Platform.exit();
+                System.exit(0);
+            });
 
             stage.show();
         });

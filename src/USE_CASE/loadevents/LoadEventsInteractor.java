@@ -1,21 +1,31 @@
-package USE_CASE.load_events;
 
+package USE_CASE.loadevents;
 
 import DATA_ACCESS.DatabaseDAO;
-import DATA_ACCESS.LoadEventsDAO_InputData;
-import DATA_ACCESS.LoadEventsDAO_OutputData;
-import DATA_ACCESS.LoadEventsDataAccessInterface;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
+import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 
-import INTERFACE_ADAPTER.load_events.LoadEventsInputData;
-import INTERFACE_ADAPTER.load_events.LoadEventsOuputData;
-import INTERFACE_ADAPTER.load_events.LoadEventsPresenter;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsInputData;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
+import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
+import VIEW.LoadMapView;
+
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
+
 
 import java.util.HashSet;
 import java.util.Set;
 
 import VIEW.LoadMapView;
+
+
+import ENTITY.Event;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.util.Set;
 
 
 public class LoadEventsInteractor implements LoadEventsOutputBoundary {
@@ -36,17 +46,13 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
         currentGeoposition = loadEventsOuputData.getNewLocationPoint();
     }
 
-    //TODO: this code may be moved to another UseCaseInteractor (VIEW_EVENT)
 
-
-
-    //TODO: --- till here ---
 @Override
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView) {
         String problem = "";
 
         try{
-            LoadEventsDataAccessInterface databaseAccess = new DatabaseDAO();
+            LoadEventsDataAccessInterface databaseAccess = (LoadEventsDataAccessInterface) new DatabaseDAO();
             LoadEventsDAO_InputData inputDatabaseData = new LoadEventsDAO_InputData(loadEventsOuputData.getNewLocationPoint());
             LoadEventsDAO_OutputData outputDatabaseData = databaseAccess.getEventsInRange(inputDatabaseData);
             events = outputDatabaseData.getEvents();
@@ -55,8 +61,16 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
             problem = "Database_error";
         }
 
+        System.out.println("events are in interactor");
+
         LoadEventsInputData loadEventsInputData = new LoadEventsInputData(events);
+        System.out.println("loadEventsInputData: ");
         LoadEventsInputBoundary presenter = new LoadEventsPresenter(loadEventsInputData, loadMapView);
+        System.out.println("presenter: ");
+
+        for(Event event : events) {
+            System.out.println(event.getEventName()+" "+event.getGeoPosition().toString());
+        }
 
         if(problem == "Database_error") {
             presenter.PrepareFailView(problem, loadMapView);
@@ -65,6 +79,7 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
         if(events == null) {
             problem = "No_events";
+            System.out.println("No events at this location");
             presenter.PrepareFailView(problem, loadMapView);
             return;
         }

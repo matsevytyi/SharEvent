@@ -2,16 +2,14 @@ package VIEW;
 
 import API.LoadMap_API;
 
-
-import INTERFACE_ADAPTER.LoadMapState;
-
 import INTERFACE_ADAPTER.add_event.AddEventController;
 import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
-import INTERFACE_ADAPTER.load_map.LoadMapController;
-import INTERFACE_ADAPTER.load_map.LoadMapPresenter;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;

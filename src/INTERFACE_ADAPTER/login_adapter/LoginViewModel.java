@@ -13,6 +13,16 @@ public class LoginViewModel extends ViewModel {
     public final String LOGIN_BUTTON_LABEL = "Log in";
     public final String CANCEL_BUTTON_LABEL = "Cancel";
 
+    private boolean LoginSuccessed = false;
+
+    public void setLogged() {
+        LoginSuccessed = true;
+    }
+
+    public boolean getLogged() {
+        return LoginSuccessed;
+    }
+
     private LoginState state = new LoginState();
 
     public LoginViewModel() {
