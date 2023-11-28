@@ -1,10 +1,14 @@
 package INTERFACE_ADAPTER;
 
+import INTERFACE_ADAPTER.filter.FilterController;
 import USE_CASE.LoadMapInputBoundary;
 import USE_CASE.LoadMapInteractor;
+import USE_CASE.filter.FilterInteractor;
+import VIEW.FilterEventsView;
 import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
 import VIEW_CREATOR.LoadMapViewModel;
+import org.jxmapviewer.viewer.GeoPosition;
 
 public class LoadMapController {
 
@@ -19,7 +23,9 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_PROFILE)
     }
 
-    public void filterEvents(){
+    public void filterEvents(GeoPosition geoPosition){
+        // TODO: Change cuz CA
+        FilterEventsView view = new FilterEventsView(geoPosition);
         //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 

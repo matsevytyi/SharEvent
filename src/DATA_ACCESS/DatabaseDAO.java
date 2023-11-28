@@ -12,7 +12,7 @@ import ENTITY.Temporary_entites.*;
 
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, FilterEventsDAO {
     Database database = new Database();
 
     public void addEvent(String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {

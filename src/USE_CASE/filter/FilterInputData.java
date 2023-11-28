@@ -1,29 +1,23 @@
 package USE_CASE.filter;
 
+import org.jxmapviewer.viewer.GeoPosition;
+
 import java.util.ArrayList;
 
 public class FilterInputData {
 
     final private String typeInput;
 
-    final private String timeInput;
-    final private ArrayList<EventInterface> events;
+    final private GeoPosition geoPosition;
 
-    public FilterInputData(String typeInput,String timeInput, ArrayList<EventInterface> events) {
+    public FilterInputData(String typeInput, GeoPosition geoPosition) {
         this.typeInput = typeInput;
-        this.timeInput = timeInput;
-        this.events = events;
+        this.geoPosition = geoPosition;
     }
 
     String getTypeInput() {
         return this.typeInput;
     }
 
-    String getTimeInput() {
-        return this.timeInput;
-    }
-
-    ArrayList<EventInterface> getEvents() {
-        return this.events;
-    }
+    GeoPosition getGeoPosition(){return this.geoPosition;}
 }

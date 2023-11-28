@@ -67,7 +67,7 @@ public class LoadMapView {
         });
 
         filterEventsButton.setOnAction(e -> {
-            controller.filterEvents();
+            controller.filterEvents(this.viewModel.getMapKit().getCenterPosition());
         });
 
         viewFriendsButton.setOnAction(e -> {
