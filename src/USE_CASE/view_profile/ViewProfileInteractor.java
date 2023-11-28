@@ -4,6 +4,7 @@ package USE_CASE.view_profile;
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.Event;
+import ENTITY.User;
 
 public class ViewProfileInteractor implements ViewProfileInputBoundary {
     private final LoadEventsDataAccessInterface eventDataAccessInterface;
@@ -15,21 +16,17 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
     }
 
     @Override
-    public void execute(ViewProfileInputData position) {
+    public void execute(ViewProfileInputData username) {
 
-        Event event = eventDataAccessInterface.getEventByPosition(position.getLatitude(), position.getLongitude(), position.getMapViewer());
+       User user = eventDataAccessInterface(username.getUsername());
 
-        if (event != null) {
+        if (user != null) {
             ViewProfileOutputData outputData = new ViewProfileOutputData(
-                    event.getEventId(),
-                    event.getEventName(),
-                    event.getType(),
-                    event.getDescription(),
-                    event.getEventDate(),
-                    event.getEventTime(),
-                    event.getCreator().getName(),
-                    event.getEventAttendants().toString()
-
+                    user.getUsername(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getRegisteredEvents(),
+                    user.getHostedEvents()
             );;
             viewEventPresenter.successesView(outputData);
         } // додати фейл сітуейшн

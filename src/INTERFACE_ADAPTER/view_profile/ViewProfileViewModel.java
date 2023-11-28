@@ -9,19 +9,19 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ViewProfileViewModel extends ViewModel {
-    private static final String VIEW_NAME = "View Event";
+    private static final String VIEW_NAME = "View Profile";
 
     private ViewProfileState state = new ViewProfileState();
 
     public ViewProfileViewModel() {
-        super("View Event");
+        super("View Profile");
     }
 
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("VIEW", null, this.state);
+        support.firePropertyChange("PROFILE", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -41,20 +41,5 @@ public class ViewProfileViewModel extends ViewModel {
         this.state = state;
     }
 
-    public void setClickedPosition(GeoPosition clickedPosition) {
-        state.setLatitude(clickedPosition.getLatitude());
-        state.setLongitude(clickedPosition.getLongitude());
-    }
 
-    public void setMapViewer(JXMapViewer mapViewer) {
-        state.setMapViewer(mapViewer);
-    }
-
-    public void setLoggedInUser(String loggedInUser) {
-        state.setLoggedinuser(loggedInUser);
-    }
-
-    public String getLoggedInUser() {
-       return state.getLoggedinuser();
-    }
 }

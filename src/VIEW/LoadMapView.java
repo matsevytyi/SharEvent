@@ -13,6 +13,9 @@ import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
+import INTERFACE_ADAPTER.view_profile.ViewProfileController;
+import INTERFACE_ADAPTER.view_profile.ViewProfileState;
+import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -82,9 +85,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     private final RegisterController registerController;
 
+    private final ViewProfileViewModel viewProfileViewModel;
+
+    private final ViewProfileController viewProfileController;
 
 
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController) {
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
 
 
       viewModel = loggedInViewModel; // here was new LoadMapViewModel();
@@ -107,6 +113,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         this.viewEventViewModel = viewEventViewModel;
         this.viewEventController = viewEventController;
         this.registerController = registerController;
+        this.viewProfileController = viewProfileController;
+        this.viewProfileViewModel = viewProfileViewModel;
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
@@ -137,7 +145,23 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 //        });
 
         viewProfileButton.setOnAction(e -> {
+           UserProfileView userProfileView  = new UserProfileView(viewProfileViewModel,viewProfileController);
+           ViewProfileState viewProfileState = viewProfileViewModel.getState();
+            viewProfileState.setUsername(viewModel.getLoggedInUser());
 
+            viewProfileController.execute(viewProfileState.getUsername());
+            // Set the scene for the AddEventView stage
+            Scene scene = new Scene(userProfileView, 500, 500);
+
+            // Create a new stage for AddEventView
+            Stage addEventStage = new Stage();
+            addEventStage.initModality(Modality.APPLICATION_MODAL);
+            addEventStage.setScene(scene);
+            addEventStage.setX(1600);
+            addEventStage.setY(1200);
+
+            // Show the AddEventView stage
+            addEventStage.show();
         });
 
         filterEventsButton.setOnAction(e -> {

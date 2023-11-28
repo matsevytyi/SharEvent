@@ -11,9 +11,9 @@ import java.util.List;
 
 @Getter @Setter
 public class ViewProfileState {
+    public ViewProfileState(){}
 
-
-    public ViewProfileState(String username, String name, String email, List<EventInterface> registered_events, List<EventInterface> hosted_events) {
+    public void setDetails(String username, String name, String email, List<EventInterface> registered_events, List<EventInterface> hosted_events) {
         setEmail(email);
         setName(name);
         setUsername(username);

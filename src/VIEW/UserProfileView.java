@@ -1,6 +1,8 @@
 package VIEW;
 
 
+import INTERFACE_ADAPTER.view_profile.ViewProfileController;
+import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -13,19 +15,20 @@ public class UserProfileView extends VBox {
     private final Label hostedEventsLabel = new Label();
     private final Button logoutButton = new Button("Log Out");
 
+    private final ViewProfileViewModel viewProfileViewModel;
 
-
-    public UserProfileView(String username, String name, String email, String registeredEvents, String hostedEvents, LogoutListener logoutListener) {
-        this.usernameLabel.setText("Username: " + username);
-        this.nameLabel.setText("Name: " + name);
-        this.emailLabel.setText("Email: " + email);
-        this.registeredEventsLabel.setText("Registered Events: " + registeredEvents);
-        this.hostedEventsLabel.setText("Hosted Events: " + hostedEvents);
-
-
+    public UserProfileView(ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
+        this.viewProfileViewModel = viewProfileViewModel;
+        this.viewProfileController = viewProfileController;
 
         initUI();
     }
+
+    private final ViewProfileController viewProfileController;
+
+
+
+
 
     private void initUI() {
         getChildren().addAll(
