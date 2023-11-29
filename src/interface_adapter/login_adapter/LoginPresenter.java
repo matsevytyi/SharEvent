@@ -1,5 +1,6 @@
 package INTERFACE_ADAPTER.login_adapter;
 
+import APP.main;
 import ENTITY.User;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -78,7 +79,7 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     private void openJavaFXMapView() {
 
         Platform.runLater(() -> {
-            LoadMapView loadMapView = new LoadMapView(mapViewModel);
+            LoadMapView loadMapView = main.loadMapView;
             Scene scene = new Scene(loadMapView.getStackPane(), 1600, 1200);
 
             Stage stage = new Stage();

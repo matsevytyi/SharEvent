@@ -1,13 +1,9 @@
 
 package VIEW;
 
-import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.login_adapter.LoginController;
 import INTERFACE_ADAPTER.login_adapter.LoginState;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
-import INTERFACE_ADAPTER.signup_adapter.SighUpController;
-import INTERFACE_ADAPTER.signup_adapter.SignUpState;
-import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 
 import javax.swing.*;
 import java.awt.*;

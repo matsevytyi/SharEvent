@@ -5,9 +5,13 @@ import ENTITY.User;
 import lombok.SneakyThrows;
 
 import java.sql.*;
-import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 
 public class Database {
     Connection connection;
@@ -15,6 +19,7 @@ public class Database {
     public Database() {
         connection = connect();
     }
+
     public Connection connect() {
         String url = "jdbc:postgresql://db.bqeyxdersfsiysrpyzqb.supabase.co:5432/postgres";
         String user = "basic_user";
@@ -82,6 +87,115 @@ public class Database {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+        }
+    }
+
+    // find one user
+    public Object executeQueryUser(String query, String username) {
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            return extractUser(resultSet);
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public Object executeQueryUserListForEvent(String query, int event_id) {
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, event_id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            List<User> userList = new LinkedList<>();
+
+            while (resultSet.next()) {
+                userList.add(extractUser(resultSet));
+            }
+
+            return extractUser(resultSet);
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public User getUserByUsername(String username) {
+        connection = connect();
+        String query = "select * from public.user where username=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            return extractUser(resultSet);
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<User> getUsersRegisteredForEvent(int event_id) {
+        connection = connect();
+        String query = "SELECT * " +
+                "FROM public.user AS u " +
+                "JOIN public.attendedevents AS ae ON u.username = ae.visitor " +
+                "WHERE ae.event = " + event_id + ";";
+
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            List<User> userList = new LinkedList<>();
+
+            while (resultSet.next()) {
+                userList.add(extractUser(resultSet));
+            }
+
+            return userList;
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -100,32 +214,7 @@ public class Database {
 
             return extractUser(resultSet);
 
-        }  catch (SQLException e) {
-            System.out.println("Error executing SQL query");
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public Object executeQueryUser(String query, String username) {
-        connection = connect();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                return extractUser(resultSet);
-            }
-
-            return null;
-
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error executing SQL query");
             e.printStackTrace();
             return null;
@@ -164,6 +253,7 @@ public class Database {
         return false;
     }
 
+
     @SneakyThrows
     private User extractUser(ResultSet resultSet) {
         String username = resultSet.getString("username");
@@ -172,11 +262,11 @@ public class Database {
         String password = resultSet.getString("password");
 
         // треба якось переробити з цими налами
-        return new User(username, name, email, password, null, null);
+        return new User(username, name, email, password);
     }
 
 
-    public Collection<Event> executeQueryEventList(String query, String username) {
+    public Object executeQueryEventList(String query, String username) {
 
         Connection connection = connect();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -189,6 +279,68 @@ public class Database {
             }
 
             return eventList;
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    // EVENT
+
+    public Set<Event> executeQueryEventList() {
+        // шось не так з табличкою event, бо до юзера все норм доступається
+        String query = "SELECT * FROM public.event";
+        connection = connect();
+        Set<Event> eventSet = new HashSet<>();  // Use HashSet to represent a Set
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Event ev = extractEvent(resultSet);
+                eventSet.add(ev);
+
+            }
+
+            System.out.println(eventSet.isEmpty());
+
+            return eventSet;
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                    System.out.println("Connection closed.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public Event executeQueryEvent(String query, int event_id) {
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                return extractEvent(resultSet);
+            }
+            return null;
 
         }  catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -204,29 +356,105 @@ public class Database {
 
     }
 
+    public Object executeQueryEvent(String query) {
+
+        Set<Event> events = new HashSet<>();
+
+        connection = connect();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                events.add(extractEvent(resultSet));
+
+          }
+//            else {
+//                System.out.println("No results found");
+//                return null;
+//            }
+
+        } catch (SQLException e) {
+            System.out.println("Error executing SQL query");
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("our event set: " + events.isEmpty());
+
+        return events;
+    }
+
     @SneakyThrows
     private Event extractEvent(ResultSet resultSet) {
         int id_event = resultSet.getInt("id_event");
         String event_name = resultSet.getString("event_name");
         String description = resultSet.getString("description");
         String type = resultSet.getString("type");
-        String time = resultSet.getString("time");
-        String date = resultSet.getString("date");
-        double longitude = resultSet.getDouble("longitude");
-        System.out.println("double long" + longitude);
-        double latitude = resultSet.getDouble("latitude");
-        System.out.println("double lat" + latitude);
-        String creator = resultSet.getString("creator");
 
-        // треба якось переробити з цими налами
-        return new Event(id_event, event_name, description, type, time, date, longitude, latitude, creator);
+        // Extracting java.sql.Date and converting it to LocalDate
+        String dateSql = resultSet.getString("date");
+        LocalDate date = LocalDate.parse(dateSql);
+
+        // Extracting java.sql.Time and converting it to LocalTime
+        String timeSql = resultSet.getString("time");
+        LocalTime time = LocalTime.parse(timeSql);
+
+        double longitude = resultSet.getDouble("longitude");
+        double latitude = resultSet.getDouble("latitude");
+        String creator = resultSet.getString("creator");
+        User creatorUser = getUserByUsername(creator);
+        List<User> attendants = getUsersRegisteredForEvent(id_event);
+
+        // Create and return the Event object
+        return new Event(id_event, event_name, type, description, date, time, creatorUser, attendants, latitude, longitude);
+    }
+
+    public void executeQueryRegister(String query, String username, int eventId) {
+
+
     }
 
 
-
-
+//    public int executeInsertAndGetGeneratedId(String query, Object... parameters) {
+//        connection = connect();
+//        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+//            for (int i = 0; i < parameters.length; i++) {
+//                statement.setObject(i + 1, parameters[i]);
+//            }
+//
+//            int affectedRows = statement.executeUpdate();
+//
+//            if (affectedRows == 0) {
+//                System.out.println("Failed to insert event");
+//                return -1; // Or throw an exception
+//            }
+//
+//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+//                if (generatedKeys.next()) {
+//                    return generatedKeys.getInt(1);
+//                } else {
+//                    System.out.println("Failed to retrieve generated ID");
+//                    return -1; // Or throw an exception
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error executing SQL query");
+//            e.printStackTrace();
+//            return -1; // Or throw an exception
+//        } finally {
+//            try {
+//                connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
-
-
-
-

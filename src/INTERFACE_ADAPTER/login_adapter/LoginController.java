@@ -2,8 +2,6 @@ package INTERFACE_ADAPTER.login_adapter;
 
 import USE_CASE.login.LoginInputBoundary;
 import USE_CASE.login.LoginInputData;
-import USE_CASE.signup.SignUpInputBoundary;
-import USE_CASE.signup.SignUpInputData;
 
 import java.sql.SQLException;
 

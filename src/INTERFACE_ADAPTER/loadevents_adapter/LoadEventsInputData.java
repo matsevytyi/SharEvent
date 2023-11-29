@@ -1,5 +1,6 @@
 package INTERFACE_ADAPTER.loadevents_adapter;
 
+import ENTITY.Event;
 import lombok.Getter;
 
 import java.util.Set;

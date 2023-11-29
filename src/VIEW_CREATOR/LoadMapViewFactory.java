@@ -69,13 +69,13 @@ public class LoadMapViewFactory {
         Button updateEventsButton = (Button) pane.getChildren().get(6);
 
         StackPane.setAlignment(viewProfileButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 820, 0));
+        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 420, 0));
 
         StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(filterEventsButton, new Insets(0, 20, 620, 0));
 
-        StackPane.setAlignment(viewFriendsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewFriendsButton, new Insets(0, 20, 420, 0));
+//        StackPane.setAlignment(viewFriendsButton, Pos.BOTTOM_RIGHT);
+//        StackPane.setMargin(viewFriendsButton, new Insets(0, 20, 420, 0));
 
         StackPane.setAlignment(viewEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(viewEventsButton, new Insets(0, 20, 220, 0));

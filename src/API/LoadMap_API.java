@@ -2,8 +2,10 @@ package API;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -71,6 +73,12 @@ public class LoadMap_API implements LoadMapAPIAccessInterface {
         connection.disconnect();
 
         return new GeoPosition(Double.parseDouble(latitude), Double.parseDouble(longitude));
+    }
+
+    public static GeoPosition getClickedPosition(Point clickPoint, JXMapViewer mapViewer) {
+        double latitude = mapViewer.convertPointToGeoPosition(clickPoint).getLatitude();
+        double longitude = mapViewer.convertPointToGeoPosition(clickPoint).getLongitude();
+        return new GeoPosition(latitude, longitude);
     }
 
 }

@@ -23,6 +23,6 @@ public class LoginOutputData {
     }
 
     public User getUser() {
-        return new User(username, name, password, email, null, null);
+        return new User(username, name, password, email);
     }
 }

@@ -1,44 +1,44 @@
 package DATA_ACCESS;
 
+import java.awt.geom.Point2D;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
+
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.User;
-import ENTITY.Event;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import ENTITY.Event;
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.viewer.GeoPosition;
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
     Database database = new Database();
 
-    public void addEvent(String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
+    public void deleteEvent(int event_id) {
 
-        //TODO: implement additional logic if needed (fof holding unappropriate cases)
-
-        String query = "INSERT INTO events (event_name, event_description, type, time, date, creator, longitude, latitude) VALUES (" + event_name + ", " + event_description + ", " + type + ", " + time + ", " + date + ", " + creator + ", " + longitude + ", " + latitude + ")";
+        String query = "DELETE FROM public.event WHERE id_event = " + event_id;
 
         database.executeQuery(query, true);
+
     }
 
-    public void deleteEvent(String event_id) {
+    @Override
+    public String getEventById(int eventId) {
+        String query = "select * from public.event where id_event = " + eventId;
 
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-        // + only event creator can perform such operation for particular event
+        Event event = database.executeQueryEvent(query, eventId);
 
-        String query = "DELETE FROM events WHERE event_id = " + event_id;
-
-        database.executeQuery(query, true);
+        return event.getEventName();
     }
 
     public void updateEvent(String old_event_name, String old_event_time, String old_event_date, String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-        // + only event creator can perform such operation for particular event
-        // + consider adding event_id to the event entity and simplify the query
 
         String query = "update public.event" +
                 " set " +
@@ -59,42 +59,20 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
-    public void registerUserForEvent(String username, String event_id) {
+    public void registerUserForEvent(String username, int event_id) {
 
+        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (?, ?)";
 
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-
-        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (" + username + ", " + event_id + ")";
-
-        database.executeQuery(query, true);
+        database.executeQuery(query, true, username, event_id);
 
     }
 
     public void unregisterUserFromEvent(String username, String event_id) {
 
-        //TODO: implement additional logic if needed (for holding unappropriate cases) --
-        // + only particular visitor or event creator can perform such operation for particular event
-
         String query = "DELETE FROM public.attendedEvents WHERE visitor = " + username + " AND event = " + event_id;
 
         database.executeQuery(query, true);
 
-    }
-
-    public void getUsersRegisteredForEvent(String event_id) {
-
-        //TODO: implement additional logic if needed (for holding unappropriate cases) --
-        // + write query to get event_id or add event_id to the event class
-
-        String query = "SELECT * " +
-                " FROM public.user JOIN public.attendedEvents " +
-                " WHERE public.attendedEvents.event = " + event_id +
-                ";";
-
-
-        database.executeQuery(query, false);
-
-        //TODO return List<User>
     }
 
     public void FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
@@ -128,20 +106,55 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
-        String query = "SELECT * FROM public.event " +
-                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
-                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
-                ";";
+//        String query = "SELECT * FROM public.event " +
+//                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
+//                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
+//                ";";
 
-        Set<Event> events = new HashSet<>();
-
-        events.addAll(database.executeQueryEventList(query, "TODO"));
+        String query = "SELECT * FROM public.event;";
+        Set<Event> events = (Set<Event>) database.executeQueryEvent(query);
 
         return new LoadEventsDAO_OutputData(events);
     }
 
 
-    //TODO: implement GetEventFunction for VIEW_EVENT use case
+
+    @Override
+    public void addEvent(Event event) {
+        String query = "INSERT INTO public.event (event_name, type, description, date, time, creator, latitude, longitude) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        database.executeQuery(query, true, event.getEventName(), event.getType(), event.getDescription(), event.getEventDate(), event.getEventTime(), event.getCreator().getName(), event.getLatitude(), event.getLongitude());
+    }
+
+    @Override
+    public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {
+
+        Set<Event> events = LoadEventsDAO_OutputData.getEvents();
+        for (Event event : events) {
+            GeoPosition eventPosition = event.getPosition();
+            GeoPosition clickedPosition = new GeoPosition(latitude, longitude);
+            if (isClickNearWaypoint(clickedPosition, eventPosition, mapViewer)) {
+                return event;
+            }
+        }
+
+        return null;
+    }
+
+
+
+    private boolean isClickNearWaypoint(GeoPosition clickPosition, GeoPosition waypointPosition, JXMapViewer mapViewer) {
+        // Convert GeoPositions to screen coordinates
+        Point2D.Double clickPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(clickPosition, mapViewer.getZoom());
+        Point2D.Double waypointPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(waypointPosition, mapViewer.getZoom());
+
+        // Define a threshold for considering the click as near the waypoint
+        int threshold = 23;
+
+        // Check if the click is within the threshold distance of the waypoint
+        return clickPoint.distance(waypointPoint) < threshold;
+    }
 
     // User
 
@@ -150,10 +163,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         String query = "SELECT * FROM public.user WHERE username=?";
         Object result = database.executeQuery(query, false, identifier);
 
-        System.out.println(result);
-
         return result != null;
     }
+
 
 
     @Override
@@ -165,14 +177,14 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return true;
     }
 
-    @Override
+
     public User getUserByUsername(String username) {
         String query = "select * from public.user where username=?";
         Object result = database.executeQueryUser(query, username);
 
         return (User) result;
-    }
 
+    }
 
     @Override
     public boolean checkPassword(String username, String password) {
@@ -182,16 +194,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return result;
     }
 
-    public List<User> FindFollowersOfUser(String username) throws SQLException {
-        String query = "select * from public.user \n" +
-                "\t where username in (select follower\n" +
-                "                  from public.following\n" +
-                "                  where target_user = ?)";
-
-        Object userList = database.executeQueryUserList(query, username);
-
-        return (List<User>) userList;
-    }
 
     public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
         String query = "select event.event_name from public.event\n" +
@@ -233,81 +235,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return (boolean) result;
 
     }
-
-
-
-    /*static Connection connection;
-    public static UserDataAccessObject dt = new UserDataAccessObject();
-    private final Map<String, User> accounts = new HashMap<>();
-
-    public static void connect() {
-
-        String url = "jdbc:mysql://localhost:3306/sharEvent";
-        String user = "root";
-        String password = "loppp888";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection is Successful to the database" + url);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Override
-    public boolean existsByName(String identifier) {
-        String query = "SELECT * FROM User WHERE username=?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, identifier);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            System.out.println(resultSet.getString(1));
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Не вірний SQL запит existsByName");
-            return false;
-        }
-
-    }
-
-    public boolean save(User user) {
-        String query = "INSERT INTO User (username, name, email, password)" +
-                "VALUES (?,?,?,?)";
-        try(PreparedStatement statement = connection.prepareStatement(query)){
-
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
-
-            int rows = statement.executeUpdate();
-
-            if (rows == 0) {
-                System.out.println("Failed to save");
-            }
-
-        }catch(SQLException e){
-            System.out.println("Не вірний SQL запит на вибірку даних");
-            e.printStackTrace();
-        }
-        return true;
-
-    }*/
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -1,10 +1,13 @@
+
 package INTERFACE_ADAPTER.loadmap_adapter;
+
+import VIEW_CREATOR.LoadMapViewModel;
 
 import USE_CASE.loadmap.LoadMapInputBoundary;
 import USE_CASE.loadmap.LoadMapInteractor;
 import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
-import VIEW_CREATOR.LoadMapViewModel;
+
 
 public class LoadMapController {
 
@@ -27,13 +30,13 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_FRIENDS)
     }
 
-    public void viewEvents(){
-        //TODO: switch to another Usecase (VIEW_EVENTS)
-    }
+//    public void viewEvents(){
+//        //TODO: switch to another Usecase (VIEW_EVENTS)
+//    }
 
-    public void addEvent(){
-        //TODO: switch to another Usecase (ADD_EVENT)
-    }
+//    public void addEvent(){
+//        //TODO: switch to another Usecase (ADD_EVENT)
+//    }
 
     public void updateEvents(LoadMapView loadMapView){
         //TODO: switch to another Usecase (UPDATE_EVENTS)
