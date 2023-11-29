@@ -3,7 +3,8 @@ package VIEW_CREATOR;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.jxmapviewer.JXMapKit;
+
+import java.io.FileNotFoundException;
 
 public class LoadMapButtonFactory {
 
@@ -12,8 +13,6 @@ public class LoadMapButtonFactory {
         updateEventsButton.setStyle(buttonStyle);
 
         updateEventsButton.setPrefSize(400, 40);
-
-        //Move setOnAction to another class due to Clean Architecture Principles
 
         updateEventsButton.setVisible(false);
 
@@ -26,35 +25,49 @@ public class LoadMapButtonFactory {
         Button filterEventsButton = new Button();
         filterEventsButton.setStyle(buttonStyle);
 
-        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-        buttonImage.setFitWidth(buttonSize - 15);
-        buttonImage.setFitHeight(buttonSize - 15);
-
         filterEventsButton.setPrefSize(buttonSize, buttonSize);
         filterEventsButton.setMaxSize(buttonSize, buttonSize);
 
-        filterEventsButton.setGraphic(buttonImage);
+        try {
+            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+
+            buttonImage.setFitWidth(buttonSize - 30);
+            buttonImage.setFitHeight(buttonSize - 30);
+
+            buttonImage.setOpacity(0.7);
+
+            filterEventsButton.setGraphic(buttonImage);
+            filterEventsButton.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+            filterEventsButton.setText("Filter Events");
+        }
 
         return filterEventsButton;
     }
-
-    //I need to do for this button the same I did for createViewEventsButton
 
     public static Button createViewFriendsButton(Class<?> clazz, String path, String buttonStyle,double buttonSize) {
 
         Button viewFriendsButton = new Button();
         viewFriendsButton.setStyle(buttonStyle);
 
-        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-        buttonImage.setFitWidth(buttonSize - 30);
-        buttonImage.setFitHeight(buttonSize - 35);
-
         viewFriendsButton.setPrefSize(buttonSize, buttonSize);
         viewFriendsButton.setMaxSize(buttonSize, buttonSize);
 
-        viewFriendsButton.setGraphic(buttonImage);
+        try {
+            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+
+            buttonImage.setFitWidth(buttonSize - 30);
+            buttonImage.setFitHeight(buttonSize - 35);
+
+            buttonImage.setOpacity(0.85);
+
+            viewFriendsButton.setGraphic(buttonImage);
+            viewFriendsButton.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+            viewFriendsButton.setText("View Friends");
+        }
 
         return viewFriendsButton;
     }
@@ -63,36 +76,48 @@ public class LoadMapButtonFactory {
         Button viewEventsButton = new Button();
         viewEventsButton.setStyle(buttonStyle);
 
-        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+        try {
+            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
-        buttonImage.setFitWidth(buttonSize - 35);
-        buttonImage.setFitHeight(buttonSize - 35);
+            buttonImage.setFitWidth(buttonSize - 30);
+            buttonImage.setFitHeight(buttonSize - 30);
 
-        buttonImage.setOpacity(0.7);
+            buttonImage.setOpacity(0.7);
 
-        viewEventsButton.setPrefSize(buttonSize, buttonSize);
-        viewEventsButton.setMaxSize(buttonSize, buttonSize);
+            viewEventsButton.setGraphic(buttonImage);
+            viewEventsButton.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+            viewEventsButton.setText("View Events");
+        }
 
-        viewEventsButton.setGraphic(buttonImage);
+
 
         return viewEventsButton;
     }
 
     public static Button createAddEventButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {
         Button addEventButton = new Button();
+
         addEventButton.setStyle(buttonStyle);
-
-        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-        buttonImage.setFitWidth(buttonSize - 35);
-        buttonImage.setFitHeight(buttonSize - 35);
-
-        buttonImage.setOpacity(0.7);
 
         addEventButton.setPrefSize(buttonSize, buttonSize);
         addEventButton.setMaxSize(buttonSize, buttonSize);
 
-        addEventButton.setGraphic(buttonImage);
+        try {
+            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+
+            buttonImage.setFitWidth(buttonSize - 35);
+            buttonImage.setFitHeight(buttonSize - 35);
+
+            buttonImage.setOpacity(0.7);
+
+            addEventButton.setGraphic(buttonImage);
+            addEventButton.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+            addEventButton.setText("Add Event");
+        }
 
         return addEventButton;
     }
@@ -101,16 +126,23 @@ public class LoadMapButtonFactory {
         Button viewProfileButton = new Button();
         viewProfileButton.setStyle(buttonStyle);
 
-
-        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-        buttonImage.setFitWidth(buttonSize + 70);
-        buttonImage.setFitHeight(buttonSize + 70);
-
         viewProfileButton.setPrefSize(buttonSize, buttonSize);
         viewProfileButton.setMaxSize(buttonSize, buttonSize);
 
-        viewProfileButton.setGraphic(buttonImage);
+        try {
+            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+
+            buttonImage.setFitWidth(buttonSize + 70);
+            buttonImage.setFitHeight(buttonSize + 70);
+
+            buttonImage.setOpacity(0.7);
+
+            viewProfileButton.setGraphic(buttonImage);
+            viewProfileButton.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+            viewProfileButton.setText("View Profile");
+        }
 
         return viewProfileButton;
     }

@@ -2,19 +2,29 @@ package API;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LoadMap_API {
-    public static GeoPosition getCoord() throws IOException {
-        String apiKey = "21c8d093151b434dad0212bbb482d7e6";
-        String apiUrl = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey;
+public class LoadMap_API implements LoadMapAPIAccessInterface {
 
+    final private String apiUrl;
+    final private String apiKey;
+
+    public LoadMap_API() {
+        //I didn't place the API key in constructor call since its used only once and is a sensitive information
+        this.apiKey = "21c8d093151b434dad0212bbb482d7e6";
+        this.apiUrl = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey;
+    }
+
+
+    public GeoPosition getCoord() throws IOException {
         String longitude = "0";
         String latitude = "0";
 
@@ -40,6 +50,8 @@ public class LoadMap_API {
             latitude = jsonObject.get("latitude").getAsString();
             longitude = jsonObject.get("longitude").getAsString();
 
+
+            //Checkout the range of latitude and longitude to load the events, can be removed in further
             double delta = 5./111;
 
             double maxLatitude = Double.parseDouble(latitude) + delta;
@@ -55,13 +67,18 @@ public class LoadMap_API {
             System.out.println("Max Longitude: " + maxLongitude);
             System.out.println("Min Longitude: " + minLongitude);
 
-            // You can use latitude and longitude variables as needed
         } else {
             System.out.println("HTTP GET request failed: " + responseCode);
         }
         connection.disconnect();
 
         return new GeoPosition(Double.parseDouble(latitude), Double.parseDouble(longitude));
+    }
+
+    public static GeoPosition getClickedPosition(Point clickPoint, JXMapViewer mapViewer) {
+        double latitude = mapViewer.convertPointToGeoPosition(clickPoint).getLatitude();
+        double longitude = mapViewer.convertPointToGeoPosition(clickPoint).getLongitude();
+        return new GeoPosition(latitude, longitude);
     }
 
 }
