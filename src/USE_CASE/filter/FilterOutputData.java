@@ -7,9 +7,8 @@ public class FilterOutputData {
 
     private boolean useCaseFailed;
 
-    public FilterOutputData(ArrayList<EventInterface> foundEvents, boolean useCaseFailed) {
+    public FilterOutputData(List<Event> foundEvents) {
         this.foundEvents = foundEvents;
-        this.useCaseFailed = useCaseFailed;
     }
 
     public ArrayList<EventInterface> getFoundEvents() {return foundEvents;}

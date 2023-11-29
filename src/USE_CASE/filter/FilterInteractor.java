@@ -25,11 +25,11 @@ public class FilterInteractor implements FilterInputBoundary {
                 Double.toString(range.get(2)),
                 Double.toString(range.get(3)));
 
-        if{foundEvents.isEmpty()}{
-            FilterOutputData filterOutputData = new FilterOutputData(foundEvents, true);
+        if{foundEvents.isEmpty();}{
+            this.filterPresenter.prepareFailView("No events match your filters");
         }
-        FilterOutputData filterOutputData = new FilterOutputData(foundEvents, false);
-
+        FilterOutputData filterOutputData = new FilterOutputData(foundEvents);
+        this.filterPresenter.prepareSuccessView(filterOutputData);
 
     }
 

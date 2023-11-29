@@ -1,39 +1,35 @@
 package INTERFACE_ADAPTER.filter;
 
+import ENTITY.Temporary_entites;
+import USE_CASE.filter.FilterOutputBoundary;
+import VIEW.LoadMapView;
+import INTERFACE_ADAPTER.LoadEventsInputData;
 import USE_CASE.filter.FilterOutputData;
+import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.viewer.WaypointPainter;
 
-public class FilterPresenter {
-    private final LoadMapViewModel loadMapViewModel;
-    private ViewManagerModel viewManagerModel;
+import java.util.Set;
 
-    public FilterPresenter(ViewManagerModel viewManagerModel,
-                           LoadMapViewModel loadMapViewModel) {
-        this.viewManagerModel = viewManagerModel;
-        this.LoadMapViewModel = loadMapViewModel;
+public class FilterPresenter implements FilterOutputBoundary {
+    private final JXMapKit mapKit;
+
+
+    public FilterPresenter(JXMapKit mapKit) {
+        this.mapKit = mapKit;
     }
 
-    @Override
-    public void prepareSuccessView(FilterOutputData response) {
-        // TODO
-//        // On success, switch to the login view.
-//        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-//        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-//
-//        LoginState loginState = loginViewModel.getState();
-//        loginState.setUsername(response.getUsername());
-//        this.loginViewModel.setState(loginState);
-//        loginViewModel.firePropertyChanged();
-//
-//        viewManagerModel.setActiveView(loginViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+    public void prepareSuccessView(FilterOutputData filterOutputData) {
+
+        Set<Temporary_entites.Event> localEvents = filterOutputData.getEvents();
+
+        WaypointPainter<Temporary_entites.Event> eventPainter = new WaypointPainter<>();
+        eventPainter.setWaypoints(localEvents);
+
+        mapKit.getMainMap().setOverlayPainter(eventPainter);
     }
 
     @Override
     public void prepareFailView(String error) {
         // TODO
-//        SignupState signupState = signupViewModel.getState();
-//        signupState.setUsernameError(error);
-//        signupViewModel.firePropertyChanged();
     }
-}
 }

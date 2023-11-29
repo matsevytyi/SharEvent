@@ -1,6 +1,7 @@
 package INTERFACE_ADAPTER.filter;
 import USE_CASE.filter.FilterInputData;
 import USE_CASE.filter.FilterInputBoundary;
+import VIEW_CREATOR.LoadMapViewModel;
 import org.jxmapviewer.viewer.GeoPosition;
 
 public class FilterController {
@@ -9,8 +10,8 @@ public class FilterController {
         this.filterUseCaseInteractor = filterUseCaseInteractor;
     }
 
-    public void execute(String type, GeoPosition geoPosition) {
-        FilterInputData filterInputData = new FilterInputData(type, geoPosition);
+    public void execute(String type, LoadMapViewModel viewModel) {
+        FilterInputData filterInputData = new FilterInputData(type, viewModel.getMapKit().getCenterPosition());
 
         filterUseCaseInteractor.execute(filterInputData);
     }

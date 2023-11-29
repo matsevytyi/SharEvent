@@ -3,6 +3,7 @@ package VIEW;
 import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.filter.FilterPresenter;
 import USE_CASE.filter.FilterOutputBoundary;
+import VIEW_CREATOR.LoadMapViewModel;
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -16,7 +17,7 @@ import java.util.Enumeration;
 public class FilterEventsView extends JPanel {
     @Getter
     private FilterController controller;
-    public FilterEventsView(FilterController controller, GeoPosition geoPosition){
+    public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
         JFrame filterFrame = new JFrame("Filter");
         JPanel filterPanel = new JPanel();
         JPanel filterPanelType= new JPanel();
@@ -64,7 +65,7 @@ public class FilterEventsView extends JPanel {
                         String selectedType = getSelectedOptions(typeGroup);
                         System.out.println(selectedType);
                         filterFrame.dispose();
-                        controller.execute(selectedType, geoPosition);
+                        controller.execute(selectedType, viewModel);
                     }
                 }
         );

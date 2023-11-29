@@ -7,6 +7,7 @@ import USE_CASE.filter.FilterInteractor;
 import VIEW.FilterEventsView;
 import VIEW.LoadEventsView;
 import VIEW.LoadMapView;
+import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -23,9 +24,10 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_PROFILE)
     }
 
-    public void filterEvents(GeoPosition geoPosition){
+    public void filterEvents(LoadMapViewModel viewModel){
         // TODO: Change cuz CA
-        FilterEventsView view = new FilterEventsView(geoPosition);
+        FilterEventsViewFactory filterEventsViewFactory = new FilterEventsViewFactory();
+        FilterEventsView view = filterEventsViewFactory.create(viewModel);
         //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 
