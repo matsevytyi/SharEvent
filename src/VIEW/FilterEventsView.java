@@ -17,6 +17,8 @@ import java.util.Enumeration;
 public class FilterEventsView extends JPanel {
     @Getter
     private FilterController controller;
+    @Getter
+    private Frame frame;
     public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
         JFrame filterFrame = new JFrame("Filter");
         JPanel filterPanel = new JPanel();
@@ -82,8 +84,17 @@ public class FilterEventsView extends JPanel {
         filterPanel.add(filterPanelType);
         filterPanel.add(filterPanelButtons);
         filterFrame.add(filterPanel);
-        filterFrame.setVisible(true);
+        this.frame = filterFrame;
+        filterFrame.setVisible(false);
 
+    }
+
+    public void showMenu(){
+        this.frame.setVisible(true);
+    }
+
+    public void hideMenu(){
+        this.frame.setVisible(false);
     }
 
     private static String getSelectedOptions(ButtonGroup buttonGroup) {

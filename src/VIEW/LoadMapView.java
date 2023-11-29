@@ -7,6 +7,7 @@ import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
@@ -89,8 +90,10 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     private final ViewProfileController viewProfileController;
 
+    private final FilterEventsView filterEventsView;
 
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
+
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController, FilterEventsView filterEventsView) {
 
 
       viewModel = loggedInViewModel; // here was new LoadMapViewModel();
@@ -115,6 +118,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         this.registerController = registerController;
         this.viewProfileController = viewProfileController;
         this.viewProfileViewModel = viewProfileViewModel;
+        this.filterEventsView = filterEventsView;
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
@@ -167,7 +171,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         });
 
         filterEventsButton.setOnAction(e -> {
-            controller.filterEvents();
+            controller.filterEvents(this, filterEventsView);
         });
 
 //        viewFriendsButton.setOnAction(e -> {
