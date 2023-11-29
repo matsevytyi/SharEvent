@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
+import ENTITY.EventInterface;
 import ENTITY.User;
 
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDAO {
     Database database = new Database();
 
     public void deleteEvent(int event_id) {
@@ -75,20 +76,26 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
-    public void FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
+    // public List<Event> FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
+    public Set<Event> FilterEvents(String type) {
 
+//        String query = "SELECT * " +
+//                "FROM public.event " +
+//                "WHERE type = " + type +
+//                " AND " +
+//                "EVENTLAT > " + latitude1 +" AND EVENTLAT < " + latitude2 +
+//                " AND " +
+//                "EVENTLONG > " + longitude1 +" AND EVENTLONG < " + longitude2 +
+//                ";";
         String query = "SELECT * " +
-                "FROM public.events " +
-                "WHERE type = " + type +
-                " AND " +
-                "EVENTLAT > " + latitude1 +" AND EVENTLAT < " + latitude2 +
-                " AND " +
-                "EVENTLONG > " + longitude1 +" AND EVENTLONG < " + longitude2 +
-                ";";
+                "FROM public.event ";
+//                +
+//                "WHERE type = " + type;
 
-        database.executeQuery(query, false);
+        Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
-        //TODO return List<Event>
+
+        return (Set<Event>) eventList;
 
     }
 
