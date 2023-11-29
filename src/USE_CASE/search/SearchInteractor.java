@@ -1,7 +1,8 @@
 package USE_CASE.search;
 
-import entity.User;
-import entity.UserFactory;
+import ENTITY.EventInterface;
+import ENTITY.User;
+import ENTITY.UserFactory;
 
 import java.util.ArrayList;
 
@@ -13,19 +14,19 @@ public class SearchInteractor implements SearchInputBoundary{
     }
 
     public void execute(SearchInputData searchInputData) {
-        ArrayList<EventInterface> foundEvents = new ArrayList<EventInterface>();
-        searchInputData.getEvents().forEach((event) -> {
-            if(event.getName.contains(searchInputData.getSearchInput())){
-                foundEvents.add(event);
-            }
-        });
-
-        if (foundEvents.isEmpty()){
-            searchPresenter.prepareFailView("No events match your search.");
-        } else {
-            SearchOutputData searchOutputData = new SearchOutputData(foundEvents, false);
-            searchPresenter.prepareSuccessView(searchOutputData);
-        }
+//        ArrayList<EventInterface> foundEvents = new ArrayList<>();
+//        searchInputData.getEvents().forEach((event) -> {
+//            if(event.geteventName.contains(searchInputData.getSearchInput())){
+//                foundEvents.add(event);
+//            }
+//        });
+//
+//        if (foundEvents.isEmpty()){
+//            searchPresenter.prepareFailView("No events match your search.");
+//        } else {
+//            SearchOutputData searchOutputData = new SearchOutputData(foundEvents, false);
+//            searchPresenter.prepareSuccessView(searchOutputData);
+//        }
 
     }
 }

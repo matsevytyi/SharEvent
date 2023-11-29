@@ -1,7 +1,9 @@
 package INTERFACE_ADAPTER.search;
 
+import INTERFACE_ADAPTER.ViewManagerModel;
 import USE_CASE.search.SearchOutputBoundary;
 import USE_CASE.search.SearchOutputData;
+import VIEW_CREATOR.LoadMapViewModel;
 
 public class SearchPresenter implements SearchOutputBoundary {
 
@@ -11,7 +13,7 @@ public class SearchPresenter implements SearchOutputBoundary {
     public SearchPresenter(ViewManagerModel viewManagerModel,
                            LoadMapViewModel loadMapViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.LoadMapViewModel = loadMapViewModel;
+        this.loadMapViewModel = loadMapViewModel;
     }
 
     @Override

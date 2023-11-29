@@ -64,10 +64,14 @@ public class FilterEventsView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String selectedType = getSelectedOptions(typeGroup);
-                        System.out.println(selectedType);
-                        filterFrame.dispose();
-                        controller.execute(selectedType, viewModel);
+                        AbstractButton selectedType = getSelectedOptions(typeGroup);
+                        if(selectedType != null) {
+                            System.out.println(selectedType.getText());
+                            filterFrame.dispose();
+                            controller.execute(selectedType.getText(), viewModel);
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "No Filters Selected");
+                        }
                     }
                 }
         );
@@ -76,6 +80,10 @@ public class FilterEventsView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        AbstractButton selectedType = getSelectedOptions(typeGroup);
+                        if (selectedType != null){
+                            selectedType.setSelected(false);
+                        }
                         filterFrame.dispose();
                     }
                 }
@@ -97,13 +105,13 @@ public class FilterEventsView extends JPanel {
         this.frame.setVisible(false);
     }
 
-    private static String getSelectedOptions(ButtonGroup buttonGroup) {
+    private static AbstractButton getSelectedOptions(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements();
              buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
 
             if (button.isSelected()) {
-                return button.getText();
+                return button;
             }
         }
         return null;

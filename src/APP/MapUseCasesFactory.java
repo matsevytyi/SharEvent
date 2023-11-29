@@ -21,7 +21,6 @@ import INTERFACE_ADAPTER.view_event.ViewEventPresenter;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfilePresenter;
-import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import USE_CASE.add_event.AddEventInteractor;
 import USE_CASE.add_event.AddEventOutputBoundary;

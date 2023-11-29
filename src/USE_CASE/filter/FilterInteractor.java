@@ -2,9 +2,14 @@ package USE_CASE.filter;
 
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.FilterEventsDAO;
+import ENTITY.Event;
+import ENTITY.EventInterface;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FilterInteractor implements FilterInputBoundary {
     final FilterOutputBoundary filterPresenter;
@@ -14,24 +19,34 @@ public class FilterInteractor implements FilterInputBoundary {
     }
 
     public void execute(FilterInputData filterInputData) {
+        System.out.println(filterInputData.getTypeInput());
+
         FilterEventsDAO databaseDAO = new DatabaseDAO();
-        ArrayList<Double> range = getRange(filterInputData.getGeoPosition());
-        // Get range
+//        ArrayList<Double> range = getRange(filterInputData.getGeoPosition());
+            // Get range
 
-        List<Event> foundEvents = databaseDAO.FilterEvents(
-                filterInputData.getTypeInput(),
-                Double.toString(range.get(0)),
-                Double.toString(range.get(1)),
-                Double.toString(range.get(2)),
-                Double.toString(range.get(3)));
-
-        if{foundEvents.isEmpty();}{
-            this.filterPresenter.prepareFailView("No events match your filters");
+//        List<Event> foundEvents = databaseDAO.FilterEvents(
+//                filterInputData.getTypeInput(),
+//                Double.toString(range.get(0)),
+//                Double.toString(range.get(1)),
+//                Double.toString(range.get(2)),
+//                Double.toString(range.get(3)));
+        Set<Event> allEvents = databaseDAO.FilterEvents(filterInputData.getTypeInput());
+        Set<Event> foundEvents = new HashSet<>();
+        for (Event event : allEvents) {
+            if (event.getType().equals(filterInputData.getTypeInput().toLowerCase())) {
+                foundEvents.add(event);
+            }
         }
-        FilterOutputData filterOutputData = new FilterOutputData(foundEvents);
-        this.filterPresenter.prepareSuccessView(filterOutputData);
+        if (foundEvents.isEmpty()) {
+            this.filterPresenter.prepareFailView("No events matched your filters");
+        } else {
+            FilterOutputData filterOutputData = new FilterOutputData(foundEvents);
+            this.filterPresenter.prepareSuccessView(filterOutputData);
+        }
 
     }
+
 
     private ArrayList<Double> getRange(GeoPosition geoPosition){
         double latitude = geoPosition.getLatitude();

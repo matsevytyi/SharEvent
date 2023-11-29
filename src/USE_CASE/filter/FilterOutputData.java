@@ -1,15 +1,18 @@
 package USE_CASE.filter;
 
-import java.util.ArrayList;
+import ENTITY.Event;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.Set;
 
 public class FilterOutputData {
-    private final List<EventInterface> foundEvents;
+    @Getter
+    private final Set<Event> foundEvents;
 
-    private boolean useCaseFailed;
 
-    public FilterOutputData(List<Event> foundEvents) {
+    public FilterOutputData(Set<Event> foundEvents) {
         this.foundEvents = foundEvents;
     }
 
-    public ArrayList<EventInterface> getFoundEvents() {return foundEvents;}
 }

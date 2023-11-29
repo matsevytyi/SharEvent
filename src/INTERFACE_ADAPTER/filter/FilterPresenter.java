@@ -1,13 +1,15 @@
 package INTERFACE_ADAPTER.filter;
 
-import ENTITY.Temporary_entites;
+import ENTITY.Event;
+import ENTITY.EventInterface;
 import USE_CASE.filter.FilterOutputBoundary;
+import VIEW.FilterEventsView;
 import VIEW.LoadMapView;
-import INTERFACE_ADAPTER.LoadEventsInputData;
 import USE_CASE.filter.FilterOutputData;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
+import javax.swing.*;
 import java.util.Set;
 
 public class FilterPresenter implements FilterOutputBoundary {
@@ -19,17 +21,21 @@ public class FilterPresenter implements FilterOutputBoundary {
     }
 
     public void prepareSuccessView(FilterOutputData filterOutputData) {
+        Set<Event> localEvents = filterOutputData.getFoundEvents();
+//        for (Event event : localEvents) {
+//            System.out.println(event.getEventName());
+//        }
 
-        Set<Temporary_entites.Event> localEvents = filterOutputData.getEvents();
-
-        WaypointPainter<Temporary_entites.Event> eventPainter = new WaypointPainter<>();
+        WaypointPainter<Event> eventPainter = new WaypointPainter<>();
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
+        System.out.println("Success View Done");
     }
 
     @Override
     public void prepareFailView(String error) {
-        // TODO
+        System.out.println("Preparing Fail View for " + error);
+        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), error);
     }
 }

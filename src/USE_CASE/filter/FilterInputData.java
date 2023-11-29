@@ -8,16 +8,12 @@ public class FilterInputData {
 
     final private String typeInput;
 
-    final private GeoPosition geoPosition;
-
-    public FilterInputData(String typeInput, GeoPosition geoPosition) {
+    public FilterInputData(String typeInput) {
         this.typeInput = typeInput;
-        this.geoPosition = geoPosition;
     }
 
     String getTypeInput() {
         return this.typeInput;
     }
 
-    GeoPosition getGeoPosition(){return this.geoPosition;}
 }

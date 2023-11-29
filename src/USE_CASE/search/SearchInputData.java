@@ -1,5 +1,7 @@
 package USE_CASE.search;
 
+import ENTITY.EventInterface;
+
 import java.util.ArrayList;
 
 public class SearchInputData {

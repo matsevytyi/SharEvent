@@ -11,7 +11,7 @@ public class FilterController {
     }
 
     public void execute(String type, LoadMapViewModel viewModel) {
-        FilterInputData filterInputData = new FilterInputData(type, viewModel.getMapKit().getCenterPosition());
+        FilterInputData filterInputData = new FilterInputData(type);
 
         filterUseCaseInteractor.execute(filterInputData);
     }

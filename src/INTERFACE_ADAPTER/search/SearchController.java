@@ -1,7 +1,10 @@
 package INTERFACE_ADAPTER.search;
 
+import ENTITY.EventInterface;
 import USE_CASE.search.SearchInputBoundary;
 import USE_CASE.search.SearchInputData;
+
+import java.util.ArrayList;
 
 public class SearchController {
     final SearchInputBoundary searchUseCaseInteractor;
