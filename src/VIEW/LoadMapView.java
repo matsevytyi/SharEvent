@@ -17,6 +17,7 @@ import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
+import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -93,7 +94,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     private final FilterEventsView filterEventsView;
 
 
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController, FilterEventsView filterEventsView) {
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
 
 
       viewModel = loggedInViewModel; // here was new LoadMapViewModel();
@@ -118,7 +119,6 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         this.registerController = registerController;
         this.viewProfileController = viewProfileController;
         this.viewProfileViewModel = viewProfileViewModel;
-        this.filterEventsView = filterEventsView;
 
 
         mapViewer = this.getViewModel().getMapKit().getMainMap();
@@ -127,6 +127,9 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
+
+        FilterEventsViewFactory filterEventsViewFactory = new FilterEventsViewFactory();
+        this.filterEventsView = filterEventsViewFactory.create(this.getViewModel());
 
     }
 
