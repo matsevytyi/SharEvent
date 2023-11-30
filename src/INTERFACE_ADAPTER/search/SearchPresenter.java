@@ -1,42 +1,40 @@
 package INTERFACE_ADAPTER.search;
 
-import INTERFACE_ADAPTER.ViewManagerModel;
+import ENTITY.Event;
 import USE_CASE.search.SearchOutputBoundary;
 import USE_CASE.search.SearchOutputData;
-import VIEW_CREATOR.LoadMapViewModel;
+import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.viewer.WaypointPainter;
+
+import javax.swing.*;
+import java.util.Set;
 
 public class SearchPresenter implements SearchOutputBoundary {
 
-    private final LoadMapViewModel loadMapViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final JXMapKit mapKit;
 
-    public SearchPresenter(ViewManagerModel viewManagerModel,
-                           LoadMapViewModel loadMapViewModel) {
-        this.viewManagerModel = viewManagerModel;
-        this.loadMapViewModel = loadMapViewModel;
+    public SearchPresenter(JXMapKit mapKit) {
+        this.mapKit = mapKit;
     }
 
     @Override
-    public void prepareSuccessView(SearchOutputData response) {
-          // TODO
-//        // On success, switch to the login view.
-//        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-//        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-//
-//        LoginState loginState = loginViewModel.getState();
-//        loginState.setUsername(response.getUsername());
-//        this.loginViewModel.setState(loginState);
-//        loginViewModel.firePropertyChanged();
-//
-//        viewManagerModel.setActiveView(loginViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+    public void prepareSuccessView(SearchOutputData searchOutputData) {
+        Set<Event> localEvents = searchOutputData.getFoundEvents();
+        for (Event event : localEvents) {
+            System.out.println(event.getEventName());
+        }
+
+        WaypointPainter<Event> eventPainter = new WaypointPainter<>();
+        eventPainter.setWaypoints(localEvents);
+
+        mapKit.getMainMap().setOverlayPainter(eventPainter);
+        System.out.println("Success View Done");
+
     }
 
     @Override
     public void prepareFailView(String error) {
-        // TODO
-//        SignupState signupState = signupViewModel.getState();
-//        signupState.setUsernameError(error);
-//        signupViewModel.firePropertyChanged();
+        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), error);
     }
+
 }
