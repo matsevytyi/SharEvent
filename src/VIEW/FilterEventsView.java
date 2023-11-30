@@ -14,12 +14,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+@Getter
 public class FilterEventsView extends JPanel {
-    @Getter
-    private FilterController controller;
-    @Getter
-    private Frame frame;
+    private final FilterController controller;
+    private final Frame frame;
     public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
+        this.controller = controller;
         JFrame filterFrame = new JFrame("Filter");
         JPanel filterPanel = new JPanel();
         JPanel filterPanelType= new JPanel();
@@ -49,6 +49,7 @@ public class FilterEventsView extends JPanel {
         JRadioButton otherButton = new JRadioButton("Other");
         JRadioButton gamingButton = new JRadioButton("Gaming");
         JRadioButton moreButton = new JRadioButton("More");
+        JRadioButton allButton = new JRadioButton("Show All");
         ButtonGroup typeGroup = new ButtonGroup();
 
         ArrayList<JRadioButton> typeList = new ArrayList<>();
@@ -58,6 +59,7 @@ public class FilterEventsView extends JPanel {
         typeList.add(otherButton);
         typeList.add(gamingButton);
         typeList.add(moreButton);
+        typeList.add(allButton);
         setButtons(typeList, filterPanelType, typeGroup);
 
         apply.addActionListener(
@@ -82,7 +84,9 @@ public class FilterEventsView extends JPanel {
                     public void actionPerformed(ActionEvent e) {
                         AbstractButton selectedType = getSelectedOptions(typeGroup);
                         if (selectedType != null){
+
                             selectedType.setSelected(false);
+
                         }
                         filterFrame.dispose();
                     }
@@ -92,6 +96,7 @@ public class FilterEventsView extends JPanel {
         filterPanel.add(filterPanelType);
         filterPanel.add(filterPanelButtons);
         filterFrame.add(filterPanel);
+        filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame = filterFrame;
         filterFrame.setVisible(false);
 

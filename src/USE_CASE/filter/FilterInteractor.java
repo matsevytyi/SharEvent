@@ -32,19 +32,25 @@ public class FilterInteractor implements FilterInputBoundary {
 //                Double.toString(range.get(2)),
 //                Double.toString(range.get(3)));
         Set<Event> allEvents = databaseDAO.FilterEvents(filterInputData.getTypeInput());
-        Set<Event> foundEvents = new HashSet<>();
-        for (Event event : allEvents) {
-            if (event.getType().equals(filterInputData.getTypeInput().toLowerCase())) {
-                foundEvents.add(event);
+        if(filterInputData.getTypeInput().equals("Show All")){
+            FilterOutputData filterOutputData = new FilterOutputData(allEvents);
+            this.filterPresenter.prepareSuccessView(filterOutputData);
+        } else {
+
+
+            Set<Event> foundEvents = new HashSet<>();
+            for (Event event : allEvents) {
+                if (event.getType().equals(filterInputData.getTypeInput().toLowerCase())) {
+                    foundEvents.add(event);
+                }
+            }
+            if (foundEvents.isEmpty()) {
+                this.filterPresenter.prepareFailView("No events matched your filters");
+            } else {
+                FilterOutputData filterOutputData = new FilterOutputData(foundEvents);
+                this.filterPresenter.prepareSuccessView(filterOutputData);
             }
         }
-        if (foundEvents.isEmpty()) {
-            this.filterPresenter.prepareFailView("No events matched your filters");
-        } else {
-            FilterOutputData filterOutputData = new FilterOutputData(foundEvents);
-            this.filterPresenter.prepareSuccessView(filterOutputData);
-        }
-
     }
 
 
