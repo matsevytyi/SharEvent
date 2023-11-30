@@ -2,17 +2,15 @@
 package INTERFACE_ADAPTER.loadmap_adapter;
 
 import INTERFACE_ADAPTER.filter.FilterController;
+import VIEW.*;
 import VIEW_CREATOR.LoadMapViewModel;
 
 import USE_CASE.loadmap.LoadMapInputBoundary;
 import USE_CASE.loadmap.LoadMapInteractor;
 
-import VIEW.FilterEventsView;
-import VIEW.LoadEventsView;
-import VIEW.LoadMapView;
-
 import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
+import VIEW_CREATOR.SearchEventsViewFactory;
 
 public class LoadMapController {
 
@@ -27,13 +25,15 @@ public class LoadMapController {
         //TODO: switch to another Usecase (VIEW_PROFILE)
     }
 
-    public void filterEvents(LoadMapView loadMapView, FilterEventsView filterEventsView){
+    public void filterEvents(FilterEventsView filterEventsView){
         filterEventsView.showMenu();
 
         //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 
-    public void viewFriends(){
+    public void viewFriends(LoadMapViewModel viewModel){
+        SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
+        SearchEventsView searchEventsView= searchEventsViewFactory.create(viewModel);
         //TODO: switch to another Usecase (VIEW_FRIENDS)
     }
 
