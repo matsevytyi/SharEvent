@@ -1,19 +1,16 @@
 package USE_CASE.search;
 
-import ENTITY.EventInterface;
-
-import java.util.ArrayList;
+import ENTITY.Event;
+import java.util.Set;
 
 public class SearchOutputData{
-    private final ArrayList<EventInterface> foundEvents;
+    private final Set<Event> foundEvents;
 
-    private boolean useCaseFailed;
 
-    public SearchOutputData(ArrayList<EventInterface> foundEvents, boolean useCaseFailed) {
+    public SearchOutputData(Set<Event> foundEvents) {
         this.foundEvents = foundEvents;
-        this.useCaseFailed = useCaseFailed;
     }
 
-    public ArrayList<EventInterface> getFoundEvents() {return foundEvents;}
+    public Set<Event> getFoundEvents() {return foundEvents;}
 
 }

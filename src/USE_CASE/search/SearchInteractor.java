@@ -1,10 +1,11 @@
 package USE_CASE.search;
 
-import ENTITY.EventInterface;
-import ENTITY.User;
-import ENTITY.UserFactory;
+import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.SearchEventsDAO;
+import ENTITY.Event;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SearchInteractor implements SearchInputBoundary{
     final SearchOutputBoundary searchPresenter;
@@ -14,19 +15,21 @@ public class SearchInteractor implements SearchInputBoundary{
     }
 
     public void execute(SearchInputData searchInputData) {
-//        ArrayList<EventInterface> foundEvents = new ArrayList<>();
-//        searchInputData.getEvents().forEach((event) -> {
-//            if(event.geteventName.contains(searchInputData.getSearchInput())){
-//                foundEvents.add(event);
-//            }
-//        });
-//
-//        if (foundEvents.isEmpty()){
-//            searchPresenter.prepareFailView("No events match your search.");
-//        } else {
-//            SearchOutputData searchOutputData = new SearchOutputData(foundEvents, false);
-//            searchPresenter.prepareSuccessView(searchOutputData);
-//        }
+        SearchEventsDAO searchEventsDAO = new DatabaseDAO();
+        Set<Event> allEvents = searchEventsDAO.SearchEvent(searchInputData.getSearchInput());
+
+        Set<Event> foundEvents = new HashSet<>();
+        for (Event event : allEvents) {
+            if (event.getEventName().toLowerCase().contains(searchInputData.getSearchInput().toLowerCase())) {
+                foundEvents.add(event);
+            }
+        }
+        if (foundEvents.isEmpty()) {
+            this.searchPresenter.prepareFailView("No events matched your search");
+        } else {
+            SearchOutputData searchOutputData = new SearchOutputData(foundEvents);
+            this.searchPresenter.prepareSuccessView(searchOutputData);
+        }
 
     }
 }
