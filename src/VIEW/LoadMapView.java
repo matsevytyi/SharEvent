@@ -141,7 +141,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
-        Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        Button searchEventsButton = (Button) pane.getChildren().get(3);
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
@@ -177,8 +177,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
             controller.filterEvents(filterEventsView);
         });
 
-        viewFriendsButton.setOnAction(e -> {
-            controller.viewFriends(this.viewModel);
+        searchEventsButton.setOnAction(e -> {
+            controller.searchEvents(this.viewModel);
         });
 
         viewEventsButton.setOnAction(e -> {

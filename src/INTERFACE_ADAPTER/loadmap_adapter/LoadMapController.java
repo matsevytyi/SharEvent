@@ -31,10 +31,10 @@ public class LoadMapController {
         //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 
-    public void viewFriends(LoadMapViewModel viewModel){
+    public void searchEvents(LoadMapViewModel viewModel){
         SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
         SearchEventsView searchEventsView= searchEventsViewFactory.create(viewModel);
-        //TODO: switch to another Usecase (VIEW_FRIENDS)
+        //TODO: switch to another Usecase (SEARCH_EVENTS)
     }
 
 //    public void viewEvents(){

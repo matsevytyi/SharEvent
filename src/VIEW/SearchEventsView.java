@@ -39,6 +39,7 @@ public class SearchEventsView extends JPanel {
                         if (searchInput.isEmpty()) {
                             JOptionPane.showMessageDialog(frame, "No Search To Apply");
                         } else {
+                            searchFrame.dispose();
                             controller.execute(searchInput);
                         }
                     }
