@@ -18,6 +18,15 @@ public class FilterController {
     }
 
     public void execute(String type, LoadMapViewModel viewModel) {
+
+        try {
+            while (allEvents.isEmpty()) {
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Exception: " + e);
+        }
+
         FilterInputData filterInputData = new FilterInputData(type, allEvents);
 
         filterUseCaseInteractor.execute(filterInputData);

@@ -3,6 +3,7 @@ package INTERFACE_ADAPTER.loadmap_adapter;
 
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.FilterEventsDAO;
+import DATA_ACCESS.SearchEventsDAO;
 import ENTITY.Event;
 import INTERFACE_ADAPTER.filter.FilterController;
 import VIEW.*;
@@ -32,8 +33,8 @@ public class LoadMapController {
 
     public void filterEvents(FilterEventsView filterEventsView){
         filterEventsView.showMenu();
-        FilterEventsDAO databaseDAO = new DatabaseDAO();
-        Set<Event> allEvents = databaseDAO.FilterEvents("");
+        FilterEventsDAO filterEventsDAO = new DatabaseDAO();
+        Set<Event> allEvents = filterEventsDAO.FilterEvents("");
         filterEventsView.getController().setEvents(allEvents);
 
         //TODO: switch to another Usecase (FILTER_EVENTS)
@@ -42,6 +43,11 @@ public class LoadMapController {
     public void searchEvents(LoadMapViewModel viewModel){
         SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
         SearchEventsView searchEventsView = searchEventsViewFactory.create(viewModel);
+        SearchEventsDAO searchEventsDAO = new DatabaseDAO();
+        Set<Event> allEvents = searchEventsDAO.SearchEvent("");
+        searchEventsView.getController().setEvents(allEvents);
+
+
         //TODO: switch to another Usecase (SEARCH_EVENTS)
     }
 

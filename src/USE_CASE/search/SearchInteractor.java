@@ -15,11 +15,9 @@ public class SearchInteractor implements SearchInputBoundary{
     }
 
     public void execute(SearchInputData searchInputData) {
-        SearchEventsDAO searchEventsDAO = new DatabaseDAO();
-        Set<Event> allEvents = searchEventsDAO.SearchEvent(searchInputData.getSearchInput());
 
         Set<Event> foundEvents = new HashSet<>();
-        for (Event event : allEvents) {
+        for (Event event : searchInputData.getAllEvents()) {
             if (event.getEventName().toLowerCase().contains(searchInputData.getSearchInput().toLowerCase())) {
                 foundEvents.add(event);
             }

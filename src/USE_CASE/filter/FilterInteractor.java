@@ -19,22 +19,10 @@ public class FilterInteractor implements FilterInputBoundary {
     public void execute(FilterInputData filterInputData) {
         System.out.println("Filter used: " + filterInputData.getTypeInput());
 
-//        FilterEventsDAO databaseDAO = new DatabaseDAO();
-////        ArrayList<Double> range = getRange(filterInputData.getGeoPosition());
-//            // Get range
-//
-////        List<Event> foundEvents = databaseDAO.FilterEvents(
-////                filterInputData.getTypeInput(),
-////                Double.toString(range.get(0)),
-////                Double.toString(range.get(1)),
-////                Double.toString(range.get(2)),
-////                Double.toString(range.get(3)));
-//        Set<Event> allEvents = databaseDAO.FilterEvents(filterInputData.getTypeInput());
         if(filterInputData.getTypeInput().equals("Show All")){
             FilterOutputData filterOutputData = new FilterOutputData(filterInputData.getAllEvents());
             this.filterPresenter.prepareSuccessView(filterOutputData);
         } else {
-
 
             Set<Event> foundEvents = new HashSet<>();
             for (Event event : filterInputData.getAllEvents()) {

@@ -8,6 +8,7 @@ import USE_CASE.search.SearchInteractor;
 import USE_CASE.search.SearchOutputBoundary;
 import VIEW.SearchEventsView;
 
+
 public class SearchEventsViewFactory {
 
     public SearchEventsView create(LoadMapViewModel viewModel){
