@@ -4,6 +4,7 @@ import ENTITY.Event;
 import ENTITY.EventInterface;
 import USE_CASE.search.SearchInputBoundary;
 import USE_CASE.search.SearchInputData;
+import USE_CASE.search.SearchShowAllData;
 import VIEW.LoadMapView;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -33,6 +34,20 @@ public class SearchController {
 
         searchUseCaseInteractor.execute(searchInputData);
     }
+
+    public void executeShowAll(){
+        try {
+            while (allEvents.isEmpty()) {
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Exception: " + e);
+        }
+        SearchShowAllData searchShowAllData = new SearchShowAllData(allEvents);
+
+        searchUseCaseInteractor.executeShowAll(searchShowAllData);
+    }
+
 
     public void setEvents(Set<Event> allEvents){
         this.allEvents = allEvents;

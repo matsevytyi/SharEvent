@@ -30,4 +30,9 @@ public class SearchInteractor implements SearchInputBoundary{
         }
 
     }
+
+    public void executeShowAll(SearchShowAllData searchShowAllData){
+        SearchOutputData searchOutputData = new SearchOutputData(searchShowAllData.getAllEvents());
+        this.searchPresenter.prepareSuccessView(searchOutputData);
+    }
 }

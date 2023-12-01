@@ -50,7 +50,9 @@ public class SearchEventsView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         searchFrame.dispose();
+                        controller.executeShowAll();
                     }
                 }
         );
