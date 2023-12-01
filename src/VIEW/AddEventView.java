@@ -45,7 +45,8 @@ public class AddEventView extends StackPane {
         LabelTextPane eventTimeInfo = new LabelTextPane("Time", eventTimeField);
         LabelTextPane eventDescriptionInfo = new LabelTextPane("Description", descriptionInputField);
         LabelTextPane eventTypeInfo = new LabelTextPane("Event type", eventTypeComboBox);
-        eventTypeComboBox.getItems().addAll("music", "sport", "food", "lecture");
+
+        eventTypeComboBox.getItems().addAll("Sports and Fitness", "Music", "Food and Drinks", "Gaming", "Education and Learning", "Outdoors and Adventure", "Other");
         getChildren().addAll(title, eventNameInfo, eventDateInfo, eventTimeInfo, eventDescriptionInfo,eventTypeInfo, addEventButton);
 
         setPadding(new Insets(10));

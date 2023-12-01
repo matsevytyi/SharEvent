@@ -1,6 +1,7 @@
 package APP;
 
 
+import DATA_ACCESS.FilterEventsDAO;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.EventFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -21,7 +22,6 @@ import INTERFACE_ADAPTER.view_event.ViewEventPresenter;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfilePresenter;
-import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import USE_CASE.add_event.AddEventInteractor;
 import USE_CASE.add_event.AddEventOutputBoundary;
@@ -34,8 +34,10 @@ import USE_CASE.view_event.ViewEventInteractor;
 import USE_CASE.view_event.ViewEventOutputBoundary;
 import USE_CASE.view_profile.ViewProfileInteractor;
 import USE_CASE.view_profile.ViewProfileOutputBoundary;
+import VIEW.FilterEventsView;
 import VIEW.LoadMapView;
 
+import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
 import java.io.IOException;

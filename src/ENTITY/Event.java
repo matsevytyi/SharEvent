@@ -15,6 +15,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
    // private static int lastAssignedId = 0;
 
     private int eventId;
+    @Getter
     private final String eventName;
     private final String type;
     private final LocalDate eventDate;

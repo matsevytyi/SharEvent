@@ -46,13 +46,13 @@ public class LoadMapButtonFactory {
         return filterEventsButton;
     }
 
-    public static Button createViewFriendsButton(Class<?> clazz, String path, String buttonStyle,double buttonSize) {
+    public static Button createSearchEventsButton(Class<?> clazz, String path, String buttonStyle,double buttonSize) {
 
-        Button viewFriendsButton = new Button();
-        viewFriendsButton.setStyle(buttonStyle);
+        Button searchEventsButton = new Button();
+        searchEventsButton.setStyle(buttonStyle);
 
-        viewFriendsButton.setPrefSize(buttonSize, buttonSize);
-        viewFriendsButton.setMaxSize(buttonSize, buttonSize);
+        searchEventsButton.setPrefSize(buttonSize, buttonSize);
+        searchEventsButton.setMaxSize(buttonSize, buttonSize);
 
         try {
             ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
@@ -62,14 +62,14 @@ public class LoadMapButtonFactory {
 
             buttonImage.setOpacity(0.85);
 
-            viewFriendsButton.setGraphic(buttonImage);
-            viewFriendsButton.setText("");
+            searchEventsButton.setGraphic(buttonImage);
+            searchEventsButton.setText("");
         } catch (Exception e) {
             System.out.println(e);
-            viewFriendsButton.setText("View Friends");
+            searchEventsButton.setText("Search");
         }
 
-        return viewFriendsButton;
+        return searchEventsButton;
     }
 
     public static Button createViewEventsButton(Class<?> clazz, String path, String buttonStyle, double buttonSize) {

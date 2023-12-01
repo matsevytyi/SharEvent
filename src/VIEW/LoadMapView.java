@@ -7,6 +7,7 @@ import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
+import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
@@ -16,6 +17,7 @@ import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
+import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -89,6 +91,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     private final ViewProfileController viewProfileController;
 
+    private final FilterEventsView filterEventsView;
+
 
     public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
 
@@ -124,6 +128,9 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         //The LOAD_EVENTS Use Case is firstly called just after launching the map and user authorisation
         controller.updateEvents(this);
 
+        FilterEventsViewFactory filterEventsViewFactory = new FilterEventsViewFactory();
+        this.filterEventsView = filterEventsViewFactory.create(this.getViewModel());
+
     }
 
     public StackPane getStackPane() {
@@ -134,7 +141,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
-        //  Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        Button searchEventsButton = (Button) pane.getChildren().get(3);
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
@@ -167,12 +174,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         });
 
         filterEventsButton.setOnAction(e -> {
-            controller.filterEvents();
+            controller.filterEvents(filterEventsView);
         });
 
-//        viewFriendsButton.setOnAction(e -> {
-//            controller.viewFriends();
-//        });
+        searchEventsButton.setOnAction(e -> {
+            controller.searchEvents(this.viewModel);
+        });
 
         viewEventsButton.setOnAction(e -> {
             handleMapClickForViewing();

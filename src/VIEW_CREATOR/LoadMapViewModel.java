@@ -21,7 +21,7 @@ public class LoadMapViewModel {
     @Getter
     private String filterEventsButtonImgPath;
     @Getter
-    private String viewFriendsButtonImgPath;
+    private String searchEventsButtonImgPath;
     @Getter
     private String viewEventsButtonImgPath;
     @Getter
@@ -67,7 +67,7 @@ public class LoadMapViewModel {
 
         viewProfileButtonImgPath = "/UI_elements/DefaultProfilePicture.png";
         filterEventsButtonImgPath = "/UI_elements/MapFiltersButton.png";
-        viewFriendsButtonImgPath = "/UI_elements/ViewFriendsButtonBg.png";
+        searchEventsButtonImgPath = "/UI_elements/SearchEventsButton.png";
         viewEventsButtonImgPath = "/UI_elements/ViewMyEventsButtonBg.png";
         addEventButtonImgPath = "/UI_elements/AddEventButtonBg.png";
         updateEventsButtonName = "Update Events";

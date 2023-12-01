@@ -16,6 +16,7 @@ import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
 import VIEW.*;
+import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -57,13 +58,14 @@ public static LoadMapView loadMapView;
         RegisterViewModel registerViewModel = new RegisterViewModel();
         ViewProfileViewModel viewProfileViewModel = new ViewProfileViewModel();
 
+
         SignUpView signupView = SignUpUseCaseFactory.SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
         views.add(loginView, loginView.viewName);
 
-        loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel, registerViewModel, viewProfileViewModel );
+        loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel, registerViewModel, viewProfileViewModel);
         views.add(loadMapView, loadMapView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
