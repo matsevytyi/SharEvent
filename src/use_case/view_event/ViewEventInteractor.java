@@ -30,9 +30,11 @@ public class ViewEventInteractor implements ViewEventInputBoundary {
                     event.getCreator().getName(),
                     event.getEventAttendants().toString()
 
-            );;
+            );
             viewEventPresenter.successesView(outputData);
-        } // додати фейл сітуейшн
+        } else{
+            viewEventPresenter.prepareFailView("Something went wrong. Please, try again");
+        }
     }
 
 

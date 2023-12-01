@@ -69,7 +69,9 @@ public class AddEventView extends VBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         AddEventState addEventState = (AddEventState) evt.getNewValue();
-        if (addEventState.getEventNameError() != null) {
+        if(addEventState.getEventName() != null){
+            showAlert("Done","You successfully added event " + addEventState.getEventName(), Alert.AlertType.INFORMATION);
+        } else if (addEventState.getEventNameError() != null) {
             showAlert("Error",addEventState.getEventNameError(), Alert.AlertType.INFORMATION);
         }
     }

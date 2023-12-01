@@ -21,12 +21,9 @@ public class AddEventPresenter implements AddEventOutputBoundary {
     @Override
     public void prepareSuccessView(AddEventOutputData event) {
 
-
-
         AddEventState addEventState = addEventViewModel.getState();
         addEventState.setEventName(event.getEventName());
         addEventViewModel.firePropertyChanged(); // having message about successful adding of event
-
         viewManagerModel.firePropertyChanged();
     }
 
