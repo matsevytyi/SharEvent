@@ -65,7 +65,7 @@ public static LoadMapView loadMapView;
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
         views.add(loginView, loginView.viewName);
 
-        loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel, registerViewModel, viewProfileViewModel );
+        loadMapView = MapUseCasesFactory.create(mapViewModel, loginViewModel, addEventViewModel, viewEventViewModel, databaseDAO, viewManagerModel, deleteEventViewModel, registerViewModel, viewProfileViewModel);
         views.add(loadMapView, loadMapView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

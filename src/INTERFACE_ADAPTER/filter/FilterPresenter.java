@@ -10,6 +10,7 @@ import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class FilterPresenter implements FilterOutputBoundary {
@@ -30,7 +31,6 @@ public class FilterPresenter implements FilterOutputBoundary {
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
-        System.out.println("Success View Done");
     }
 
     @Override
