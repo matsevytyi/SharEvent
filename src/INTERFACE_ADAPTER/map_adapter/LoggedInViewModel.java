@@ -1,9 +1,7 @@
 package INTERFACE_ADAPTER.map_adapter;
 
 
-import ENTITY.User;
 import INTERFACE_ADAPTER.ViewModel;
-import INTERFACE_ADAPTER.login_adapter.LoginState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

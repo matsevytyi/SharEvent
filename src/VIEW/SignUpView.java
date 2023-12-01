@@ -9,9 +9,6 @@ import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SighUpController;
 import INTERFACE_ADAPTER.signup_adapter.SignUpState;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 
 import javax.swing.*;
 import java.awt.*;

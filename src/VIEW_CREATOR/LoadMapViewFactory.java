@@ -42,7 +42,7 @@ public class LoadMapViewFactory {
         //TODO: addjust buttons so that they meet the UI
         Button viewProfileButton = LoadMapButtonFactory.createViewProfileButton(LoadMapButtonFactory.class, viewModel.getViewProfileButtonImgPath(), viewModel.getViewProfileButtonStyle(), viewModel.getViewProfileButtonSize());
         Button filterEventsButton = LoadMapButtonFactory.createFilterEventsButton(LoadMapButtonFactory.class, viewModel.getFilterEventsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
-        Button viewFriendsButton = LoadMapButtonFactory.createViewFriendsButton(LoadMapButtonFactory.class, viewModel.getViewFriendsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
+        Button searchEventsButton = LoadMapButtonFactory.createSearchEventsButton(LoadMapButtonFactory.class, viewModel.getSearchEventsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
         Button viewEventsButton = LoadMapButtonFactory.createViewEventsButton(LoadMapButtonFactory.class, viewModel.getViewEventsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
         Button addEventButton = LoadMapButtonFactory.createAddEventButton(LoadMapButtonFactory.class, viewModel.getAddEventButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
         Button updateEventsButton = LoadMapButtonFactory.createUpdateEventsButton(viewModel.getUpdateEventsButtonName(), viewModel.getUpdateEventsButtonStyle());
@@ -51,7 +51,7 @@ public class LoadMapViewFactory {
 
         buttons.add(viewProfileButton);
         buttons.add(filterEventsButton);
-        buttons.add(viewFriendsButton);
+        buttons.add(searchEventsButton);
         buttons.add(viewEventsButton);
         buttons.add(addEventButton);
         buttons.add(updateEventsButton);
@@ -63,19 +63,20 @@ public class LoadMapViewFactory {
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
-        Button viewFriendsButton = (Button) pane.getChildren().get(3);
+        Button searchEventsButton = (Button) pane.getChildren().get(3);
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
 
         StackPane.setAlignment(viewProfileButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 820, 0));
+        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 420, 0));
 
         StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(filterEventsButton, new Insets(0, 20, 620, 0));
 
-        StackPane.setAlignment(viewFriendsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewFriendsButton, new Insets(0, 20, 420, 0));
+        // TODO Adjust
+        StackPane.setAlignment(searchEventsButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(searchEventsButton, new Insets(0, 20, 820, 0));
 
         StackPane.setAlignment(viewEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(viewEventsButton, new Insets(0, 20, 220, 0));

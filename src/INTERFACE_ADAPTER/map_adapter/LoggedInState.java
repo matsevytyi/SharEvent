@@ -1,6 +1,5 @@
 package INTERFACE_ADAPTER.map_adapter;
 
-import ENTITY.User;
 import USE_CASE.login.LoginOutputData;
 
 public class LoggedInState {

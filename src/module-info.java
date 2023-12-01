@@ -7,6 +7,7 @@ module com.example.mapsdemo {
     requires java.sql;
     requires com.google.gson;
     exports APP;
+    exports APP.use_case_factory;
     //opens com.example.mapsdemo to javafx.fxml;
     //exports com.example.mapsdemo;
 }
