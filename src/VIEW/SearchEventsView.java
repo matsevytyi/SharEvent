@@ -63,9 +63,10 @@ public class SearchEventsView extends JPanel {
         mainPanel.add(searchPanelButtons);
 
         searchFrame.add(mainPanel);
-        searchFrame.setBounds(650, 200, 250, 130);
+        searchFrame.setBounds(0, 0, 250, 130);
 
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        searchFrame.setLocationRelativeTo(null);
         searchFrame.setVisible(true);
         this.frame = searchFrame;
 

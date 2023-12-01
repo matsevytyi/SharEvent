@@ -27,7 +27,7 @@ public class FilterEventsView extends JPanel {
         filterPanelType.setAlignmentX(Component.CENTER_ALIGNMENT);
         filterPanel.add(Box.createVerticalStrut(25));
         filterFrame.setTitle("Filters");
-        filterFrame.setBounds(650, 200, 300, 400);
+        filterFrame.setBounds(0, 0, 300, 400);
         filterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         filterFrame.setResizable(false);
 
@@ -97,6 +97,7 @@ public class FilterEventsView extends JPanel {
         filterPanel.add(filterPanelButtons);
         filterFrame.add(filterPanel);
         filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        filterFrame.setLocationRelativeTo(null);
         this.frame = filterFrame;
         filterFrame.setVisible(false);
 
