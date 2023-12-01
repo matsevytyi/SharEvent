@@ -25,9 +25,9 @@ public class FilterEventsView extends JPanel {
         JPanel filterPanelType= new JPanel();
         JPanel filterPanelButtons = new JPanel();
         filterPanelType.setAlignmentX(Component.CENTER_ALIGNMENT);
-        filterPanel.add(Box.createVerticalStrut(25));
+        filterPanel.add(Box.createVerticalStrut(15));
         filterFrame.setTitle("Filters");
-        filterFrame.setBounds(0, 0, 300, 400);
+        filterFrame.setBounds(0, 0, 250, 300);
         filterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         filterFrame.setResizable(false);
 
@@ -43,12 +43,13 @@ public class FilterEventsView extends JPanel {
         filterPanelType.setLayout(new BoxLayout(filterPanelType, BoxLayout.Y_AXIS));
 
         // Buttons for Type selection
-        JRadioButton sportsButton = new JRadioButton("Sports");
+        JRadioButton sportsButton = new JRadioButton("Sports and Fitness");
         JRadioButton musicButton = new JRadioButton("Music");
-        JRadioButton foodButton = new JRadioButton("Food");
-        JRadioButton otherButton = new JRadioButton("Other");
+        JRadioButton foodButton = new JRadioButton("Food and Drinks");
         JRadioButton gamingButton = new JRadioButton("Gaming");
-        JRadioButton moreButton = new JRadioButton("More");
+        JRadioButton educationButton = new JRadioButton("Education and Learning");
+        JRadioButton outdoorsButton = new JRadioButton("Outdoors and Adventure");
+        JRadioButton otherButton = new JRadioButton("Other");
         JRadioButton allButton = new JRadioButton("Show All");
         ButtonGroup typeGroup = new ButtonGroup();
 
@@ -56,9 +57,10 @@ public class FilterEventsView extends JPanel {
         typeList.add(sportsButton);
         typeList.add(musicButton);
         typeList.add(foodButton);
-        typeList.add(otherButton);
         typeList.add(gamingButton);
-        typeList.add(moreButton);
+        typeList.add(educationButton);
+        typeList.add(outdoorsButton);
+        typeList.add(otherButton);
         typeList.add(allButton);
         setButtons(typeList, filterPanelType, typeGroup);
 
@@ -105,10 +107,6 @@ public class FilterEventsView extends JPanel {
 
     public void showMenu(){
         this.frame.setVisible(true);
-    }
-
-    public void hideMenu(){
-        this.frame.setVisible(false);
     }
 
     private static AbstractButton getSelectedOptions(ButtonGroup buttonGroup) {
