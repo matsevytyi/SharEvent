@@ -87,7 +87,7 @@ public class MapUseCasesFactory {
             throw new RuntimeException(e);
         }
 
-        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController, registerController, viewProfileViewModel, viewProfileController);
+        return new LoadMapView(loadMapViewModel, addEventViewModel,addEventController,viewEventViewModel, viewEventController,  deleteEventViewModel, deleteEventController, registerController, viewProfileViewModel, viewProfileController, logoutController);
     }
 
 
