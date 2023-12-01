@@ -26,10 +26,6 @@ public class UserProfileView extends VBox {
 
     private final ViewProfileController viewProfileController;
 
-
-
-
-
     private void initUI() {
         getChildren().addAll(
                 new Label("User Profile"),
@@ -42,19 +38,19 @@ public class UserProfileView extends VBox {
         );
         setSpacing(5);
 
-//        logoutButton.setOnAction(event -> handleActionButtonClick());
-//        logoutButton.setOnAction(event -> {
-//          //////////////////
-//        });
+
+        logoutButton.setOnAction(event -> {
+          //////////////////
+        });
     }
 
     public void updateProfile() {
         // Встановлення нових значень для елементів інтерфейсу на основі даних користувача
-        usernameLabel.setText("Username: " + viewProfileViewModel.getState().getUsername());
-        nameLabel.setText("Name: " + viewProfileViewModel.getState().getName());
-        emailLabel.setText("Email: " + viewProfileViewModel.getState().getEmail());
-        registeredEventsLabel.setText("Registered Events: " + viewProfileViewModel.getState().getRegistered_events());
-        hostedEventsLabel.setText("Hosted Events: " + viewProfileViewModel.getState().getHosted_events());
+        usernameLabel.setText( viewProfileViewModel.getState().getUsername());
+        nameLabel.setText(viewProfileViewModel.getState().getName());
+        emailLabel.setText( viewProfileViewModel.getState().getEmail());
+        registeredEventsLabel.setText(viewProfileViewModel.getState().getRegistered_events().toString());
+        hostedEventsLabel.setText(viewProfileViewModel.getState().getHosted_events().toString());
     }
 
 }

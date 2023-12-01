@@ -21,6 +21,7 @@ import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
 
+import VIEW_CREATOR.OtherViewFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -40,6 +42,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -97,7 +101,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
 
 
-      viewModel = loggedInViewModel; // here was new LoadMapViewModel();
+        viewModel = loggedInViewModel; // here was new LoadMapViewModel();
         this.deleteEventViewModel = deleteEventViewModel;
         this.deleteEventController = deleteEventController;
 
@@ -157,20 +161,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
             viewProfileState.setUsername(viewModel.getLoggedInUser());
 
             viewProfileController.execute(viewProfileState.getUsername());
-
             userProfileView.updateProfile();
-            // Set the scene for the AddEventView stage
-            Scene scene = new Scene(userProfileView, 500, 500);
-
-            // Create a new stage for AddEventView
-            Stage addEventStage = new Stage();
-            addEventStage.initModality(Modality.APPLICATION_MODAL);
-            addEventStage.setScene(scene);
-            addEventStage.setX(1600);
-            addEventStage.setY(1200);
-
-            // Show the AddEventView stage
-            addEventStage.show();
+            OtherViewFactory.createOtherView(pane, userProfileView);
         });
 
         filterEventsButton.setOnAction(e -> {
@@ -182,12 +174,12 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         });
 
         viewEventsButton.setOnAction(e -> {
-            handleMapClickForViewing();
+            handleMapClick(false);
         });
 
 
         addEventButton.setOnAction(e -> {
-            handleMapClickForAdding();
+            handleMapClick(true);
         });
 
         updateEventsButton.setOnAction(e -> {
@@ -198,30 +190,28 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     }
 
 
-    private void handleMapClickForAdding() {
+    private void handleMapClick(boolean isAdding) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Choose Map Point");
         alert.setHeaderText(null);
-        alert.setContentText("Please choose a point on the map.");
+        alert.setContentText(isAdding ? "Please choose a point on the map." : "Please choose an event you want to look at.");
 
-        // Показати спливаюче вікно та зачекати його закриття
         alert.showAndWait();
 
-        // Оновлено: Встановлення нового об'єкту CompletableFuture для нового натискання на карті
         CompletableFuture<GeoPosition> mapClickFuture = new CompletableFuture<>();
 
-        // Оновлено: Встановлення обробника подій для нового натискання на карті
         mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 Point clickPoint = e.getPoint();
-
-                // Оновлено: Встановлення значення у CompletableFuture при новому натисканні на карті
                 mapClickFuture.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
                 mapViewer.removeMouseListener(this);
 
-                // Оновлено: Виклик методу для обробки координат після закриття вікна
-                handleClosedEventForAdding(mapClickFuture);
+                if (isAdding) {
+                    handleClosedEventForAdding(mapClickFuture);
+                } else {
+                    handleClosedEventForViewing(mapClickFuture);
+                }
             }
         });
     }
@@ -233,22 +223,8 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
             try {
                 GeoPosition clickedPosition = mapClickFuture.get();
                 addEventViewModel.setClickedPosition(clickedPosition);
-
                 AddEventView addEventView = new AddEventView(addEventViewModel, addEventController);
-
-                // Set the scene for the AddEventView stage
-                Scene scene = new Scene(addEventView, 500, 500);
-
-                // Create a new stage for AddEventView
-                Stage addEventStage = new Stage();
-                addEventStage.initModality(Modality.APPLICATION_MODAL);
-                addEventStage.setScene(scene);
-                addEventStage.setX(1600);
-                addEventStage.setY(1200);
-
-                // Show the AddEventView stage
-                addEventStage.show();
-
+                OtherViewFactory.createOtherView(pane,addEventView );
                 addEventView.getEventNameInputField().setOnKeyTyped(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
@@ -268,18 +244,23 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                     }
                 });
 
-                addEventView.getEventTimeField().setOnKeyTyped(new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent event) {
-                        AddEventState currentState = addEventViewModel.getState();
-                        String text =  addEventView.getEventTimeField().getText() + event.getCharacter();
-//                        currentState.setEventTime(LocalTime.parse(text, TimeFormatter.ofPattern("HH:mm a")));
-                        LocalTime localTime = LocalTime.of(12, 0);
-                        currentState.setEventTime(localTime);
-                        addEventViewModel.setState(currentState);
-                    }
+                addEventView.getEventTimePicker().hourComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    AddEventState currentState = addEventViewModel.getState();
+                    currentState.setEventTime(addEventView.getEventTimePicker().getSelectedTime());
+                    addEventViewModel.setState(currentState);
                 });
 
+                addEventView.getEventTimePicker().minuteComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    AddEventState currentState = addEventViewModel.getState();
+                    currentState.setEventTime(addEventView.getEventTimePicker().getSelectedTime());
+                    addEventViewModel.setState(currentState);
+                });
+
+                addEventView.getEventTimePicker().amPmComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    AddEventState currentState = addEventViewModel.getState();
+                    currentState.setEventTime(addEventView.getEventTimePicker().getSelectedTime());
+                    addEventViewModel.setState(currentState);
+                });
                 addEventView.getDescriptionInputField().setOnKeyTyped(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
@@ -314,57 +295,17 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                                 currentState.getEventLongitude()
 
                         );
-                        // Close the current stage
 
-                       addEventStage.close();
-
-                        // Reload events (Assuming loadEvents is a method that reloads events)
                         controller.updateEvents(LoadMapView.this);
                     }
 
                 });
 
 
-
-
-
-//                OtherViewFactory otherViewFactory = new OtherViewFactory();
-//              otherViewFactory.createOtherView(pane, new AddEventView(addEventViewModel, addEventController));
-
             } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace(); // Обробка відповідно до вашого випадку
+                ex.printStackTrace();
             }
         });
-    }
-
-    @SneakyThrows
-    private void handleMapClickForViewing() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Choose Map Point");
-        alert.setHeaderText(null);
-        alert.setContentText("Please choose an event you want to look at.");
-
-        // Показати спливаюче вікно та зачекати його закриття
-        alert.showAndWait();
-
-        // Оновлено: Встановлення нового об'єкту CompletableFuture для нового натискання на карті
-        CompletableFuture<GeoPosition> mapClickFutureForViewing = new CompletableFuture<>();
-
-        // Оновлено: Встановлення обробника подій для нового натискання на карті
-        mapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                Point clickPoint = e.getPoint();
-
-                // Set the value in CompletableFuture for the new click on the map
-                mapClickFutureForViewing.complete(LoadMap_API.getClickedPosition(clickPoint, mapViewer));
-                mapViewer.removeMouseListener(this);
-
-                handleClosedEventForViewing(mapClickFutureForViewing);
-            }
-        });
-
-
     }
 
     private void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFutureForViewing) {
@@ -383,17 +324,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 ViewEventView viewEventView = new ViewEventView(viewEventViewModel, deleteEventController, deleteEventViewModel, registerController);
                 viewEventView.updateView();
                 // Set the scene for the AddEventView stage
-                Scene scene = new Scene(viewEventView, 500, 500);
-
-                // Create a new stage for AddEventView
-                Stage viewEventStage = new Stage();
-                viewEventStage.initModality(Modality.APPLICATION_MODAL);
-                viewEventStage.setScene(scene);
-                viewEventStage.setX(1600);
-                viewEventStage.setY(1200);
-
-                // Show the AddEventView stage
-                viewEventStage.show();
+                OtherViewFactory.createOtherView(pane, viewEventView);
                 controller.updateEvents(LoadMapView.this);
 
             } catch (InterruptedException | ExecutionException ex) {
@@ -414,4 +345,6 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     public void actionPerformed(java.awt.event.ActionEvent e) {
         System.out.println("Click " + e.getActionCommand());
     }
+
+
 }
