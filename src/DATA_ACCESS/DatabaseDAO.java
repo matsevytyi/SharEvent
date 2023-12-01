@@ -58,14 +58,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
-    public void registerUserForEvent(String username, String event_id) {
+    public void registerUserForEvent(String username, int event_id) {
 
+        String query = "INSERT INTO public.attendedevents (visitor, event) VALUES (" + username + ", " + event_id + ")";
 
-        //TODO: implement additional logic if needed (for holding unappropriate cases)
-
-        String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (" + username + ", " + event_id + ")";
-
-        database.executeQuery(query, true);
+        database.
+                executeQuery(query, true);
 
     }
 
@@ -230,80 +228,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return (boolean) result;
 
     }
-
-
-
-    /*static Connection connection;
-    public static UserDataAccessObject dt = new UserDataAccessObject();
-    private final Map<String, User> accounts = new HashMap<>();
-
-    public static void connect() {
-
-        String url = "jdbc:mysql://localhost:3306/sharEvent";
-        String user = "root";
-        String password = "loppp888";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection is Successful to the database" + url);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Override
-    public boolean existsByName(String identifier) {
-        String query = "SELECT * FROM User WHERE username=?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, identifier);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            System.out.println(resultSet.getString(1));
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Не вірний SQL запит existsByName");
-            return false;
-        }
-
-    }
-
-    public boolean save(User user) {
-        String query = "INSERT INTO User (username, name, email, password)" +
-                "VALUES (?,?,?,?)";
-        try(PreparedStatement statement = connection.prepareStatement(query)){
-
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
-
-            int rows = statement.executeUpdate();
-
-            if (rows == 0) {
-                System.out.println("Failed to save");
-            }
-
-        }catch(SQLException e){
-            System.out.println("Не вірний SQL запит на вибірку даних");
-            e.printStackTrace();
-        }
-        return true;
-
-    }*/
-
-
-
-
-
-
-
-
-
 
 
 

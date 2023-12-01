@@ -230,13 +230,11 @@ public class Database {
 
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 events.add(extractEvent(resultSet));
 
-            } else {
-                System.out.println("No results found");
-                return null;
             }
+
 
         } catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -254,12 +252,4 @@ public class Database {
 
         return events;
     }
-
-
-
-
 }
-
-
-
-
