@@ -3,6 +3,8 @@ package USE_CASE.filter;
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.FilterEventsDAO;
 import ENTITY.Event;
+import USE_CASE.FindEventsStrategy.FindByFilter;
+import USE_CASE.FindEventsStrategy.FindEventsStrategy;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.ArrayList;
@@ -24,12 +26,9 @@ public class FilterInteractor implements FilterInputBoundary {
             this.filterPresenter.prepareSuccessView(filterOutputData);
         } else {
 
-            Set<Event> foundEvents = new HashSet<>();
-            for (Event event : filterInputData.getAllEvents()) {
-                if (event.getType().equals(filterInputData.getTypeInput().toLowerCase())) {
-                    foundEvents.add(event);
-                }
-            }
+            FindEventsStrategy findEventsStrategy = new FindByFilter();
+            Set<Event> foundEvents = findEventsStrategy.findEvents(filterInputData.getAllEvents(), filterInputData.getTypeInput());
+
             if (foundEvents.isEmpty()) {
                 this.filterPresenter.prepareFailView("No events matched your filters");
             } else {

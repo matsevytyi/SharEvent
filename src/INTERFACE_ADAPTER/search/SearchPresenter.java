@@ -28,7 +28,6 @@ public class SearchPresenter implements SearchOutputBoundary {
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
-        System.out.println("Success View Done");
 
     }
 

@@ -3,6 +3,8 @@ package USE_CASE.search;
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.SearchEventsDAO;
 import ENTITY.Event;
+import USE_CASE.FindEventsStrategy.FindBySearch;
+import USE_CASE.FindEventsStrategy.FindEventsStrategy;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,12 +18,9 @@ public class SearchInteractor implements SearchInputBoundary{
 
     public void execute(SearchInputData searchInputData) {
 
-        Set<Event> foundEvents = new HashSet<>();
-        for (Event event : searchInputData.getAllEvents()) {
-            if (event.getEventName().toLowerCase().contains(searchInputData.getSearchInput().toLowerCase())) {
-                foundEvents.add(event);
-            }
-        }
+        FindEventsStrategy findEventsStrategy =  new FindBySearch();
+        Set<Event> foundEvents = findEventsStrategy.findEvents(searchInputData.getAllEvents(), searchInputData.getSearchInput());
+
         if (foundEvents.isEmpty()) {
             this.searchPresenter.prepareFailView("No events matched your search");
         } else {
