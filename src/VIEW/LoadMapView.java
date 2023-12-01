@@ -149,11 +149,6 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         Button viewEventsButton = (Button) pane.getChildren().get(4);
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
-        //Button logOut = (Button) pane.getChildren().get(7);
-
-//        logOut.setOnAction(e -> {
-//            logOutController.execute();
-//        });
 
         viewProfileButton.setOnAction(e -> {
            UserProfileView userProfileView  = new UserProfileView(viewProfileViewModel,viewProfileController);
@@ -224,7 +219,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 GeoPosition clickedPosition = mapClickFuture.get();
                 addEventViewModel.setClickedPosition(clickedPosition);
                 AddEventView addEventView = new AddEventView(addEventViewModel, addEventController);
-                OtherViewFactory.createOtherView(pane,addEventView );
+                OtherViewFactory.createOtherView(pane,addEventView);
                 addEventView.getEventNameInputField().setOnKeyTyped(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
@@ -298,6 +293,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
                         controller.updateEvents(LoadMapView.this);
                     }
+
 
                 });
 

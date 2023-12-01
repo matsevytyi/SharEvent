@@ -4,8 +4,6 @@ package VIEW;
 import INTERFACE_ADAPTER.add_event.AddEventController;
 import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -14,10 +12,13 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import static VIEW_CREATOR.FailViewFactory.showAlert;
+
 @Getter @Setter
-public class AddEventView extends VBox {
+public class AddEventView extends VBox implements PropertyChangeListener {
 
     private final AddEventViewModel addEventViewModel;
     private final AddEventController addEventController;
@@ -27,11 +28,13 @@ public class AddEventView extends VBox {
     private final DatePicker eventDatePicker = new DatePicker();
     private final TimePicker eventTimePicker = new TimePicker();
     private final TextField descriptionInputField = new TextField();
-    private final Button addEventButton = new Button("Add Event");
+    private final Button addEventButton = new Button(AddEventViewModel.ADD_EVENT_BUTTON_LABEL);
+
 
     public AddEventView(AddEventViewModel addEventViewModel, AddEventController addEventController) {
         this.addEventViewModel = addEventViewModel;
         this.addEventController = addEventController;
+        addEventViewModel.addPropertyChangeListener(this);
         initUI();
 
 
@@ -40,6 +43,7 @@ public class AddEventView extends VBox {
 
     private void initUI() {
         Label title = new Label("Add Event");
+        title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
 
         LabelTextPane eventNameInfo = new LabelTextPane("Event name", eventNameInputField);
         LabelTextPane eventDateInfo = new LabelTextPane("Date", eventDatePicker);
@@ -48,17 +52,27 @@ public class AddEventView extends VBox {
         LabelTextPane eventTypeInfo = new LabelTextPane("Event type", eventTypeComboBox);
 
         eventTypeComboBox.getItems().addAll("Sports and Fitness", "Music", "Food and Drinks", "Gaming", "Education and Learning", "Outdoors and Adventure", "Other");
+
+        addEventButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
+
         getChildren().addAll(title, eventNameInfo, eventDateInfo, eventTimeInfo, eventDescriptionInfo, eventTypeInfo, addEventButton);
 
         setPadding(new Insets(10));
-        VBox contentBox = new VBox(title, eventNameInfo, eventDateInfo, eventTimeInfo, eventDescriptionInfo, eventTypeInfo, addEventButton);
+        VBox contentBox = new VBox(eventNameInfo, eventDateInfo, eventTimeInfo, eventDescriptionInfo, eventTypeInfo, addEventButton);
         contentBox.setSpacing(10);
         contentBox.setPadding(new Insets(10));
-
-        // Center the contentBox within the StackPane
         StackPane.setAlignment(contentBox, javafx.geometry.Pos.CENTER);
 
         getChildren().add(contentBox);
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt){
+        AddEventState addEventState = (AddEventState) evt.getNewValue();
+        if (addEventState.getEventNameError() != null) {
+            showAlert("Error",addEventState.getEventNameError(), Alert.AlertType.INFORMATION);
+        }
+    }
+
 
 }

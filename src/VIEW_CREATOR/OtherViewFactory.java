@@ -20,9 +20,11 @@ public class OtherViewFactory {
             centerBox.setAlignment(Pos.CENTER);
             centerBox.setMaxSize(600, 400);
           Button closeButton = new Button("Close");
+          closeButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
           closeButton.setOnAction(event -> {
             // Close the view or perform any necessary actions
             parentPane.getChildren().removeAll(overlay, centerBox);
+
         });
         centerBox.getChildren().add(closeButton);
             parentPane.getChildren().addAll(overlay,centerBox);

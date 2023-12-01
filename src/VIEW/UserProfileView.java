@@ -2,12 +2,18 @@ package VIEW;
 
 
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
+import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
+import VIEW_CREATOR.FailViewFactory;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class UserProfileView extends VBox {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class UserProfileView extends VBox implements PropertyChangeListener {
     private final Label usernameLabel = new Label();
     private final Label nameLabel = new Label();
     private final Label emailLabel = new Label();
@@ -20,6 +26,7 @@ public class UserProfileView extends VBox {
     public UserProfileView(ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
         this.viewProfileViewModel = viewProfileViewModel;
         this.viewProfileController = viewProfileController;
+        viewProfileViewModel.addPropertyChangeListener(this);
 
         initUI();
     }
@@ -27,17 +34,20 @@ public class UserProfileView extends VBox {
     private final ViewProfileController viewProfileController;
 
     private void initUI() {
+        Label title = new Label("User Profile");
+        title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
+
         getChildren().addAll(
-                new Label("User Profile"),
-                new Label("Username"), usernameLabel,
-                new Label("Name "), nameLabel,
-                new Label("Email "),emailLabel,
-                new Label("Registered Events "),registeredEventsLabel,
-                new Label("Hosted Events"),hostedEventsLabel,
+                title,
+                new Label("Username:"), usernameLabel,
+                new Label("Name: "), nameLabel,
+                new Label("Email: "),emailLabel,
+                new Label("Registered Events: "),registeredEventsLabel,
+                new Label("Hosted Events:"),hostedEventsLabel,
                 new Label("Log out "),logoutButton
         );
         setSpacing(5);
-
+        logoutButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
 
         logoutButton.setOnAction(event -> {
           //////////////////
@@ -53,5 +63,13 @@ public class UserProfileView extends VBox {
         hostedEventsLabel.setText(viewProfileViewModel.getState().getHosted_events().toString());
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        ViewProfileState viewProfileState = (ViewProfileState) evt.getNewValue();
+        if (viewProfileState.getError() != null) {
+            FailViewFactory.showAlert("Error",viewProfileState.getError(), Alert.AlertType.INFORMATION);
+
+        }
+    }
 }
 
