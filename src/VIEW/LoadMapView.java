@@ -94,16 +94,14 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     private final FilterEventsView filterEventsView;
 
-    private final LogOutController logOutController;
 
 
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController, LogOutController logOutController) {
+    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
 
 
       viewModel = loggedInViewModel; // here was new LoadMapViewModel();
         this.deleteEventViewModel = deleteEventViewModel;
         this.deleteEventController = deleteEventController;
-        this.logOutController = logOutController;
 
         presenter = new LoadMapPresenter();
 
@@ -156,7 +154,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 //        });
 
         viewProfileButton.setOnAction(e -> {
-           UserProfileView userProfileView  = new UserProfileView(viewProfileViewModel,viewProfileController, logOutController);
+           UserProfileView userProfileView  = new UserProfileView(viewProfileViewModel,viewProfileController);
            ViewProfileState viewProfileState = viewProfileViewModel.getState();
             viewProfileState.setUsername(viewModel.getLoggedInUser());
 

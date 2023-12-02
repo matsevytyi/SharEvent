@@ -20,23 +20,16 @@ public class UserProfileView extends VBox {
     private final Label hostedEventsLabel = new Label();
     private final Button logoutButton = new Button("Log Out");
 
-    private final LogOutController logOutController;
-
     private final ViewProfileViewModel viewProfileViewModel;
 
-    public UserProfileView(ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController, LogOutController logOutController) {
+    public UserProfileView(ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
         this.viewProfileViewModel = viewProfileViewModel;
         this.viewProfileController = viewProfileController;
-        this.logOutController = logOutController;
 
         initUI();
     }
 
     private final ViewProfileController viewProfileController;
-
-
-
-
 
     private void initUI() {
         getChildren().addAll(
@@ -60,7 +53,6 @@ public class UserProfileView extends VBox {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            //logOutController.execute();
 
             Platform.exit();
             System.exit(0);
