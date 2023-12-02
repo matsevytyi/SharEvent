@@ -3,6 +3,7 @@ package VIEW;
 import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.filter.FilterPresenter;
 import USE_CASE.filter.FilterOutputBoundary;
+import VIEW_CREATOR.FilterEventsViewModel;
 import VIEW_CREATOR.LoadMapViewModel;
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -19,41 +20,40 @@ public class FilterEventsView extends JPanel {
     private final FilterController controller;
     private final Frame frame;
     private final LoadMapViewModel viewModel;
-    public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
+    public FilterEventsView(FilterController controller, LoadMapViewModel viewModel, FilterEventsViewModel filterEventsViewModel) {
         this.viewModel = viewModel;
         this.controller = controller;
 
-        JFrame filterFrame = new JFrame("Filter");
+        JFrame filterFrame = new JFrame(filterEventsViewModel.getFILTER_FRAME_TITLE());
         JPanel filterPanel = new JPanel();
         JPanel filterPanelType= new JPanel();
         JPanel filterPanelButtons = new JPanel();
         filterPanelType.setAlignmentX(Component.CENTER_ALIGNMENT);
-        filterPanel.add(Box.createVerticalStrut(15));
-        filterFrame.setTitle("Filters");
-        filterFrame.setBounds(0, 0, 250, 300);
+        filterPanel.add(Box.createVerticalStrut(filterEventsViewModel.getVERTICAL_GAP()));
+        filterFrame.setBounds(0, 0, filterEventsViewModel.getFRAME_WIDTH(), filterEventsViewModel.getFRAME_HEIGHT());
         filterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         filterFrame.setResizable(false);
 
         // Buttons for Apply and Cancel
-        JButton apply = new JButton("Apply");
-        JButton cancel = new JButton("Cancel");
+        JButton apply = new JButton(filterEventsViewModel.getAPPLY_BUTTON_TITLE());
+        JButton cancel = new JButton(filterEventsViewModel.getCANCEL_BUTTON_TITLE());
         filterPanelButtons.add(cancel);
         filterPanelButtons.add(apply);
 
-        JLabel typeLabel = new JLabel("Filter by Type: ");
+        JLabel typeLabel = new JLabel(filterEventsViewModel.getLABEL_TEXT());
         filterPanelType.add(typeLabel, BorderLayout.NORTH);
         filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
         filterPanelType.setLayout(new BoxLayout(filterPanelType, BoxLayout.Y_AXIS));
 
         // Buttons for Type selection
-        JRadioButton sportsButton = new JRadioButton("Sports and Fitness");
-        JRadioButton musicButton = new JRadioButton("Music");
-        JRadioButton foodButton = new JRadioButton("Food and Drinks");
-        JRadioButton gamingButton = new JRadioButton("Gaming");
-        JRadioButton educationButton = new JRadioButton("Education and Learning");
-        JRadioButton outdoorsButton = new JRadioButton("Outdoors and Adventure");
-        JRadioButton otherButton = new JRadioButton("Other");
-        JRadioButton allButton = new JRadioButton("Show All");
+        JRadioButton sportsButton = new JRadioButton(filterEventsViewModel.getTYPE1());
+        JRadioButton musicButton = new JRadioButton(filterEventsViewModel.getTYPE2());
+        JRadioButton foodButton = new JRadioButton(filterEventsViewModel.getTYPE3());
+        JRadioButton gamingButton = new JRadioButton(filterEventsViewModel.getTYPE4());
+        JRadioButton educationButton = new JRadioButton(filterEventsViewModel.getTYPE5());
+        JRadioButton outdoorsButton = new JRadioButton(filterEventsViewModel.getTYPE6());
+        JRadioButton otherButton = new JRadioButton(filterEventsViewModel.getTYPE7());
+        JRadioButton allButton = new JRadioButton(filterEventsViewModel.getTYPE8());
         ButtonGroup typeGroup = new ButtonGroup();
 
         ArrayList<JRadioButton> typeList = new ArrayList<>();

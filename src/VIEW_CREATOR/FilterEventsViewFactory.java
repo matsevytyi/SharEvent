@@ -12,11 +12,12 @@ import java.util.Set;
 public class FilterEventsViewFactory {
 
     public FilterEventsView create(LoadMapViewModel viewModel){
+        FilterEventsViewModel filterEventsViewModel = new FilterEventsViewModel();
         FilterOutputBoundary presenter = new FilterPresenter(viewModel.getMapKit());
 
         FilterInputBoundary interactor = new FilterInteractor(presenter);
         FilterController controller = new FilterController(interactor);
-        return new FilterEventsView(controller, viewModel);
+        return new FilterEventsView(controller, viewModel, filterEventsViewModel);
     }
 
 }

@@ -12,9 +12,10 @@ import VIEW.SearchEventsView;
 public class SearchEventsViewFactory {
 
     public SearchEventsView create(LoadMapViewModel viewModel){
+        SearchEventsViewModel searchEventsViewModel = new SearchEventsViewModel();
         SearchOutputBoundary presenter = new SearchPresenter(viewModel.getMapKit());
         SearchInputBoundary interactor = new SearchInteractor(presenter);
         SearchController controller = new SearchController(interactor);
-        return new SearchEventsView(controller, viewModel);
+        return new SearchEventsView(controller, viewModel, searchEventsViewModel);
     }
 }
