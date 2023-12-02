@@ -7,6 +7,7 @@ import USE_CASE.search.SearchInputData;
 import USE_CASE.search.SearchShowAllData;
 import VIEW.LoadMapView;
 import VIEW_CREATOR.LoadMapViewModel;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class SearchController {
+    @Getter
     final SearchInputBoundary searchUseCaseInteractor;
 
     Set<Event> allEvents;

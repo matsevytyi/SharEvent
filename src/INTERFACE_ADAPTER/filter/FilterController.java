@@ -3,11 +3,13 @@ import ENTITY.Event;
 import USE_CASE.filter.FilterInputData;
 import USE_CASE.filter.FilterInputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
+import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 public class FilterController {
     final FilterInputBoundary filterUseCaseInteractor;
 

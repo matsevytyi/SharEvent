@@ -23,14 +23,12 @@ public class FilterPresenter implements FilterOutputBoundary {
 
     public void prepareSuccessView(FilterOutputData filterOutputData) {
         Set<Event> localEvents = filterOutputData.getFoundEvents();
-//        for (Event event : localEvents) {
-//            System.out.println(event.getEventName());
-//        }
 
         WaypointPainter<Event> eventPainter = new WaypointPainter<>();
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
+
     }
 
     @Override

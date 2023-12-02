@@ -21,7 +21,7 @@ public class FilterInteractor implements FilterInputBoundary {
     public void execute(FilterInputData filterInputData) {
         System.out.println("Filter used: " + filterInputData.getTypeInput());
 
-        if(filterInputData.getTypeInput().equals("Show All")){
+        if (filterInputData.getTypeInput().equals("Show All")) {
             FilterOutputData filterOutputData = new FilterOutputData(filterInputData.getAllEvents());
             this.filterPresenter.prepareSuccessView(filterOutputData);
         } else {
@@ -36,26 +36,5 @@ public class FilterInteractor implements FilterInputBoundary {
                 this.filterPresenter.prepareSuccessView(filterOutputData);
             }
         }
-    }
-
-
-    private ArrayList<Double> getRange(GeoPosition geoPosition){
-        double latitude = geoPosition.getLatitude();
-        double longitude = geoPosition.getLongitude();
-
-        double delta = 5./111;
-
-        double maxLatitude = latitude + delta;
-        double minLatitude = latitude - delta;
-        double maxLongitude = longitude + delta;
-        double minLongitude = longitude - delta;
-
-        ArrayList<Double> range = new ArrayList<Double>();
-        range.add(minLatitude);
-        range.add(maxLatitude);
-        range.add(minLongitude);
-        range.add(maxLongitude);
-
-        return range;
     }
 }

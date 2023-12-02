@@ -14,7 +14,9 @@ import java.awt.event.ActionListener;
 public class SearchEventsView extends JPanel {
     private final SearchController controller;
     private final Frame frame;
+    private final LoadMapViewModel viewModel;
     public SearchEventsView(SearchController controller, LoadMapViewModel viewModel) {
+        this.viewModel = viewModel;
         this.controller = controller;
         JFrame searchFrame = new JFrame("Search");
         JLabel searchLabel = new JLabel("Search Events by name: ");

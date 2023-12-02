@@ -17,9 +17,12 @@ import java.util.Enumeration;
 @Getter
 public class FilterEventsView extends JPanel {
     private final FilterController controller;
-    private final Frame frame;
+    private static Frame frame;
+    private final LoadMapViewModel viewModel;
     public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
+        this.viewModel = viewModel;
         this.controller = controller;
+
         JFrame filterFrame = new JFrame("Filter");
         JPanel filterPanel = new JPanel();
         JPanel filterPanelType= new JPanel();
@@ -100,16 +103,16 @@ public class FilterEventsView extends JPanel {
         filterFrame.add(filterPanel);
         filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         filterFrame.setLocationRelativeTo(null);
-        this.frame = filterFrame;
+        frame = filterFrame;
         filterFrame.setVisible(false);
 
     }
 
-    public void showMenu(){
-        this.frame.setVisible(true);
+    public static void showMenu(){
+        frame.setVisible(true);
     }
 
-    private static AbstractButton getSelectedOptions(ButtonGroup buttonGroup) {
+    public static AbstractButton getSelectedOptions(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements();
              buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
