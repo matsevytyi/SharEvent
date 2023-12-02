@@ -11,11 +11,11 @@ import java.util.List;
 public class AddEventState {
 
 
-    private String eventName = "";
+    private String eventName = null;
     private String eventNameError = null;
-    private String eventType = "";
+    private String eventType = null;
     private String eventTypeError = null;
-    private String eventDescription = "";
+    private String eventDescription = null;
     private String eventDescriptionError = null;
     private LocalDate eventDate = null;
     private String eventDateError = null;
@@ -30,7 +30,7 @@ public class AddEventState {
 
     private double eventLatitude = 0;
     private String eventLatitudeError = null;
-//    private GeoPosition clickedPosition = null;
+
 
     public AddEventState(){}
 

@@ -1,12 +1,15 @@
 package VIEW;
 
+import INTERFACE_ADAPTER.add_event.AddEventState;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventState;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventState;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
+import VIEW_CREATOR.FailViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,8 +17,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class ViewEventView extends VBox {
+
+public class ViewEventView extends VBox implements PropertyChangeListener {
     private final Label eventNameLabel = new Label();
     private final Label typeLabel = new Label();
     private final Label eventDateLabel = new Label();
@@ -41,21 +47,24 @@ public class ViewEventView extends VBox {
         this.deleteEventViewModel = deleteEventViewModel;
 
         this.registerEventController = registerEventController;
-
+viewEventViewModel.addPropertyChangeListener(this);
         initUI();
     }
 
     private void initUI() {
+        Label title = new Label("Event Details");
+        title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
         getChildren().addAll(
-                new Label("Event Name: "), eventNameLabel,
+                 title,
                 new Label("Type: "), typeLabel,
                 new Label("Event Date: "), eventDateLabel,
                 new Label("Event Time: "), eventTimeLabel,
                 new Label("Description: "), descriptionLabel,
                 new Label("Creator: "), creatorLabel,
                 new Label("Attendants: "), attendantsLabel,
-                new Label("Action: "), actionButton
+                actionButton
         );
+        actionButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
         setSpacing(5);
         setPadding(new Insets(10));
         actionButton.setOnAction(event -> handleActionButtonClick());
@@ -113,4 +122,14 @@ public class ViewEventView extends VBox {
             }
         }
     }
+    @Override
+    public void propertyChange(PropertyChangeEvent evt){
+        ViewEventState viewEventState =( ViewEventState) evt.getNewValue();
+        if (viewEventState.getError() != null) {
+            FailViewFactory.showAlert("Error",viewEventState.getError(), Alert.AlertType.INFORMATION);
+
+        }
+    }
+
+
 }
