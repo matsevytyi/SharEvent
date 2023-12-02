@@ -9,11 +9,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-@Getter
 public class SearchEventsView extends JPanel {
+    @Getter
     private final SearchController controller;
     private final Frame frame;
+    @Getter
     private final LoadMapViewModel viewModel;
     public SearchEventsView(SearchController controller, LoadMapViewModel viewModel) {
         this.viewModel = viewModel;
@@ -73,7 +73,6 @@ public class SearchEventsView extends JPanel {
         searchFrame.setLocationRelativeTo(null);
         searchFrame.setVisible(true);
         this.frame = searchFrame;
-
 
     }
 

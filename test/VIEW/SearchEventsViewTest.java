@@ -9,13 +9,14 @@ import java.awt.*;
 import static org.junit.Assert.assertNotNull;
 
 public class SearchEventsViewTest {
-    public void MakeSearchEventsView(){
+
+    public void MakeSearchEventsView() {
         LoadMapViewModel viewModel = new LoadMapViewModel();
         SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
         searchEventsViewFactory.create(viewModel);
     }
 
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         JFrame mainFrame = null;
         Window[] windows = Window.getWindows();
         for (Window window : windows) {
@@ -47,14 +48,14 @@ public class SearchEventsViewTest {
     public void testCancelButtonPresent() {
         MakeSearchEventsView();
         JButton button = getButton(0);
-        assert(button.getText().equals("Cancel"));
+        assert (button.getText().equals("Cancel"));
     }
 
     @org.junit.Test
     public void testApplyButtonPresent() {
         MakeSearchEventsView();
         JButton button = getButton(1);
-        assert(button.getText().equals("Apply"));
+        assert (button.getText().equals("Apply"));
     }
 
     @org.junit.Test

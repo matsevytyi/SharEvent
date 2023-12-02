@@ -1,10 +1,7 @@
 package VIEW;
 
-import APP.main;
 import VIEW_CREATOR.FilterEventsViewFactory;
-import VIEW_CREATOR.LoadMapViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
-import javafx.scene.layout.StackPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +9,10 @@ import java.awt.*;
 import static org.junit.Assert.assertNotNull;
 
 public class FilterEventsViewTest {
-    public void MakeFilterEventsView(){
+    public FilterEventsView MakeFilterEventsView(){
         LoadMapViewModel viewModel = new LoadMapViewModel();
         FilterEventsViewFactory filterEventsViewFactory = new FilterEventsViewFactory();
-        filterEventsViewFactory.create(viewModel);
+        return filterEventsViewFactory.create(viewModel);
     }
 
 
@@ -110,10 +107,10 @@ public class FilterEventsViewTest {
 
     @org.junit.Test
     public void testCheckVisibility() {
-        MakeFilterEventsView();
+        FilterEventsView filterEventsView = MakeFilterEventsView();
         JFrame mainFrame = getFrame();
         assert (!mainFrame.isVisible());  // Filter view is not visible on starting
-        FilterEventsView.showMenu();
+        filterEventsView.showMenu();
         assert (mainFrame.isVisible());  // Filter view is visible after method call
     }
 

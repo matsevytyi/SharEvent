@@ -32,7 +32,7 @@ public class LoadMapController {
     }
 
     public void filterEvents(FilterEventsView filterEventsView){
-        FilterEventsView.showMenu();
+        filterEventsView.showMenu();
         FilterEventsDAO filterEventsDAO = new DatabaseDAO();
         Set<Event> allEvents = filterEventsDAO.FilterEvents("");
         filterEventsView.getController().setEvents(allEvents);

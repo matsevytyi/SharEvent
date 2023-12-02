@@ -1,21 +1,14 @@
 package INTERFACE_ADAPTER.search;
 
 import ENTITY.Event;
-import ENTITY.EventInterface;
 import USE_CASE.search.SearchInputBoundary;
 import USE_CASE.search.SearchInputData;
 import USE_CASE.search.SearchShowAllData;
-import VIEW.LoadMapView;
-import VIEW_CREATOR.LoadMapViewModel;
-import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class SearchController {
-    @Getter
     final SearchInputBoundary searchUseCaseInteractor;
 
     Set<Event> allEvents;
@@ -29,9 +22,7 @@ public class SearchController {
             while (allEvents.isEmpty()) {
                 Thread.sleep(500);
             }
-        } catch (InterruptedException e) {
-            System.out.println("Exception: " + e);
-        }
+        } catch (InterruptedException e) {System.out.println("Exception: " + e);}
         SearchInputData searchInputData = new SearchInputData(search_input, allEvents);
 
         searchUseCaseInteractor.execute(searchInputData);
@@ -42,9 +33,7 @@ public class SearchController {
             while (allEvents.isEmpty()) {
                 Thread.sleep(500);
             }
-        } catch (InterruptedException e) {
-            System.out.println("Exception: " + e);
-        }
+        } catch (InterruptedException e) {System.out.println("Exception: " + e);}
         SearchShowAllData searchShowAllData = new SearchShowAllData(allEvents);
 
         searchUseCaseInteractor.executeShowAll(searchShowAllData);

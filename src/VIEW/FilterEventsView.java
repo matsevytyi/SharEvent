@@ -17,7 +17,7 @@ import java.util.Enumeration;
 @Getter
 public class FilterEventsView extends JPanel {
     private final FilterController controller;
-    private static Frame frame;
+    private final Frame frame;
     private final LoadMapViewModel viewModel;
     public FilterEventsView(FilterController controller, LoadMapViewModel viewModel) {
         this.viewModel = viewModel;
@@ -73,12 +73,9 @@ public class FilterEventsView extends JPanel {
                     public void actionPerformed(ActionEvent e) {
                         AbstractButton selectedType = getSelectedOptions(typeGroup);
                         if(selectedType != null) {
-                            System.out.println(selectedType.getText());
                             filterFrame.dispose();
                             controller.execute(selectedType.getText(), viewModel);
-                        } else {
-                            JOptionPane.showMessageDialog(frame, "No Filters Selected");
-                        }
+                        } else { JOptionPane.showMessageDialog(frame, "No Filters Selected");}
                     }
                 }
         );
@@ -86,18 +83,9 @@ public class FilterEventsView extends JPanel {
         cancel.addActionListener(
                 new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractButton selectedType = getSelectedOptions(typeGroup);
-                        if (selectedType != null){
-
-                            selectedType.setSelected(false);
-
-                        }
-                        filterFrame.dispose();
-                    }
+                    public void actionPerformed(ActionEvent e) {filterFrame.dispose();}
                 }
         );
-
         filterPanel.add(filterPanelType);
         filterPanel.add(filterPanelButtons);
         filterFrame.add(filterPanel);
@@ -105,10 +93,9 @@ public class FilterEventsView extends JPanel {
         filterFrame.setLocationRelativeTo(null);
         frame = filterFrame;
         filterFrame.setVisible(false);
-
     }
 
-    public static void showMenu(){
+    public void showMenu(){
         frame.setVisible(true);
     }
 
