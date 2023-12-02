@@ -26,6 +26,7 @@ public class ViewProfileState {
     private  String email;
     private List<EventInterface> registered_events;
     private  List<EventInterface> hosted_events;
+    private String error;
 
     }
 

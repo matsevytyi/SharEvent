@@ -29,7 +29,9 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
                     user.getHostedEvents()
             );;
             viewEventPresenter.successesView(outputData);
-        } // додати фейл сітуейшн
+        } else{
+            viewEventPresenter.prepareFailView("Something went wrong. Please, try again");
+        }
     }
 
 
