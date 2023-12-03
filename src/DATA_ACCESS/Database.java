@@ -14,18 +14,43 @@ import java.util.Set;
 
 
 public class Database {
-    Connection connection;
+    private static final String url = "jdbc:postgresql://db.bqeyxdersfsiysrpyzqb.supabase.co:5432/postgres";
+    private static final String user = "basic_user";
+    private static final String password = "pass1111";
 
-    public Database() {
-        connection = connect();
+    // The maximum number of connections in the pool
+    private static final int MAX_CONNECTIONS = 10;
+
+    private static Connection[] connectionPool = new Connection[MAX_CONNECTIONS];
+    private static int poolSize = 0;
+
+    // Singleton instance
+    private static Database instance;
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
     }
 
-    public Connection connect() {
-        String url = "jdbc:postgresql://db.bqeyxdersfsiysrpyzqb.supabase.co:5432/postgres";
-        String user = "basic_user";
-        String password = "pass1111";
+    public Connection getConnection() {
+        if (poolSize > 0) {
+            return connectionPool[--poolSize];
+        } else {
+            return connect();
+        }
+    }
 
+    public void releaseConnection(Connection connection) {
+        if (poolSize < MAX_CONNECTIONS) {
+            connectionPool[poolSize++] = connection;
+        } else {
+            closeConnection(connection);
+        }
+    }
 
+    private Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(url, user, password);
@@ -35,19 +60,17 @@ public class Database {
         }
     }
 
-    public boolean closeConnection() {
+    private void closeConnection(Connection connection) {
         try {
             connection.close();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
 
     public Object executeQuery(String query, boolean isUpdate, Object... parameters) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             // Set parameters if any
             for (int i = 0; i < parameters.length; i++) {
@@ -69,7 +92,6 @@ public class Database {
                 // For SELECT
                 resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    //TODO What are we supposed to do gere instead of printing resultSet?
                     System.out.println(resultSet.getString(1));
                     return resultSet;
                 } else {
@@ -93,7 +115,7 @@ public class Database {
 
     // find one user
     public Object executeQueryUser(String query, String username) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -116,7 +138,7 @@ public class Database {
     }
 
     public Object executeQueryUserListForEvent(String query, int event_id) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, event_id);
             ResultSet resultSet = statement.executeQuery();
@@ -144,7 +166,7 @@ public class Database {
     }
 
     public User getUserByUsername(String username) {
-        connection = connect();
+        Connection connection = getConnection();
         String query = "select * from public.user where username=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
@@ -167,7 +189,7 @@ public class Database {
     }
 
     public List<User> getUsersRegisteredForEvent(int event_id) {
-        connection = connect();
+        Connection connection = getConnection();
         String query = "SELECT * " +
                 "FROM public.user AS u " +
                 "JOIN public.attendedevents AS ae ON u.username = ae.visitor " +
@@ -201,7 +223,7 @@ public class Database {
 
     // USER
     public Object executeQueryUserList(String query, String username) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -229,7 +251,7 @@ public class Database {
     }
 
     public boolean executeQueryCheckPassword(String query, String username, String password) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -268,7 +290,7 @@ public class Database {
 
     public Object executeQueryEventList(String query, String username) {
 
-        Connection connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             ResultSet resultSet = statement.executeQuery();
@@ -299,7 +321,7 @@ public class Database {
     public Set<Event> executeQueryEventList() {
         // шось не так з табличкою event, бо до юзера все норм доступається
         String query = "SELECT * FROM public.event";
-        connection = connect();
+        Connection connection = getConnection();
         Set<Event> eventSet = new HashSet<>();  // Use HashSet to represent a Set
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -333,7 +355,7 @@ public class Database {
     }
 
     public Event executeQueryEvent(String query, int event_id) {
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             ResultSet resultSet = statement.executeQuery();
@@ -360,7 +382,7 @@ public class Database {
 
         Set<Event> events = new HashSet<>();
 
-        connection = connect();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
 
@@ -399,11 +421,10 @@ public class Database {
         String description = resultSet.getString("description");
         String type = resultSet.getString("type");
 
+
         // Extracting java.sql.Date and converting it to LocalDate
         String dateSql = resultSet.getString("date");
         LocalDate date = LocalDate.parse(dateSql);
-
-        // Extracting java.sql.Time and converting it to LocalTime
         String timeSql = resultSet.getString("time");
         LocalTime time = LocalTime.parse(timeSql);
 
@@ -417,10 +438,12 @@ public class Database {
         return new Event(id_event, event_name, type, description, date, time, creatorUser, attendants, latitude, longitude);
     }
 
-    public void executeQueryRegister(String query, String username, int eventId) {
 
 
-    }
+
+
+}
+
 
 
 //    public int executeInsertAndGetGeneratedId(String query, Object... parameters) {
@@ -457,4 +480,4 @@ public class Database {
 //            }
 //        }
 //    }
-}
+

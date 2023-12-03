@@ -20,7 +20,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDAO, SearchEventsDAO {
-    Database database = new Database();
+    Database database = Database.getInstance();
 
     public void deleteEvent(int event_id) {
 
@@ -65,6 +65,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (?, ?)";
 
         database.executeQuery(query, true, username, event_id);
+
 
     }
 
@@ -126,7 +127,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         return new LoadEventsDAO_OutputData(events);
     }
-
 
 
     @Override
@@ -247,4 +247,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
+
+
 }
+

@@ -11,6 +11,7 @@ import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
+import INTERFACE_ADAPTER.logout_adapter.LogOutController;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
@@ -96,6 +97,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     private final ViewProfileController viewProfileController;
 
     private final FilterEventsView filterEventsView;
+
 
 
     public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
