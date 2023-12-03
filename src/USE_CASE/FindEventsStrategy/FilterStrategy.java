@@ -5,7 +5,7 @@ import ENTITY.Event;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FindByFilter implements FindEventsStrategy{
+public class FilterStrategy implements FindEventsStrategy{
 
     @Override
     public Set<Event> findEvents(Set<Event> allEvents, String filter) {

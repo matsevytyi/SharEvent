@@ -1,21 +1,17 @@
 package USE_CASE.filter;
 
-import DATA_ACCESS.DatabaseDAO;
-import DATA_ACCESS.FilterEventsDAO;
 import ENTITY.Event;
-import USE_CASE.FindEventsStrategy.FindByFilter;
+import USE_CASE.FindEventsStrategy.FilterStrategy;
 import USE_CASE.FindEventsStrategy.FindEventsStrategy;
-import org.jxmapviewer.viewer.GeoPosition;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class FilterInteractor implements FilterInputBoundary {
     final FilterOutputBoundary filterPresenter;
-
+    final FindEventsStrategy findEventsStrategy;
     public FilterInteractor(FilterOutputBoundary filterOutputBoundary) {
         this.filterPresenter = filterOutputBoundary;
+        this.findEventsStrategy = new FilterStrategy();
     }
 
     public void execute(FilterInputData filterInputData) {
@@ -26,8 +22,7 @@ public class FilterInteractor implements FilterInputBoundary {
             this.filterPresenter.prepareSuccessView(filterOutputData);
         } else {
 
-            FindEventsStrategy findEventsStrategy = new FindByFilter();
-            Set<Event> foundEvents = findEventsStrategy.findEvents(filterInputData.getAllEvents(), filterInputData.getTypeInput());
+            Set<Event> foundEvents = this.findEventsStrategy.findEvents(filterInputData.getAllEvents(), filterInputData.getTypeInput());
 
             if (foundEvents.isEmpty()) {
                 this.filterPresenter.prepareFailView("No events matched your filters");
