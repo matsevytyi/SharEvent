@@ -53,6 +53,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
+@Getter
 public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
@@ -100,7 +101,16 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
 
 
-    public LoadMapView(LoadMapViewModel loggedInViewModel, AddEventViewModel addEventViewModel, AddEventController addEventController, ViewEventViewModel viewEventViewModel, ViewEventController viewEventController, DeleteEventViewModel deleteEventViewModel, DeleteEventController deleteEventController, RegisterController registerController, ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController) {
+    public LoadMapView(LoadMapViewModel loggedInViewModel,
+                       AddEventViewModel addEventViewModel,
+                       AddEventController addEventController,
+                       ViewEventViewModel viewEventViewModel,
+                       ViewEventController viewEventController,
+                       DeleteEventViewModel deleteEventViewModel,
+                       DeleteEventController deleteEventController,
+                       RegisterController registerController,
+                       ViewProfileViewModel viewProfileViewModel,
+                       ViewProfileController viewProfileController) {
 
 
         viewModel = loggedInViewModel; // here was new LoadMapViewModel();
@@ -143,7 +153,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         return pane;
     }
 
-    private void setButtonListeners(StackPane pane, LoadMapController controller) {
+    public void setButtonListeners(StackPane pane, LoadMapController controller) {
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
         Button filterEventsButton = (Button) pane.getChildren().get(2);
@@ -187,7 +197,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     }
 
 
-    private void handleMapClick(boolean isAdding) {
+    public void handleMapClick(boolean isAdding) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Choose Map Point");
         alert.setHeaderText(null);

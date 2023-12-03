@@ -12,6 +12,7 @@ import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
 import VIEW.LoadMapView;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
@@ -40,16 +41,20 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
     @Getter
     private GeoPosition currentGeoposition;
 
+    @Getter
+    @Setter
+    String problem;
+
 
     public LoadEventsInteractor(LoadEventsOuputData loadEventsOuputData) {
         events = new HashSet<>();
         currentGeoposition = loadEventsOuputData.getNewLocationPoint();
+        problem = "";
     }
 
 
 @Override
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView) {
-        String problem = "";
 
         try{
             LoadEventsDataAccessInterface databaseAccess = (LoadEventsDataAccessInterface) new DatabaseDAO();

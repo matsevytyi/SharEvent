@@ -6,8 +6,16 @@ module com.example.mapsdemo {
     requires lombok;
     requires java.sql;
     requires com.google.gson;
+
     exports APP;
-    exports APP.use_case_factory;
+    exports USE_CASE.loadmap;
+    exports INTERFACE_ADAPTER.loadmap_adapter;
+    exports VIEW;
+    exports VIEW_CREATOR;
+    exports USE_CASE.login;
+    exports USE_CASE.loadevents;
+    exports INTERFACE_ADAPTER.loadevents_adapter;
+    exports ENTITY;
     //opens com.example.mapsdemo to javafx.fxml;
     //exports com.example.mapsdemo;
 }

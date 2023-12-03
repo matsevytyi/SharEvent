@@ -11,6 +11,8 @@ import USE_CASE.loadevents.LoadEventsInputBoundary;
 import USE_CASE.loadmap.LoadMapOutputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -20,16 +22,23 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
 
     public LoadMapInteractor() {
     }
+
+    @Getter
+    @Setter
+    JXMapKit mapKit;
+
+    @Getter
+    LoadMapAPIAccessInterface loadmapAPI;
     @Override
     public void execute(LoadMapOutputData loadMapOutputData, LoadMapViewModel loadMapViewModel){
 
         LoadMapOutputBoundary loadMapPresenter = new LoadMapPresenter();
 
-        JXMapKit mapKit = loadMapOutputData.getMapKit();
+        mapKit = loadMapOutputData.getMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
         mapKit.setZoom(4);
         try {
-            LoadMapAPIAccessInterface loadmapAPI = new LoadMap_API();
+            loadmapAPI = new LoadMap_API();
             GeoPosition initialGeo = loadmapAPI.getCoord();
             mapKit.setAddressLocation(initialGeo);
             loadMapPresenter.PrepareSuccessView(new LoadMapInputData(mapKit), loadMapViewModel);
