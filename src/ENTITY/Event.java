@@ -15,6 +15,8 @@ public class Event extends DefaultWaypoint implements EventInterface {
    // private static int lastAssignedId = 0;
 
     private int eventId;
+    private final List<User> eventAttendants;
+
     @Getter
     private final String eventName;
     private final String type;
@@ -22,7 +24,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
     private final LocalTime eventTime;
     private final String description;
     private final User creator;
-    private final List<User> eventAttendants;
+
     private final double latitude;
     private final double longitude;
     GeoPosition geoPosition;

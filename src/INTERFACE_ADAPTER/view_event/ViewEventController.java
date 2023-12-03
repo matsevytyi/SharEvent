@@ -17,7 +17,7 @@ public class ViewEventController {
         this.viewEventUseCaseInteractor = viewEventUseCaseInteractor;
     }
 
-    final ViewEventInputBoundary viewEventUseCaseInteractor;
+    public final ViewEventInputBoundary viewEventUseCaseInteractor;
 
 
     public void execute(double latitude, double longitude, JXMapViewer mapViewer) {
