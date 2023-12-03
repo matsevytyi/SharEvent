@@ -1,87 +1,125 @@
-/*
 package view;
 
 import INTERFACE_ADAPTER.ViewManagerModel;
+import INTERFACE_ADAPTER.login_adapter.LoginState;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SighUpController;
 import INTERFACE_ADAPTER.signup_adapter.SignUpState;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 import VIEW.SignUpView;
-import javafx.scene.input.KeyEvent;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-import org.mockito.Mockito;
+import javax.swing.*;
 
-import java.beans.PropertyChangeEvent;
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class SignUpViewTest {
 
-    private SignUpView signUpView;
+    private SighUpController signUpController;
     private SignUpViewModel signUpViewModel;
     private LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
-    private SighUpController sighUpController;
+    private SignUpView signUpView;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        sighUpController = mock(SighUpController.class);
+        signUpController = mock(SighUpController.class);
         signUpViewModel = new SignUpViewModel();
         loginViewModel = new LoginViewModel();
-        viewManagerModel = new ViewManagerModel();
-        signUpView = new SignUpView(sighUpController, signUpViewModel, loginViewModel, viewManagerModel);
+        viewManagerModel = mock(ViewManagerModel.class);
+        signUpView = new SignUpView(signUpController, signUpViewModel, loginViewModel, viewManagerModel);
+    }
+
+    @Test
+    public void testActionPerformedSignUp() throws SQLException {
+        JButton signUpButton = signUpView.getSignUp();
+        assertTrue(signUpButton.getActionListeners().length > 0);
+
+        // Mock the behavior of the signUpController
+        doNothing().when(signUpController).execute(anyString(), anyString(), anyString(), anyString(), anyString());
+
+        // Trigger the actionPerformed event for signUpButton
+        signUpButton.doClick();
+
+        // Verify that the signUpController's execute method was called
+        verify(signUpController).execute(anyString(), anyString(), anyString(), anyString(), anyString());
+    }
+
+    @Test
+    public void testActionPerformedHaveAccount() {
+        JButton haveAccountButton = signUpView.getHave_account();
+        assertTrue(haveAccountButton.getActionListeners().length > 0);
+
+        // Trigger the actionPerformed event for haveAccountButton
+        haveAccountButton.doClick();
+
+        // Verify that the viewManagerModel's setActiveView and firePropertyChanged methods were called
+        verify(viewManagerModel).setActiveView(anyString());
+        verify(viewManagerModel).firePropertyChanged();
+    }
+
+    @Test
+    public void testPropertyChange() {
+        // Trigger a property change event on the signUpViewModel
+        SignUpState newState = new SignUpState();
+        newState.setUsernameError("Invalid username");
+        //signUpViewModel.firePropertyChanged(newState);
+
+        // Verify that the JOptionPane.showMessageDialog method was called
+        //assertTrue(((String) JOptionPane.getFrames()[0].getTitle()).contains("Invalid username"));
     }
 
     @Test
     public void testSignUpButtonActionPerformed() throws SQLException {
-        // Simulate a user clicking the sign-up button
-        signUpView.signUp.doClick();
+        // Arrange
+        SighUpController mockSignUpController = mock(SighUpController.class);
+        SignUpViewModel mockSignUpViewModel = mock(SignUpViewModel.class);
+        LoginViewModel mockLoginViewModel = mock(LoginViewModel.class);
+        ViewManagerModel mockViewManagerModel = mock(ViewManagerModel.class);
 
-        // Verify that the controller's execute method was called with the expected parameters
-        verify(sighUpController).execute(anyString(), anyString(), anyString(), anyString(), anyString());
+        SignUpView signUpView = new SignUpView(mockSignUpController, mockSignUpViewModel, mockLoginViewModel, mockViewManagerModel);
 
-        // You might also want to check other aspects of the UI state or behavior after the button click
+        // Set up the state for the test
+        SignUpState testState = new SignUpState();
+        testState.setUsername("testUser");
+        testState.setName("Test Name");
+        testState.setEmail("test@example.com");
+        testState.setPassword("testPassword");
+        testState.setRepeatPassword("testPassword");
+
+        when(mockSignUpViewModel.getState()).thenReturn(testState);
+        signUpView.getSignUp().doClick();
+
+        // Assert
+        verify(mockSignUpController).execute("testUser", "Test Name", "test@example.com", "testPassword", "testPassword");
+        //verify(mockViewManagerModel).setActiveView("login");
     }
 
     @Test
     public void testHaveAccountButtonActionPerformed() {
-        // Simulate a user clicking the "Have Account" button
-        signUpView.have_account.doClick();
+        // Arrange
+        SighUpController mockSignUpController = mock(SighUpController.class);
+        SignUpViewModel mockSignUpViewModel = mock(SignUpViewModel.class);
+        LoginViewModel mockLoginViewModel = mock(LoginViewModel.class);
+        ViewManagerModel mockViewManagerModel = mock(ViewManagerModel.class);
 
-        // Verify that the view manager and login view model were updated
-        assertEquals(loginViewModel.getViewName(), viewManagerModel.getActiveView());
+        SignUpView signUpView = new SignUpView(mockSignUpController, mockSignUpViewModel, mockLoginViewModel, mockViewManagerModel);
 
-        // You may need to check other aspects of the UI state or behavior after this button click
+        // Set up the state for the test
+        LoginState testLoginState = new LoginState();
+        testLoginState.setUsername("testUser");
+        testLoginState.setPassword("testPassword");
+
+        when(mockLoginViewModel.getState()).thenReturn(testLoginState);
+
+        signUpView.getHave_account().doClick();
+        verify(mockViewManagerModel).firePropertyChanged();
     }
 
 
-    @Test
-    public void testUsernameInputFieldKeyTyped() {
-        // Simulate a key press in the username input field
-        signUpView.usernameInputField.setText("testUser");
-        //signUpView.usernameInputField.dispatchEvent(new KeyEvent(signUpView.usernameInputField, KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0, KeyEvent.VK, 'a'));
-
-        // Verify that the state in the SignUpViewModel is updated
-        assertEquals("testUsera", signUpViewModel.getState().getUsername());
-    }
-
-    // Add similar tests for other input fields, key events, and possible edge cases
-
-    @Test
-    public void testPropertyChange() {
-        // Simulate a property change event
-        SignUpState newState = new SignUpState();
-        newState.setUsernameError("Test Error");
-        signUpView.propertyChange(new PropertyChangeEvent(signUpView, "propertyName", signUpViewModel.getState(), newState));
-
-        // Verify that a JOptionPane is displayed with the expected error message
-        // Note: This may require the use of a library like JUnit Swing to handle UI interactions in tests
-    }
 }
 
-*/

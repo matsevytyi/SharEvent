@@ -7,6 +7,7 @@ import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import INTERFACE_ADAPTER.signup_adapter.SighUpController;
 import INTERFACE_ADAPTER.signup_adapter.SignUpState;
 import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 
+@Getter
         public class SignUpView extends JPanel implements ActionListener, PropertyChangeListener {
             public final String viewName = "sign up";
 

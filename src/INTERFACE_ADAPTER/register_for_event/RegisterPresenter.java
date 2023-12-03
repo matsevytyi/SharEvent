@@ -4,7 +4,9 @@ import INTERFACE_ADAPTER.ViewManagerModel;
 
 import USE_CASE.register_for_event.RegisterOutputBoundary;
 import javafx.scene.control.Alert;
+import lombok.Setter;
 
+@Setter
 public class RegisterPresenter implements RegisterOutputBoundary {
     private final RegisterViewModel registerViewModel;
 
@@ -15,8 +17,6 @@ public class RegisterPresenter implements RegisterOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
 
-
-
     @Override
     public void prepareSuccessCase() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "You registered for this event successfully!");
@@ -24,8 +24,4 @@ public class RegisterPresenter implements RegisterOutputBoundary {
     }
 
 
-    @Override
-    public void prepareFailCase(String error) {
-
-    }
 }
