@@ -16,6 +16,14 @@ public class FilterController {
         this.allEvents = new HashSet<>();
     }
 
+    /**
+     * This public method prepares the InputData for the interactor
+     * and calls the interactor to execute with the given input. It waits for the
+     * all events parameter to be non-empty.
+     * @param type  type that the user wants to filter with
+     * @param viewModel  the loadMapViewModel that the program is currently running with
+     */
+
     public void execute(String type, LoadMapViewModel viewModel) {
 
         try {
@@ -29,6 +37,11 @@ public class FilterController {
         filterUseCaseInteractor.execute(filterInputData);
     }
 
+    /**
+     * This public method sets the allEvents parameter of the controller
+     * to the set input. Should be called when the database is done finding all events
+     * @param allEvents the set of all events in the database
+     */
     public void setEvents(Set<Event> allEvents){
         this.allEvents = allEvents;
     }

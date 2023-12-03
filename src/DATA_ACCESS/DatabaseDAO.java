@@ -92,7 +92,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return (Set<Event>) eventList;
+        return eventList;
 
     }
 
@@ -109,7 +109,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return (Set<Event>) eventList;
+        return eventList;
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {

@@ -5,5 +5,5 @@ import ENTITY.Event;
 import java.util.Set;
 
 public interface SearchEventsDataAccessInterface {
-    public Set<Event> SearchEvent(String searchInput);
+    Set<Event> SearchEvent(String searchInput);
 }

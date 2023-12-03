@@ -1,12 +1,9 @@
 package VIEW;
 
 import INTERFACE_ADAPTER.filter.FilterController;
-import INTERFACE_ADAPTER.filter.FilterPresenter;
-import USE_CASE.filter.FilterOutputBoundary;
 import VIEW_CREATOR.FilterEventsViewModel;
 import VIEW_CREATOR.LoadMapViewModel;
 import lombok.Getter;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,10 +92,18 @@ public class FilterEventsView extends JPanel {
         filterFrame.setVisible(false);
     }
 
+    /**
+     * This method displays the frame that contains the filter options.
+     */
     public void showMenu(){
         frame.setVisible(true);
     }
 
+    /**
+     * This method returns the button that has been selected in the specified button group.
+     * @param buttonGroup the ButtonGroup object we want to check
+     * @return the button that has been selected
+     */
     public static AbstractButton getSelectedOptions(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements();
              buttons.hasMoreElements();) {
@@ -111,7 +116,7 @@ public class FilterEventsView extends JPanel {
         return null;
     }
 
-    static void setButtons(ArrayList<JRadioButton> buttons, JPanel panel, ButtonGroup group){
+    private static void setButtons(ArrayList<JRadioButton> buttons, JPanel panel, ButtonGroup group){
         buttons.forEach((button) -> {
             panel.add(button);
             group.add(button);

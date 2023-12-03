@@ -21,6 +21,12 @@ public class FilterPresenter implements FilterOutputBoundary {
         this.mapKit = mapKit;
     }
 
+    /**
+     * This method shows all the events that are in the OutputData on the map,
+     * given that there is at least one event in the OutputData.
+     * @param filterOutputData the filterOutputData prepared by the interactor.
+     */
+    @Override
     public void prepareSuccessView(FilterOutputData filterOutputData) {
         Set<Event> localEvents = filterOutputData.getFoundEvents();
 
@@ -31,6 +37,11 @@ public class FilterPresenter implements FilterOutputBoundary {
 
     }
 
+    /**
+     * This method opens a new Java Swing message dialog to show when an error has occured,
+     * along with the appropriate error message.
+     * @param error error message to display
+     */
     @Override
     public void prepareFailView(String error) {
         System.out.println("Preparing Fail View for " + error);

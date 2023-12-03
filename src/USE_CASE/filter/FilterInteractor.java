@@ -14,6 +14,13 @@ public class FilterInteractor implements FilterInputBoundary {
         this.findEventsStrategy = new FilterStrategy();
     }
 
+    /**
+     * This method executes with the given InputData. If the user selected to filter for "Show All",
+     * then this calls the presenter to show all the events in the database. For other filters,
+     * it calls the presenter to show all the events that match that filter. If there are no
+     * events that match the filter, then it calls the presenter to prepare the fail view.
+     * @param filterInputData the filterInputData prepared by the controller
+     */
     public void execute(FilterInputData filterInputData) {
         System.out.println("Filter used: " + filterInputData.getTypeInput());
 
