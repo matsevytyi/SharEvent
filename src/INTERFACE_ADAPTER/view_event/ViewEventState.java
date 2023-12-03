@@ -36,6 +36,7 @@ private int eventId;
     private JXMapViewer mapViewer;
 
     private String loggedinuser;
+    private String error;
 
     }
 

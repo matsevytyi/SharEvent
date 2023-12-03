@@ -1,13 +1,5 @@
-.view-event-view {
-    -fx-background-color: #f5f5f5;
-}
-
-.row {
-    -fx-spacing: 5;
-    -fx-padding: 5;
-}
-
-.label {
+.label-style {
+    -fx-font-size: 16;
     -fx-font-weight: bold;
-    -fx-min-width: 120;
+    -fx-text-fill: #3B59B6;
 }
