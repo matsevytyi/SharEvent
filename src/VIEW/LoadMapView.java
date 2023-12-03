@@ -336,7 +336,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
                 controller.updateEvents(LoadMapView.this);
 
             } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace(); // Обробка відповідно до вашого випадку
+                ex.printStackTrace();
             }
 
         });

@@ -68,24 +68,26 @@ public class LoadMapViewFactory {
         Button addEventButton = (Button) pane.getChildren().get(5);
         Button updateEventsButton = (Button) pane.getChildren().get(6);
 
-        StackPane.setAlignment(viewProfileButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 420, 0));
-
-        StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(filterEventsButton, new Insets(0, 20, 620, 0));
-
-        // TODO Adjust
-        StackPane.setAlignment(searchEventsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(searchEventsButton, new Insets(0, 20, 820, 0));
-
-        StackPane.setAlignment(viewEventsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(viewEventsButton, new Insets(0, 20, 220, 0));
+        StackPane.setAlignment(updateEventsButton, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
 
         StackPane.setAlignment(addEventButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(addEventButton, new Insets(0, 20, 20, 0));
 
-        StackPane.setAlignment(updateEventsButton, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(updateEventsButton, new Insets(0, 0, 12, 0));
+        StackPane.setAlignment(viewEventsButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(viewEventsButton, new Insets(0, 20, 215, 0));
+
+        StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(filterEventsButton, new Insets(0, 20, 410, 0));
+
+        StackPane.setAlignment(searchEventsButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(searchEventsButton, new Insets(0, 20, 606, 0));
+
+        StackPane.setAlignment(viewProfileButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(viewProfileButton, new Insets(0, 20, 800, 0));
+
+
+
         updateEventsButton.setVisible(true);
     }
 }

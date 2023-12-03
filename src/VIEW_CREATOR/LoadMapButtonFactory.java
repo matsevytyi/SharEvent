@@ -76,6 +76,9 @@ public class LoadMapButtonFactory {
         Button viewEventsButton = new Button();
         viewEventsButton.setStyle(buttonStyle);
 
+        viewEventsButton.setPrefSize(buttonSize, buttonSize);
+        viewEventsButton.setMaxSize(buttonSize, buttonSize);
+
         try {
             ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
 
