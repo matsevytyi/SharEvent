@@ -72,10 +72,10 @@ public class LoadMapViewFactory {
         StackPane.setMargin(viewProfileButton, new Insets(0, 20, 420, 0));
 
         StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(filterEventsButton, new Insets(420, 20, 700, 0));
+        StackPane.setMargin(filterEventsButton, new Insets(0, 20, 620, 0));
 
         StackPane.setAlignment(searchEventsButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(searchEventsButton, new Insets(500, 20, 620, 0));
+        StackPane.setMargin(searchEventsButton, new Insets(0, 20, 820, 0));
 
         StackPane.setAlignment(viewEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(viewEventsButton, new Insets(0, 20, 220, 0));

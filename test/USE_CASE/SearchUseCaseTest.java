@@ -1,13 +1,13 @@
-package INTERFACE_ADAPTER;
+package USE_CASE;
 
 import DATA_ACCESS.DatabaseDAO;
 import ENTITY.Event;
 import ENTITY.EventFactory;
 import ENTITY.EventFactoryInterface;
 import ENTITY.User;
-import VIEW.FilterEventsView;
-import VIEW_CREATOR.FilterEventsViewFactory;
+import VIEW.SearchEventsView;
 import VIEW_CREATOR.LoadMapViewModel;
+import VIEW_CREATOR.SearchEventsViewFactory;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -24,7 +24,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
 
-public class FilterUseCaseTest {
+public class SearchUseCaseTest {
     static String message;
     static boolean popUpDiscovered;
     public Event addEvent() {
@@ -32,25 +32,28 @@ public class FilterUseCaseTest {
         DatabaseDAO databaseDAO = new DatabaseDAO();
         User newUser = databaseDAO.getUserByUsername("ff");
         List<User> attendees = new ArrayList<>();
-        Event event = eventFactory.create("TestEvent", "Food and Drinks", "Example Event", LocalDate.now(), LocalTime.now(), newUser, attendees, 43.645306, -79.380247);
+        Event event = eventFactory.create("TestEvent2", "Food and Drinks", "Example Event", LocalDate.now(), LocalTime.now(), newUser, attendees, 43.645306, -79.380247);
+        Event event2 = eventFactory.create("TestEvent1", "Food and Drinks", "Example Event", LocalDate.now(), LocalTime.now(), newUser, attendees, 43.645306, -79.380247);
 
         databaseDAO.addEvent(event);
+        databaseDAO.addEvent(event2);
         return event;
     }
 
-    public FilterEventsView MakeFilterEventsView(){
+    public SearchEventsView MakeSearchEventsView(){
         LoadMapViewModel viewModel = new LoadMapViewModel();
-        FilterEventsViewFactory filterEventsViewFactory = new FilterEventsViewFactory();
-        FilterEventsView filterEventsView = filterEventsViewFactory.create(viewModel);
-        return filterEventsView;
+        SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
+        SearchEventsView searchEventsView = searchEventsViewFactory.create(viewModel);
+        searchEventsView.setVisible(false);
+        return searchEventsView;
     }
 
     @org.junit.Test
-    public void testEventShownAfterFilter() {
+    public void testEventShownAfterSearch() {
         Event event = addEvent();
 
         DatabaseDAO databaseDAO = new DatabaseDAO();
-        Set<Event> allEvents = databaseDAO.FilterEvents("");
+        Set<Event> allEvents = databaseDAO.SearchEvent("");
         int event_id = -1;
         for(Event event2 : allEvents) {
             if (event2.getEventName().equals(event.getEventName())){
@@ -58,16 +61,16 @@ public class FilterUseCaseTest {
             }
         }
 
-        FilterEventsView filterEventsView = MakeFilterEventsView();
-        filterEventsView.getController().setEvents(allEvents);
+        SearchEventsView searchEventsView = MakeSearchEventsView();
+        searchEventsView.getController().setEvents(allEvents);
 
-        JRadioButton foodButton = getFilterButton(3);
-        foodButton.setSelected(true);
+        JTextField searchTextField = getTextField();
+        searchTextField.setText("TestEvent");
 
         JButton applyButton = getButton(1);
         applyButton.doClick();
 
-        JXMapKit mapKit = filterEventsView.getViewModel().getMapKit();
+        JXMapKit mapKit = searchEventsView.getViewModel().getMapKit();
 
         Set<Event> eventsShown = ((WaypointPainter<Event>)mapKit.getMainMap().getOverlayPainter()).getWaypoints();
 
@@ -82,11 +85,11 @@ public class FilterUseCaseTest {
     }
 
     @org.junit.Test
-    public void testEventNotShownAfterFilter() {
+    public void testEventNotShownAfterSearch() {
         Event event = addEvent();
-
         DatabaseDAO databaseDAO = new DatabaseDAO();
-        Set<Event> allEvents = databaseDAO.FilterEvents("");
+        Set<Event> allEvents = databaseDAO.SearchEvent("");
+
         int event_id = -1;
         for(Event event2 : allEvents) {
             if (event2.getEventName().equals(event.getEventName())){
@@ -94,19 +97,18 @@ public class FilterUseCaseTest {
             }
         }
 
-        FilterEventsView filterEventsView = MakeFilterEventsView();
-        filterEventsView.getController().setEvents(allEvents);
+        SearchEventsView searchEventsView = MakeSearchEventsView();
+        searchEventsView.getController().setEvents(allEvents);
 
-        JRadioButton foodButton = getFilterButton(2);
-        foodButton.setSelected(true);
+        JTextField searchTextField = getTextField();
+        searchTextField.setText("TestEvent1");
 
         JButton applyButton = getButton(1);
         applyButton.doClick();
 
-        JXMapKit mapKit = filterEventsView.getViewModel().getMapKit();
+        JXMapKit mapKit = searchEventsView.getViewModel().getMapKit();
 
         Set<Event> eventsShown = ((WaypointPainter<Event>)mapKit.getMainMap().getOverlayPainter()).getWaypoints();
-
         Set<Integer> eventsShownID = new HashSet<>();
         for(Event event2 : eventsShown) {
             eventsShownID.add(event2.getEventId());
@@ -118,25 +120,32 @@ public class FilterUseCaseTest {
     }
 
     @org.junit.Test
-    public void testShowAllFilter() {
+    public void testNoEventsFoundPopUp(){
         DatabaseDAO databaseDAO = new DatabaseDAO();
-        Set<Event> allEvents = databaseDAO.FilterEvents("");
+        Set<Event> allEvents = databaseDAO.SearchEvent("");
 
-        FilterEventsView filterEventsView = MakeFilterEventsView();
-        filterEventsView.getController().setEvents(allEvents);
+        SearchEventsView searchEventsView = MakeSearchEventsView();
+        searchEventsView.getController().setEvents(allEvents);
+        createCloseTimer().start();
+        searchEventsView.getController().execute("TestEvent12345677");
 
-        JRadioButton foodButton = getFilterButton(2);
-        foodButton.setSelected(true);
+        assert(popUpDiscovered);
+    }
 
-        JButton applyButton = getButton(1);
-        applyButton.doClick();
+    @org.junit.Test
+    public void testCancelButtonFunctionality(){
 
-        JRadioButton showAllButton = getFilterButton(8);
-        showAllButton.setSelected(true);
+        DatabaseDAO databaseDAO = new DatabaseDAO();
+        Set<Event> allEvents = databaseDAO.SearchEvent("");
 
-        applyButton.doClick();
+        SearchEventsView searchEventsView = MakeSearchEventsView();
+        searchEventsView.getController().setEvents(allEvents);
+        searchEventsView.getController().execute("TestEvent");
+        JButton cancelButton = getButton(0);
+        cancelButton.doClick();
 
-        JXMapKit mapKit = filterEventsView.getViewModel().getMapKit();
+        JXMapKit mapKit = searchEventsView.getViewModel().getMapKit();
+
         Set<Event> eventsShown = ((WaypointPainter<Event>)mapKit.getMainMap().getOverlayPainter()).getWaypoints();
 
         assert (eventsShown.equals(allEvents));
@@ -144,36 +153,17 @@ public class FilterUseCaseTest {
     }
 
     @org.junit.Test
-    public void testEmptyApplyButtonPopUp() {
-        MakeFilterEventsView();
+    public void testEmptyStringApplyButtonPopUp() {
+
+        MakeSearchEventsView();
+        popUpDiscovered = false;
+
         JButton applyButton = getButton(1);
         createCloseTimer().start();
         applyButton.doClick();
 
         assert(popUpDiscovered);
 
-    }
-
-    @org.junit.Test
-    public void testNoEventsFoundPopUp() {
-        DatabaseDAO databaseDAO = new DatabaseDAO();
-        Set<Event> allEvents = databaseDAO.FilterEvents("");
-
-        FilterEventsView filterEventsView = MakeFilterEventsView();
-        filterEventsView.getController().setEvents(allEvents);
-
-        createCloseTimer().start();
-        filterEventsView.getController().execute("NotRealType", filterEventsView.getViewModel());
-        assert(popUpDiscovered);
-    }
-
-    @org.junit.Test
-    public void testCancelButtonDisposal() {
-        FilterEventsView filterEventsView = MakeFilterEventsView();
-        filterEventsView.showMenu();
-        JButton cancelButton = getButton(0);
-        cancelButton.doClick();
-        assert (!filterEventsView.getFrame().isVisible());
     }
     public JFrame getFrame(){
         JFrame mainFrame = null;
@@ -203,7 +193,7 @@ public class FilterUseCaseTest {
 
     }
 
-    public JRadioButton getFilterButton(int i) {
+    public JTextField getTextField(){
         JFrame mainFrame = getFrame();
 
         mainFrame.getComponent(0);
@@ -211,11 +201,9 @@ public class FilterUseCaseTest {
         Component contentPant = ((JRootPane) root).getContentPane();
         JPanel jPanel = (JPanel) contentPant;
         JPanel mainPanel = (JPanel) jPanel.getComponent(0);
-        JPanel filterButtonsPanel = (JPanel) mainPanel.getComponent(1);
-        JRadioButton button = (JRadioButton) filterButtonsPanel.getComponent(i);
+        JTextField jTextField = (JTextField) mainPanel.getComponent(1);
 
-        return button;
-
+        return jTextField;
     }
 
     private Timer createCloseTimer() {
@@ -238,8 +226,8 @@ public class FilterUseCaseTest {
                             System.out.println("message = " + s);
 
                             // store the information we got from the JDialog
-                            FilterUseCaseTest.message = s;
-                            FilterUseCaseTest.popUpDiscovered = true;
+                            SearchUseCaseTest.message = s;
+                            SearchUseCaseTest.popUpDiscovered = true;
 
                             window.dispose();
                         }
@@ -253,4 +241,5 @@ public class FilterUseCaseTest {
         t.setRepeats(false);
         return t;
     }
+
 }
