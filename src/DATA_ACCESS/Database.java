@@ -1,3 +1,18 @@
+/**
+ * The {@code Database} class provides methods for interacting with a PostgreSQL database.
+ * It includes methods for executing SQL queries, managing database connections, and extracting
+ * entities such as users and events from the result sets.
+ * <p>
+ * This class follows the Singleton design pattern, ensuring a single instance of the database
+ * is used throughout the application. It also includes connection pooling to efficiently manage
+ * database connections.
+ * </p>
+ * <p>
+ * Note: This class uses the Lombok library's {@code @SneakyThrows} annotation for simplifying
+ * checked exceptions handling. Make sure to include Lombok in your project dependencies.
+ * </p>
+ */
+
 package DATA_ACCESS;
 
 import ENTITY.Event;
@@ -69,6 +84,15 @@ public class Database {
     }
 
 
+    /**
+     * Executes the provided SQL query with optional parameters and returns the result.
+     *
+     * @param query       The SQL query to execute.
+     * @param isUpdate    A flag indicating whether the query is an update (INSERT, UPDATE, DELETE).
+     * @param parameters  Optional parameters to be set in the prepared statement.
+     * @return            The result of the query, which could be a boolean for update queries or a ResultSet for select queries.
+     */
+
     public Object executeQuery(String query, boolean isUpdate, Object... parameters) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -113,7 +137,13 @@ public class Database {
         }
     }
 
-    // find one user
+    /**
+     * Executes an SQL query to find a user by username and returns the result.
+     *
+     * @param query     The SQL query to execute.
+     * @param username  The username of the user to find.
+     * @return          The user found based on the provided username.
+     */
     public Object executeQueryUser(String query, String username) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -136,7 +166,13 @@ public class Database {
         }
 
     }
-
+    /**
+     * Executes an SQL query to retrieve a list of users registered for a specific event.
+     *
+     * @param query     The SQL query to execute.
+     * @param event_id  The ID of the event for which users are to be retrieved.
+     * @return          A list of users registered for the specified event.
+     */
     public Object executeQueryUserListForEvent(String query, int event_id) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -165,6 +201,12 @@ public class Database {
 
     }
 
+    /**
+     * Retrieves a user from the database based on the provided username.
+     *
+     * @param username  The username of the user to retrieve.
+     * @return          The user found based on the provided username.
+     */
     public User getUserByUsername(String username) {
         Connection connection = getConnection();
         String query = "select * from public.user where username=?";
@@ -188,6 +230,12 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves a list of users registered for a specific event.
+     *
+     * @param event_id  The ID of the event for which users are to be retrieved.
+     * @return          A list of users registered for the specified event.
+     */
     public List<User> getUsersRegisteredForEvent(int event_id) {
         Connection connection = getConnection();
         String query = "SELECT * " +
@@ -221,7 +269,13 @@ public class Database {
         }
     }
 
-    // USER
+    /**
+     * Executes an SQL query to retrieve a list of users based on the provided criteria.
+     *
+     * @param query     The SQL query to execute.
+     * @param username  The criteria for user retrieval.
+     * @return          A list of users based on the provided criteria.
+     */
     public Object executeQueryUserList(String query, String username) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -250,6 +304,14 @@ public class Database {
 
     }
 
+    /**
+     * Checks if the provided password matches the password of the user with the given username.
+     *
+     * @param query     The SQL query to execute.
+     * @param username  The username of the user for password verification.
+     * @param password  The password to check against the stored user password.
+     * @return          True if the password is correct, false otherwise.
+     */
     public boolean executeQueryCheckPassword(String query, String username, String password) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -288,6 +350,13 @@ public class Database {
     }
 
 
+    /**
+     * Executes an SQL query to retrieve a list of events based on the provided criteria.
+     *
+     * @param query     The SQL query to execute.
+     * @param username  The criteria for event retrieval.
+     * @return          A list of events based on the provided criteria.
+     */
     public Object executeQueryEventList(String query, String username) {
 
         Connection connection = getConnection();
@@ -316,8 +385,11 @@ public class Database {
 
     }
 
-    // EVENT
-
+    /**
+     * Retrieves a set of all events from the database.
+     *
+     * @return A set containing all events present in the database.
+     */
     public Set<Event> executeQueryEventList() {
         // шось не так з табличкою event, бо до юзера все норм доступається
         String query = "SELECT * FROM public.event";
@@ -354,6 +426,13 @@ public class Database {
 
     }
 
+    /**
+     * Executes an SQL query to retrieve an event with the specified ID.
+     *
+     * @param query    The SQL query to execute.
+     * @param event_id The ID of the event to retrieve.
+     * @return         The event found based on the provided ID.
+     */
     public Event executeQueryEvent(String query, int event_id) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -378,6 +457,12 @@ public class Database {
 
     }
 
+    /**
+     * Executes an SQL query to retrieve a set of events based on the provided criteria.
+     *
+     * @param query The SQL query to execute.
+     * @return      A set of events based on the provided criteria.
+     */
     public Object executeQueryEvent(String query) {
 
         Set<Event> events = new HashSet<>();
@@ -392,10 +477,6 @@ public class Database {
                 events.add(extractEvent(resultSet));
 
           }
-//            else {
-//                System.out.println("No results found");
-//                return null;
-//            }
 
         } catch (SQLException e) {
             System.out.println("Error executing SQL query");
@@ -437,10 +518,6 @@ public class Database {
         // Create and return the Event object
         return new Event(id_event, event_name, type, description, date, time, creatorUser, attendants, latitude, longitude);
     }
-
-
-
-
 
 }
 
