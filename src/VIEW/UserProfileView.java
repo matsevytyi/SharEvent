@@ -15,10 +15,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+@Getter
 public class UserProfileView extends VBox implements PropertyChangeListener {
     private final Label usernameLabel = new Label();
     private final Label nameLabel = new Label();

@@ -8,6 +8,8 @@ module com.example.mapsdemo {
     requires com.google.gson;
     exports APP;
     exports APP.use_case_factory;
+    exports INTERFACE_ADAPTER.add_event;
+
     //opens com.example.mapsdemo to javafx.fxml;
     //exports com.example.mapsdemo;
 }

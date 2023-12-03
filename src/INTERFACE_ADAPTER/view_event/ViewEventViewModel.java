@@ -41,13 +41,12 @@ public class ViewEventViewModel extends ViewModel {
         this.state = state;
     }
 
+    public void setMapViewer(JXMapViewer mapViewer){
+        state.setMapViewer(mapViewer);
+    }
     public void setClickedPosition(GeoPosition clickedPosition) {
         state.setLatitude(clickedPosition.getLatitude());
         state.setLongitude(clickedPosition.getLongitude());
-    }
-
-    public void setMapViewer(JXMapViewer mapViewer) {
-        state.setMapViewer(mapViewer);
     }
 
     public void setLoggedInUser(String loggedInUser) {
