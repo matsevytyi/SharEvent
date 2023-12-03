@@ -1,12 +1,19 @@
 package VIEW;
 
 
+import INTERFACE_ADAPTER.logout_adapter.LogOutController;
+import INTERFACE_ADAPTER.view_event.ViewEventState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
+
+import javafx.application.Platform;
+
 import VIEW_CREATOR.FailViewFactory;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
@@ -50,9 +57,21 @@ public class UserProfileView extends VBox implements PropertyChangeListener {
         setSpacing(5);
         logoutButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
 
-        logoutButton.setOnAction(event -> {
-          //////////////////
-        });
+        logoutButton.setOnAction(event -> handleLogoutButtonClick());
+
+    }
+
+    private void handleLogoutButtonClick() {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to log out?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+
+            Platform.exit();
+            System.exit(0);
+        }
+
     }
 
     public void updateProfile() {

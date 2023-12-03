@@ -66,9 +66,6 @@ public class MapUseCasesFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        LogOutPresenter logoutPresenter = new LogOutPresenter (loginViewModel, viewManagerModel);
-
-        LogOutInteractor logoutInteractor = new LogOutInteractor(logoutPresenter);
 
          RegisterController registerController= null;
 
@@ -77,8 +74,6 @@ public class MapUseCasesFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        LogOutController logoutController = new LogOutController (logoutInteractor);
 
         ViewProfileController viewProfileController = null;
 

@@ -1,7 +1,10 @@
 package ENTITY;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -10,6 +13,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Getter
+@Setter
+@AllArgsConstructor
 public class Event extends DefaultWaypoint implements EventInterface {
 
    // private static int lastAssignedId = 0;
@@ -60,6 +65,7 @@ public class Event extends DefaultWaypoint implements EventInterface {
         this.longitude = longitude;
         this.geoPosition = new GeoPosition(latitude, longitude);
     }
+
 
 
 //    public void setEventId(int eventId) {

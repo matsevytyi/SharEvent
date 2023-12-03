@@ -10,4 +10,7 @@ public interface UserLoginDataAccessInterface {
     User getUserByUsername(String username);
 
     boolean checkPassword(String username, String password);
+
+    ///забрати потім
+    public void registerUserForEvent(String username, int event_id);
 }
