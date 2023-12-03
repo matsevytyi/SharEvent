@@ -20,8 +20,6 @@ public class DeleteEventInteractor implements DeleteEventInputBoundary {
     public void execute(DeleteEventInputData deleteEventInputData) {
 
         String deletedEventId = loadEventsDataAccessInterface.getEventById(deleteEventInputData.getEventId());
-
-
         loadEventsDataAccessInterface.deleteEvent(deleteEventInputData.getEventId());
 
         DeleteEventOutputData deleteEventOutputData = new DeleteEventOutputData(deletedEventId,false);
