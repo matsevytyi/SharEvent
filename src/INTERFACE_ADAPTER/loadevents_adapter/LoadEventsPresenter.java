@@ -30,7 +30,6 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
     }
 
     public boolean PrepareSuccesView() {
-        System.out.println("LoadEvents mapkit Before: " + mapKit);
 
         Set<Event> localEvents = loadEventsInputData.getEvents();
 
@@ -38,7 +37,6 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
-        System.out.println("LoadEvents mapkit: " + mapKit);
 
         return true;
     }

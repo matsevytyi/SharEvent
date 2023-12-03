@@ -19,7 +19,7 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDAO, SearchEventsDAO {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDataAccessInterface, SearchEventsDataAccessInterface {
     Database database = Database.getInstance();
 
     public void deleteEvent(int event_id) {
@@ -96,7 +96,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return (Set<Event>) eventList;
+        return eventList;
 
     }
 
@@ -113,7 +113,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return (Set<Event>) eventList;
+        return eventList;
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
