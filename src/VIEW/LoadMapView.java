@@ -11,7 +11,6 @@ import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
-import INTERFACE_ADAPTER.logout_adapter.LogOutController;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;

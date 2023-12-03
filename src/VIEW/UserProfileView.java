@@ -1,7 +1,6 @@
 package VIEW;
 
 
-import INTERFACE_ADAPTER.logout_adapter.LogOutController;
 import INTERFACE_ADAPTER.view_event.ViewEventState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfileState;

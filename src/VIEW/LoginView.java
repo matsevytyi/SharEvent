@@ -4,6 +4,7 @@ package VIEW;
 import INTERFACE_ADAPTER.login_adapter.LoginController;
 import INTERFACE_ADAPTER.login_adapter.LoginState;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 
+@Getter
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
@@ -163,11 +165,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println("Click " + evt.getActionCommand());
     }
 
-   /* @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
-    }*/
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -179,9 +176,5 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     }
 
-    public void setFields(LoginState state) {
-        usernameInputField.setText(state.getUsername());
-        passwordInputField.setText(state.getPassword());
-    }
 
 }
