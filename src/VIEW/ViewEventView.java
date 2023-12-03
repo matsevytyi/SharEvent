@@ -95,7 +95,7 @@ viewEventViewModel.addPropertyChangeListener(this);
         return loggedInUser != null && loggedInUser.equals(eventCreator);
     }
 
-    private void handleActionButtonClick() {
+    public void handleActionButtonClick() {
         // Implement the logic for the actionButton click based on the text
         String buttonText = actionButton.getText();
         if ("Delete".equals(buttonText)) {

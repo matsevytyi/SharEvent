@@ -29,7 +29,7 @@ import java.awt.*;
 public class main extends Application {
     int primaryStageWidth;
     int primaryStageHeight;
-public static LoadMapView loadMapView;
+    public static LoadMapView loadMapView;
     public static void main(String[] args) {
         launch(args);
     }

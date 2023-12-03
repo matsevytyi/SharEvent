@@ -1,14 +1,17 @@
 package DATA_ACCESS;
 
 import java.awt.geom.Point2D;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
+import ENTITY.EventInterface;
 import ENTITY.User;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import ENTITY.Event;
@@ -16,8 +19,8 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDataAccessInterface, SearchEventsDataAccessInterface {
-    Database database = new Database();
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDAO, SearchEventsDAO {
+    Database database = Database.getInstance();
 
     public void deleteEvent(int event_id) {
 
@@ -63,6 +66,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         database.executeQuery(query, true, username, event_id);
 
+
     }
 
     public void unregisterUserFromEvent(String username, String event_id) {
@@ -92,7 +96,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return eventList;
+        return (Set<Event>) eventList;
 
     }
 
@@ -109,7 +113,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return eventList;
+        return (Set<Event>) eventList;
     }
 
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
@@ -123,7 +127,6 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         return new LoadEventsDAO_OutputData(events);
     }
-
 
 
     @Override
@@ -244,4 +247,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
+
+
 }
+
