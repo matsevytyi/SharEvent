@@ -1,3 +1,7 @@
+/**
+ * The LoginInteractor class represents the business logic for user login.
+ */
+
 package USE_CASE.login;
 
 import DATA_ACCESS.UserLoginDataAccessInterface;
@@ -12,12 +16,26 @@ public class LoginInteractor implements LoginInputBoundary{
     final LoginOutputDataBoundary userPresenter;
     final UserFactory userFactory;
 
+
+    /**
+     * Constructs a new LoginInteractor with the specified dependencies.
+     *
+     * @param userDataAccessObject The data access object for user-related operations.
+     * @param userPresenter        The presenter for handling output data.
+     * @param userFactory          The factory for creating user instances.
+     */
     public LoginInteractor(UserLoginDataAccessInterface userDataAccessObject, LoginOutputDataBoundary userPresenter, UserFactory userFactory) {
         this.userDataAccessObject = userDataAccessObject;
         this.userPresenter = userPresenter;
         this.userFactory = userFactory;
     }
 
+    /**
+     * Executes the user login process based on the provided input data.
+     *
+     * @param loginInputData The input data containing username and password for login.
+     * @throws SQLException If a SQL exception occurs during the login process.
+     */
     @Override
     public void execute(LoginInputData loginInputData) throws SQLException {
 
