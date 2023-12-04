@@ -1,3 +1,8 @@
+/**
+ * The LoginViewModel class serves as the view model for the login functionality, providing data and behavior for the associated view.
+
+ */
+
 package INTERFACE_ADAPTER.login_adapter;
 
 import INTERFACE_ADAPTER.ViewModel;
@@ -15,10 +20,18 @@ public class LoginViewModel extends ViewModel {
 
     private boolean LoginSuccessed = false;
 
+    /**
+     * Sets the login success status to true.
+     */
     public void setLogged() {
         LoginSuccessed = true;
     }
 
+    /**
+     * Retrieves the login success status.
+     *
+     * @return True if login was successful, false otherwise.
+     */
     public boolean getLogged() {
         return LoginSuccessed;
     }
@@ -29,22 +42,38 @@ public class LoginViewModel extends ViewModel {
         super("log in");
     }
 
+    /**
+     * Sets the state of the login view.
+     *
+     * @param state The state object containing username, password, and associated error messages.
+     */
     public void setState(LoginState state) {
         this.state = state;
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Signup Presenter will call to let the ViewModel know
-    // to alert the View
+    /**
+     * Notifies registered listeners of a change in the view model's state.
+     */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    /**
+     * Adds a property change listener to the view model.
+     *
+     * @param listener The listener to be added.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Retrieves the current state of the login view.
+     *
+     * @return The LoginState object representing the state of the login view.
+     */
     public LoginState getState() {
         return state;
     }

@@ -1,3 +1,8 @@
+/**
+ * The LoginState class represents the state of the login view, including username and password fields along with associated error messages.
+ * It is designed to be used with the LoginViewModel to manage and display the state of the login view.
+ */
+
 package INTERFACE_ADAPTER.login_adapter;
 
 import lombok.Getter;

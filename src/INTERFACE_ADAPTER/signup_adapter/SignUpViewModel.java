@@ -1,3 +1,6 @@
+/**
+ * The SignUpViewModel class serves as the view model for the sign-up functionality, providing data and behavior for the associated view.
+ */
 package INTERFACE_ADAPTER.signup_adapter;
 
 import INTERFACE_ADAPTER.ViewModel;
@@ -25,18 +28,29 @@ public class SignUpViewModel extends ViewModel {
             super("sign up");
         }
 
+    /**
+     * Sets the state of the sign-up view.
+     *
+     * @param state The state object containing user input fields and associated error messages.
+     */
         public void setState(SignUpState state) {
             this.state = state;
         }
 
         private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-        // This is what the Signup Presenter will call to let the ViewModel know
-        // to alert the View
+    /**
+     * Notifies registered listeners of a change in the view model's state.
+     */
         public void firePropertyChanged() {
             support.firePropertyChange("state", null, this.state);
         }
 
+    /**
+     * Adds a property change listener to the view model.
+     *
+     * @param listener The listener to be added.
+     */
         public void addPropertyChangeListener(PropertyChangeListener listener) {
             support.addPropertyChangeListener(listener);
         }
