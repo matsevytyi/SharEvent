@@ -74,7 +74,6 @@ public class LoadMapViewFactory {
         StackPane.setAlignment(filterEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(filterEventsButton, new Insets(0, 20, 620, 0));
 
-        // TODO Adjust
         StackPane.setAlignment(searchEventsButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(searchEventsButton, new Insets(0, 20, 820, 0));
 
