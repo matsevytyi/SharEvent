@@ -1,4 +1,4 @@
-package use_case;
+package USE_CASE;
 
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;

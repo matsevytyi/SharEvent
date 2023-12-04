@@ -1,4 +1,4 @@
-package use_case;
+package USE_CASE;
 
 import API.LoadMapAPIAccessInterface;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
@@ -39,6 +39,16 @@ public class LoadMapInteractorTest {
         loadMapInteractor.execute(loadMapOutputData, loadMapViewModel);
         Assert.assertEquals(JXMapKit.DefaultProviders.OpenStreetMaps, loadMapInteractor.getMapKit().getDefaultProvider());
         Assert.assertNotNull(loadMapInteractor.getMapKit());
+        loadMapInteractor.setMapKit(new JXMapKit());
+        Assert.assertNotNull(loadMapInteractor.getLoadmapAPI());
+    }
+
+    @Test
+    public void execute_test_getters_setters() {
+        LoadMapOutputData loadMapOutputData = new LoadMapOutputData();
+        loadMapInteractor = new LoadMapInteractor();
+        loadMapInteractor.execute(loadMapOutputData, loadMapViewModel);
+        Assert.assertNotNull(loadMapInteractor.getLoadmapAPI());
         loadMapInteractor.setMapKit(new JXMapKit());
         Assert.assertNotNull(loadMapInteractor.getLoadmapAPI());
     }

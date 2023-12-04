@@ -44,8 +44,6 @@ public class LoadMapController {
         filterEventsDAO = new DatabaseDAO();
         allEvents = filterEventsDAO.FilterEvents("");
         filterEventsView.getController().setEvents(allEvents);
-
-        //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 
     public void searchEvents(LoadMapViewModel viewModel){

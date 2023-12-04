@@ -58,7 +58,6 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
             LoadEventsDAO_OutputData outputDatabaseData = databaseAccess.getEventsInRange(inputDatabaseData);
             events = outputDatabaseData.getEvents();
         } catch (Exception e) {
-            System.out.println("Exception while loading events from DB\n" + e.getMessage());
             problem = "Database_error";
         }
 
@@ -77,6 +76,8 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
             presenter.PrepareFailView(problem, loadMapView);
             return;
         }
+
+        System.out.println("here");
 
         presenter.PrepareSuccesView();
     }

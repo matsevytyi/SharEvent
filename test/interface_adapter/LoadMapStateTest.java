@@ -4,7 +4,7 @@ import ENTITY.User;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import USE_CASE.login.LoginOutputData;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class LoadMapStateTest {
     @Test

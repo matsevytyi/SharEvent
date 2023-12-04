@@ -109,6 +109,19 @@ public class LoadMapViewTest {
         loadMapView.getController().setInteractor(new LoadMapInteractor());
     }
 
+   /* @Test
+    public void test_button_listeners() {
+        Button filterEventsButton = new Button();
+        filterEventsButton.setOnAction(controller::filterEventsButtonAction);
+
+        // Simulate a button click
+        filterEventsButton.fire();
+
+        // Verify that the corresponding method in the controller was called
+        verify(filterController).filterEvents(*//* any necessary arguments *//*);
+
+    }*/
+
     @Test
     public void test_LoadMapView_getters_seters() {
         assertNotNull(loadMapView.getViewName());

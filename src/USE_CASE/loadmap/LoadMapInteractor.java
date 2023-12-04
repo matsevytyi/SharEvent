@@ -40,12 +40,11 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
         try {
             loadmapAPI = new LoadMap_API();
             GeoPosition initialGeo = loadmapAPI.getCoord();
+            System.out.println(initialGeo);
             mapKit.setAddressLocation(initialGeo);
             loadMapPresenter.PrepareSuccessView(new LoadMapInputData(mapKit), loadMapViewModel);
         } catch (IOException e) {
             loadMapPresenter.PrepareFailView("API_error", loadMapViewModel);
-        } catch (Exception e) {
-            loadMapPresenter.PrepareFailView("Map_Load_Error", loadMapViewModel);
         }
     }
 

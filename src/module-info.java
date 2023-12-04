@@ -15,10 +15,13 @@ module com.example.mapsdemo {
     exports INTERFACE_ADAPTER;
     exports INTERFACE_ADAPTER.add_event;
     exports INTERFACE_ADAPTER.delete_event;
+    exports INTERFACE_ADAPTER.filter;
     exports INTERFACE_ADAPTER.loadmap_adapter;
     exports INTERFACE_ADAPTER.loadevents_adapter;
     exports INTERFACE_ADAPTER.login_adapter;
     exports INTERFACE_ADAPTER.register_for_event;
+    exports INTERFACE_ADAPTER.search;
+    exports INTERFACE_ADAPTER.signup_adapter;
     exports INTERFACE_ADAPTER.view_event;
     exports INTERFACE_ADAPTER.view_profile;
     exports USE_CASE.add_event;
@@ -28,6 +31,8 @@ module com.example.mapsdemo {
     exports USE_CASE.loadevents;
     exports USE_CASE.login;
     exports USE_CASE.register_for_event;
+    exports USE_CASE.search;
+    exports USE_CASE.signup;
     exports USE_CASE.view_event;
     exports USE_CASE.view_profile;
     exports VIEW;

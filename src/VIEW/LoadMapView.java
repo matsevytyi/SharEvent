@@ -217,7 +217,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
     }
 
 
-    private void handleClosedEventForAdding(CompletableFuture<GeoPosition> mapClickFuture) {
+    void handleClosedEventForAdding(CompletableFuture<GeoPosition> mapClickFuture) {
         Platform.runLater(() -> {
 
             try {
@@ -309,7 +309,7 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
         });
     }
 
-    private void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFutureForViewing) {
+    void handleClosedEventForViewing(CompletableFuture<GeoPosition> mapClickFutureForViewing) {
         Platform.runLater(() -> {
 
             try {
