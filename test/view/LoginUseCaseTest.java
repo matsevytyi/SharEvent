@@ -22,22 +22,22 @@ import VIEW.LoginView;
 import VIEW_CREATOR.LoadMapViewModel;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.layout.StackPane;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+
 
 import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
