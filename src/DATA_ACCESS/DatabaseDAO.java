@@ -23,7 +23,7 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 
 
-public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDAO, SearchEventsDAO {
+public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDataAccessInterface, SearchEventsDataAccessInterface {
     Database database = Database.getInstance();
 
     /**
@@ -120,7 +120,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
-        return (Set<Event>) eventList;
+        return eventList;
 
     }
 
@@ -142,7 +142,9 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
-        return (Set<Event>) eventList;
+
+
+        return eventList;
     }
 
     /**

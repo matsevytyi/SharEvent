@@ -17,6 +17,11 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.mapKit = mapKit;
     }
 
+    /**
+     * This method shows all the events that are in the OutputData on the map,
+     * given that there is at least one event in the OutputData.
+     * @param searchOutputData the searchOutputData prepared by the interactor.
+     */
     @Override
     public void prepareSuccessView(SearchOutputData searchOutputData) {
         Set<Event> localEvents = searchOutputData.getFoundEvents();
@@ -31,6 +36,11 @@ public class SearchPresenter implements SearchOutputBoundary {
 
     }
 
+    /**
+     * This method opens a new Java Swing message dialog to show when an error has occured,
+     * along with the appropriate error message.
+     * @param error error message to display
+     */
     @Override
     public void prepareFailView(String error) {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), error);
