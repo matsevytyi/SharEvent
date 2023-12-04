@@ -5,6 +5,7 @@ import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
+import INTERFACE_ADAPTER.loadmap_adapter.LoadMapState;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
 import INTERFACE_ADAPTER.view_event.ViewEventController;
 import INTERFACE_ADAPTER.view_event.ViewEventViewModel;
@@ -29,6 +30,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -143,6 +146,5 @@ public class LoadMapViewTest {
         assertNotNull(loadMapView.getViewProfileController());
         assertNotNull(loadMapView.getFilterEventsView());
     }
-
 
 }
