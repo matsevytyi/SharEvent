@@ -1,3 +1,4 @@
+package interface_adapter;
 
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
 import VIEW.LoadMapView;

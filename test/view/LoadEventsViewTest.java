@@ -1,3 +1,5 @@
+package view;
+
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsController;
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;

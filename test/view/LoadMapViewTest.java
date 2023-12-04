@@ -1,3 +1,5 @@
+package view;
+
 import INTERFACE_ADAPTER.add_event.AddEventController;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
