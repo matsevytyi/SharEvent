@@ -1,4 +1,4 @@
-package view;
+package VIEW;
 
 import APP.main;
 import APP.use_case_factory.LoginUseCaseFactory;
@@ -30,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.swing.*;
 import java.io.IOException;

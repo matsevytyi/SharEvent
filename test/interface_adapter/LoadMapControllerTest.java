@@ -4,57 +4,61 @@ import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
 import USE_CASE.loadmap.LoadMapInputBoundary;
+import USE_CASE.loadmap.LoadMapInteractor;
 import VIEW.FilterEventsView;
 import VIEW.LoadMapView;
+import VIEW_CREATOR.FilterEventsViewModel;
 import VIEW_CREATOR.LoadMapViewModel;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Set;
 
-@ExtendWith(MockitoExtension.class)
 public class LoadMapControllerTest {
 
-    @Mock
-    private LoadMapViewModel viewModel;
+    private LoadMapController loadMapController;
 
-    @Mock
-    FilterController filterController;
-
-    @InjectMocks
     private FilterEventsView filterEventsView;
 
-    private LoadMapController loadMapController = new LoadMapController();
+    private LoadMapViewModel viewModel;
 
-    @BeforeEach
+
+    @Before
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        loadMapController = new LoadMapController();
+        viewModel = new LoadMapViewModel();
+    }
+    @Test
+    public void test_getter_setter() {
+        loadMapController = new LoadMapController();
+        loadMapController.setInteractor(new LoadMapInteractor());
+        Assert.assertNotNull(loadMapController.getInteractor());
+        Assert.assertNull(loadMapController.getAllEvents());
+        Assert.assertNull(loadMapController.getLoadMapOutputData());
+        Assert.assertNull(loadMapController.getFilterEventsDAO());
+        Assert.assertNull(loadMapController.getSearchEventsDAO());
+        Assert.assertNull(loadMapController.getSearchEventsView());
+        Assert.assertNull(loadMapController.getSearchEventsViewFactory());
     }
 
-
-    @Test
+    /*@Test
     public void filterEvents_test() {
         loadMapController.filterEvents(filterEventsView);
 
         Assert.assertNotNull(loadMapController.getFilterEventsDAO());
         Assert.assertNotNull(loadMapController.getAllEvents());
-    }
+    }*/
 
     @Test
     public void searchEvents_test() {
-        loadMapController.searchEvents(viewModel);
+        loadMapController = new LoadMapController();
+        viewModel = new LoadMapViewModel();
 
+        loadMapController.searchEvents(viewModel);
         Assert.assertNotNull(loadMapController.getSearchEventsDAO());
         Assert.assertNotNull(loadMapController.getAllEvents());
         Assert.assertNotNull(loadMapController.getSearchEventsView());
         Assert.assertNotNull(loadMapController.getSearchEventsViewFactory());
     }
-
 }

@@ -23,6 +23,7 @@ module com.example.mapsdemo {
     exports INTERFACE_ADAPTER.view_profile;
     exports USE_CASE.add_event;
     exports USE_CASE.delete_event;
+    exports USE_CASE.filter;
     exports USE_CASE.loadmap;
     exports USE_CASE.loadevents;
     exports USE_CASE.login;

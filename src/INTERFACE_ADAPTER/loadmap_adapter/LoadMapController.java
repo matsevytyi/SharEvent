@@ -24,11 +24,11 @@ public class LoadMapController {
     LoadMapOutputData loadMapOutputData; //test in ViewTest
     @Setter
     LoadMapInputBoundary interactor; //test in ViewTest
-    FilterEventsDAO filterEventsDAO;
+    FilterEventsDataAccessInterface filterEventsDAO;
     Set<Event> allEvents;
 
     SearchEventsView searchEventsView;
-    SearchEventsDAO searchEventsDAO;
+    SearchEventsDataAccessInterface searchEventsDAO;
     SearchEventsViewFactory searchEventsViewFactory;
     LoadEventsView view; //test in ViewTest
 
