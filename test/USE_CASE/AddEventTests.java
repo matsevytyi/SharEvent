@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -25,45 +27,41 @@ class AddEventTests  {
 
     @Test
     void testAddEventUseCase()  {
-        // Create real instance
+
         DatabaseDAO dataAccessInterface  = new DatabaseDAO();
 
         User user = new User("ff", "ff", "ff", "ff");
-        // Set up real user input
+
         AddEventInputData inputData = new AddEventInputData(
                 "Event Name",
                 "Event Type",
                 "Event Description",
                 LocalDate.now() ,
                 LocalTime.now(),
-                user, // Your actual user object
+                user,
                 Collections.emptyList(),
                 43, -79
         );
 
-        // Create a real presenter that captures the output
+
         CapturingAddEventPresenter capturingPresenter = new CapturingAddEventPresenter();
 
-        // Execute the use case
+
         AddEventInteractor addEventInteractor = new AddEventInteractor(dataAccessInterface, capturingPresenter, new EventFactory());
         addEventInteractor.execute(inputData);
 
-        // Verify the captured output
+
         AddEventOutputData capturedOutput = capturingPresenter.getCapturedOutput();
         Assertions.assertNotNull(capturedOutput);
         Assertions.assertFalse(capturedOutput.isUseCaseFailed());
         Assertions.assertEquals("Event Name", capturedOutput.getEventName());
 
 
-
-
-
-
     }
 
     @Test
     void testExecute_NullEventName() {
-        // Arrange
+
         LoadEventsDataAccessInterface eventDataAccessInterface = new DatabaseDAO();
         CapturingAddEventPresenter addEventPresenter = new CapturingAddEventPresenter();
                 EventFactory eventFactory = new EventFactory();

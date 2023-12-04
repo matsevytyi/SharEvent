@@ -1,3 +1,5 @@
+package VIEW;
+
 import INTERFACE_ADAPTER.delete_event.DeleteEventController;
 import INTERFACE_ADAPTER.delete_event.DeleteEventViewModel;
 import INTERFACE_ADAPTER.register_for_event.RegisterController;
@@ -22,7 +24,7 @@ public class ViewEventViewTest {
 
     @BeforeAll
     public static void initJFX() {
-        // Initialize JavaFX for headless testing
+
         new JFXPanel();
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -45,9 +47,9 @@ public class ViewEventViewTest {
                     new RegisterController(new RealRegisterInputBoundary())
             );
             view.updateView();
-            // Add assertions based on the expected state after the updateView() method
+
             assertNotNull(view);
-            // Add more assertions as needed
+
         });
     }
 
@@ -60,11 +62,11 @@ public class ViewEventViewTest {
                     new DeleteEventViewModel(),
                     new RegisterController(new RealRegisterInputBoundary())
             );
-            // Assuming proper initialization of the view and its components
+
             view.handleActionButtonClick();
-            // Add assertions based on the expected behavior after clicking the actionButton
+
             assertNotNull(view);
-            // Add more assertions as needed
+
         });
     }
 
@@ -77,14 +79,14 @@ public class ViewEventViewTest {
                     new DeleteEventViewModel(),
                     new RegisterController(new RealRegisterInputBoundary())
             );
-            // Assuming proper initialization of the view and its components
+
             PropertyChangeEvent event = new PropertyChangeEvent(
                     this, "propertyName", "oldValue", "newValue");
 
             view.propertyChange(event);
-            // Add assertions based on the expected behavior after propertyChange
+
             assertNotNull(view);
-            // Add more assertions as needed
+
         });
     }
 
@@ -95,8 +97,7 @@ public class ViewEventViewTest {
 
         @Override
         public void execute(DeleteEventInputData inputData) {
-            // Implement the actual logic for delete event use case
-            // For testing purposes, you can print a message or perform some dummy operations
+
             System.out.println("Executing DeleteEventInputBoundary with event ID: " + inputData.getEventId());
         }
     }
@@ -105,8 +106,7 @@ public class ViewEventViewTest {
 
         @Override
         public void execute(RegisterInputData inputData) {
-            // Implement the actual logic for register for event use case
-            // For testing purposes, you can print a message or perform some dummy operations
+
             System.out.println("Executing RegisterInputBoundary with event ID: " + inputData.getEventId()
                     + " and username: " + inputData.getUserName());
         }

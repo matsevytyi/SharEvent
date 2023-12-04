@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import DATA_ACCESS.DatabaseDAO;
 import ENTITY.User;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -22,39 +24,37 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ViewProfileTests {
 
     @Test
-    void viewProfileController_Execute_CallsViewProfileUseCaseInteractorWithCorrectInputData() {
-        // Arrange
-        ViewProfileInputBoundaryStub mockInteractor = new ViewProfileInputBoundaryStub();
+    void viewProfileControllerExecute() {
+
+        ViewProfileInputBoundaryFake mockInteractor = new ViewProfileInputBoundaryFake();
         ViewProfileController controller = new ViewProfileController(mockInteractor);
         String username = "testUser";
 
-        // Act
+
         controller.execute(username);
 
-        // Assert
         assertTrue(mockInteractor.executeCalled);
         assertEquals(username, mockInteractor.inputData.getUsername());
     }
 
     @Test
-    void viewProfileInteractor_Execute_UserFound_SuccessfulView() {
-        // Arrange
+    void viewProfileInteractionistSuccesses() {
+
+
         LoadUserDataAccessInterfaceStub dataAccess= new LoadUserDataAccessInterfaceStub();
-        ViewProfileOutputBoundaryStub presenter = new ViewProfileOutputBoundaryStub();
+        ViewProfileOutputBoundaryFake presenter = new ViewProfileOutputBoundaryFake();
         ViewProfileInteractor interactor = new ViewProfileInteractor(dataAccess, presenter);
 
-        // Create a sample user for dataAccess to return
+
         User sampleUser = new User("ff", "ff", "ff", "ff");
 
-        // Set up the stub to return the sample user when called
+
         dataAccess.setUserToReturn(sampleUser);
 
         ViewProfileInputData inputData = new ViewProfileInputData("ff");
 
-        // Act
         interactor.execute(inputData);
 
-        // Assert
         assertTrue(presenter.successesViewCalled);
         assertFalse(presenter.prepareFailViewCalled);
 
@@ -69,34 +69,31 @@ public class ViewProfileTests {
     }
 
     @Test
-    void viewProfileInteractor_Execute_UserNotFound_PrepareFailViewCalled() {
-        // Arrange
+    void viewProfileInteractorUserNotFound() {
+
         LoadUserDataAccessInterfaceStub dataAccess = new LoadUserDataAccessInterfaceStub();
         dataAccess.user = null;
-        ViewProfileOutputBoundaryStub presenter = new ViewProfileOutputBoundaryStub();
+        ViewProfileOutputBoundaryFake presenter = new ViewProfileOutputBoundaryFake();
         ViewProfileInteractor interactor = new ViewProfileInteractor(dataAccess, presenter);
 
-        ViewProfileInputData inputData = new ViewProfileInputData("nonExistentUser");
+        ViewProfileInputData inputData = new ViewProfileInputData("nonExistUser");
 
-        // Act
+
         interactor.execute(inputData);
 
-        // Assert
         assertTrue(presenter.prepareFailViewCalled);
         assertFalse(presenter.successesViewCalled);
     }
 
     @Test
-    void viewProfilePresenter_SuccessfulView_SetsStateAndFiresPropertyChanged() {
-        // Arrange
+    void viewProfilePresenterSuccessfulView() {
+
         ViewProfileViewModel viewModel = new ViewProfileViewModel();
         ViewProfilePresenter presenter = new ViewProfilePresenter(viewModel, new ViewManagerModel());
         ViewProfileOutputData outputData = createOutputData();
 
-        // Act
         presenter.successesView(outputData);
 
-        // Assert
         assertEquals(outputData.getUsername(), viewModel.getState().getUsername());
         assertEquals(outputData.getName(), viewModel.getState().getName());
         assertEquals(outputData.getEmail(), viewModel.getState().getEmail());
@@ -105,16 +102,15 @@ public class ViewProfileTests {
     }
 
     @Test
-    void viewProfilePresenter_PrepareFailView_SetsErrorAndFiresPropertyChanged() {
-        // Arrange
-        ViewProfileViewModelStub viewModel = new ViewProfileViewModelStub();
+    void viewProfilePresenterPrepareFailView() {
+
+        ViewProfileViewModelFake viewModel = new ViewProfileViewModelFake();
         ViewProfilePresenter presenter = new ViewProfilePresenter(viewModel, null);
         String error = "Test error message";
 
-        // Act
+
         presenter.prepareFailView(error);
 
-        // Assert
         assertEquals(error, viewModel.getState().getError());
         assertTrue(viewModel.propertyChangedCalled);
     }
@@ -123,7 +119,7 @@ public class ViewProfileTests {
         return new ViewProfileOutputData("testUser", "Test Name", "test@example.com", null, null);
     }
 
-    public class ViewProfileInputBoundaryStub implements ViewProfileInputBoundary {
+    public class ViewProfileInputBoundaryFake implements ViewProfileInputBoundary {
         public boolean executeCalled = false;
         public ViewProfileInputData inputData;
 
@@ -134,8 +130,8 @@ public class ViewProfileTests {
         }
     }
 
-    // Stub class for the output boundary
-    public class ViewProfileOutputBoundaryStub implements ViewProfileOutputBoundary {
+
+    public class ViewProfileOutputBoundaryFake implements ViewProfileOutputBoundary {
         public boolean successesViewCalled = false;
         public boolean prepareFailViewCalled = false;
         public ViewProfileOutputData outputData;
@@ -152,8 +148,8 @@ public class ViewProfileTests {
         }
     }
 
-    // Stub class for the view model
-    public class ViewProfileViewModelStub extends ViewProfileViewModel {
+
+    public class ViewProfileViewModelFake extends ViewProfileViewModel {
         public boolean propertyChangedCalled = false;
 
         @Override
@@ -171,35 +167,33 @@ public class ViewProfileTests {
     }
 
     @Test
-    void viewProfileViewModel_FirePropertyChanged_FiresPropertyChange() {
-        // Arrange
-        ViewProfileViewModel viewModel = new ViewProfileViewModel();
-        PropertyChangeListenerStub listener = new PropertyChangeListenerStub();
+    void viewProfileViewModelFireProperty() {
 
-        // Act
+        ViewProfileViewModel viewModel = new ViewProfileViewModel();
+        PropertyChangeListenerFake listener = new PropertyChangeListenerFake();
+
+
         viewModel.addPropertyChangeListener(listener);
         viewModel.firePropertyChanged();
 
-        // Assert
         assertTrue(listener.propertyChangedCalled);
     }
 
     @Test
-    void viewProfileViewModel_UpdateView_UpdatesViewCorrectly() {
-        // Arrange
-        ViewProfileViewModel viewModel = new ViewProfileViewModel();
-        viewModel.setState(new ViewProfileState());
-        viewModel.getState().setUsername("TestUser");
+    void viewProfileViewModelUpdateView() {
 
-        // Act
-        String username = viewModel.getState().getUsername();
+        ViewProfileViewModel viewProfileViewModel = new ViewProfileViewModel();
+        viewProfileViewModel.setState(new ViewProfileState());
+        viewProfileViewModel.getState().setUsername("TestUser11");
 
-        // Assert
-        assertEquals("TestUser", username);
-        // Add more assertions for other properties
+
+        String username = viewProfileViewModel.getState().getUsername();
+
+        assertEquals("TestUser11", username);
+
     }
 
-    static class PropertyChangeListenerStub implements PropertyChangeListener {
+    static class PropertyChangeListenerFake implements PropertyChangeListener {
         boolean propertyChangedCalled = false;
 
         @Override

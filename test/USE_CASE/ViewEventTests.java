@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import DATA_ACCESS.DatabaseDAO;
 
 import ENTITY.Event;
@@ -27,14 +29,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ViewEventTests {
 
-
-    // Test ViewEventController
     @Test
-    void viewEventController_Execute_CallsViewEventUseCaseInteractorWithCorrectInputData() {
+    void viewEventControllerExecute() {
         ViewEventInputBoundaryStub mockInteractor = new ViewEventInputBoundaryStub();
         ViewEventController controller = new ViewEventController(mockInteractor);
-        double latitude = 1.0;
-        double longitude = 2.0;
+        double latitude = 3.0;
+        double longitude = 10.0;
         JXMapViewerStub mapViewer = new JXMapViewerStub();
 
         controller.execute(latitude, longitude, mapViewer);
@@ -46,11 +46,11 @@ class ViewEventTests {
     }
 
     @Test
-    void viewEventController_Execute_PassesCorrectInputDataToViewEventUseCaseInteractor() {
+    void viewEventControllerCorrect() {
         ViewEventInputBoundaryStub mockInteractor = new ViewEventInputBoundaryStub();
         ViewEventController controller = new ViewEventController(mockInteractor);
-        double latitude = 1.0;
-        double longitude = 2.0;
+        double latitude = 3.0;
+        double longitude = 10.0;
         JXMapViewerStub mapViewer = new JXMapViewerStub();
 
         controller.execute(latitude, longitude, mapViewer);
@@ -61,9 +61,9 @@ class ViewEventTests {
         assertEquals(mapViewer, mockInteractor.inputData.getMapViewer());
     }
 
-    // Test ViewEventPresenter
+
     @Test
-    void viewEventPresenter_SuccessesView_SetsStateAndFiresPropertyChanged() {
+    void viewEventPresenterSuccessesView() {
         ViewEventViewModel viewModel = new ViewEventViewModel();
         ViewEventPresenter presenter = new ViewEventPresenter(viewModel, new ViewManagerModel());
         ViewEventOutputData outputData = createOutputData();
@@ -77,7 +77,7 @@ class ViewEventTests {
     }
 
     @Test
-    void viewEventPresenter_PrepareFailView_SetsErrorAndFiresPropertyChanged() {
+    void viewEventPresenterPrepareFailView() {
         ViewEventViewModelStub viewModel = new ViewEventViewModelStub();
         ViewEventPresenter presenter = new ViewEventPresenter(viewModel, null);
         String error = "Test error message";
@@ -88,21 +88,21 @@ class ViewEventTests {
         assertTrue(viewModel.propertyChangedCalled);
     }
 
-    // Test ViewEventState
+
     @Test
-    void viewEventState_SetDetails_SetsDetailsCorrectly() {
+    void viewEventStateSetDetailsCorrectly() {
         ViewEventState state = new ViewEventState();
         state.setDetails(1, "EventName", "Type", "Description",
                 LocalDate.now(), LocalTime.now(), "Creator", "User1, User2");
         assertEquals(1, state.getEventId());
         assertEquals("EventName", state.getEventName());
         assertEquals("Type", state.getType());
-        // Add more assertions for other properties
+
     }
 
-    // Test ViewEventViewModel
+
     @Test
-    void viewEventViewModel_FirePropertyChanged_FiresPropertyChange() {
+    void viewEventViewModel_FirePropertyChanged() {
         ViewEventViewModel viewModel = new ViewEventViewModel();
         PropertyChangeListenerStub listener = new PropertyChangeListenerStub();
 
@@ -113,13 +113,13 @@ class ViewEventTests {
     }
 
     @Test
-    void viewEventViewModel_UpdateView_UpdatesViewCorrectly() {
+    void viewEventViewModelUpdateViewCorrectly() {
         ViewEventViewModel viewModel = new ViewEventViewModel();
         viewModel.setState(new ViewEventState());
         viewModel.setLoggedInUser("TestUser");
         String a = viewModel.getState().getLoggedinuser();
         assertEquals("TestUser", a);
-        // Add more assertions for other properties
+
     }
     @Test
     void execute_EventNotNull_SuccessfulView() {
@@ -129,19 +129,16 @@ class ViewEventTests {
         ViewEventInteractor interactor = new ViewEventInteractor(eventDataAccessInterface, viewEventPresenter);
         List<User> u = new ArrayList<>();
         u.add(new User("w","w","w","w"));
-        // Create a sample event for eventDataAccessInterface to return
         Event sampleEvent = new Event("TestEvent", "Type", "Description", LocalDate.now(), LocalTime.now(),
                 new User("Creator", "username", "password", "email"), u, 1.0, 2.0);
 
-        // Set up the stub to return the sample event when called
+
         eventDataAccessInterface.setEventToReturn(sampleEvent);
 
         ViewEventInputData position = new ViewEventInputData(1.0, 2.0, new JXMapViewerStub());
 
-        // Act
         interactor.execute(position);
 
-        // Assert
         assertTrue(viewEventPresenter.successesViewCalled);
         assertFalse(viewEventPresenter.prepareFailViewCalled);
 
@@ -156,11 +153,11 @@ class ViewEventTests {
         assertEquals(sampleEvent.getEventTime(), outputData.getEventTime());
         assertEquals(sampleEvent.getCreator().getName(), outputData.getCreator());
         assertEquals(sampleEvent.getEventAttendants().toString(), outputData.getRegisteredUsers());
-        // Add more assertions for other properties
+
     }
 
     @Test
-    void viewEventInteractor_Execute_NullEvent_PrepareFailViewCalled() {
+    void viewEventInteractorNullEvent() {
         LoadEventsDataAccessInterfaceStub dataAccess = new LoadEventsDataAccessInterfaceStub();
         dataAccess.event = null;
         ViewEventOutputBoundaryStub presenter = new ViewEventOutputBoundaryStub();
@@ -172,7 +169,6 @@ class ViewEventTests {
     }
 
 
-    // Test ViewEventOutputData
     @Test
     void viewEventOutputData_Constructor_SetsValuesCorrectly() {
         ViewEventOutputData outputData = createOutputData();
@@ -180,7 +176,7 @@ class ViewEventTests {
         assertEquals(1, outputData.getEventId());
         assertEquals("EventName", outputData.getEventName());
         assertEquals("Type", outputData.getType());
-        // Add more assertions for other properties
+
     }
 
 
@@ -188,7 +184,6 @@ class ViewEventTests {
         return new ViewEventOutputData(1, "EventName", "Type", "Description",
                 LocalDate.now(), LocalTime.now(), "Creator", "User1, User2");
     }
-
 
     static class ViewEventInputBoundaryStub implements ViewEventInputBoundary {
         boolean executeCalled = false;
@@ -202,7 +197,7 @@ class ViewEventTests {
     }
 
     static class JXMapViewerStub extends JXMapViewer {
-        // Add any necessary stub behavior or data for testing
+
     }
 
     static class ViewEventViewModelStub extends ViewEventViewModel {
@@ -256,8 +251,8 @@ class ViewEventTests {
 
 
     @Test
-    void setDetails_ValidInput_SetsDetailsCorrectly() {
-        // Arrange
+    void setDetailsValidInput() {
+
         ViewEventState state = new ViewEventState();
         int eventId = 1;
         String eventName = "Test Event";
@@ -268,10 +263,8 @@ class ViewEventTests {
         String createdBy = "TestUser";
         String registeredUsers = "User1, User2";
 
-        // Act
         state.setDetails(eventId, eventName, type, description, date, time, createdBy, registeredUsers);
 
-        // Assert
         assertEquals(eventId, state.getEventId());
         assertEquals(eventName, state.getEventName());
         assertEquals(type, state.getType());
@@ -283,42 +276,36 @@ class ViewEventTests {
     }
 
     @Test
-    void setClickedPosition_ValidGeoPosition_SetsLatitudeAndLongitude() {
-        // Arrange
+    void setClickedPositionValidGeoPosition() {
+
        ViewEventViewModel viewModel = new ViewEventViewModel();
         GeoPosition clickedPosition = new GeoPosition(10.0, 20.0);
 
-        // Act
         viewModel.setClickedPosition(clickedPosition);
 
-        // Assert
         assertEquals(10.0,viewModel.getState().getLatitude());
         assertEquals(20.0, viewModel.getState().getLongitude());
     }
 
     @Test
-    void setMapViewer_ValidMapViewer_SetsMapViewer() {
-        // Arrange
+    void setMapViewerValidMapViewer() {
+
         ViewEventState state = new ViewEventState();
         JXMapViewer mapViewer = new JXMapViewer();
 
-        // Act
         state.setMapViewer(mapViewer);
 
-        // Assert
         assertEquals(mapViewer, state.getMapViewer());
     }
 
     @Test
     void setLoggedInUser_ValidUser_SetsLoggedInUser() {
-        // Arrange
+
         ViewEventState state = new ViewEventState();
         String loggedInUser = "TestUser";
 
-        // Act
         state.setLoggedinuser(loggedInUser);
 
-        // Assert
         assertEquals(loggedInUser, state.getLoggedinuser());
     }
 
