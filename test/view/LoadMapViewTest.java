@@ -1,4 +1,4 @@
-package view;
+package VIEW;
 
 import INTERFACE_ADAPTER.add_event.AddEventController;
 import INTERFACE_ADAPTER.add_event.AddEventViewModel;
@@ -20,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import lombok.Getter;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -32,6 +33,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -105,6 +107,28 @@ public class LoadMapViewTest {
         assertNotNull(loadMapView.getController().getInteractor());
         assertNotNull(loadMapView.getController().getView());
         loadMapView.getController().setInteractor(new LoadMapInteractor());
+    }
+
+    @Test
+    public void test_LoadMapView_getters_seters() {
+        assertNotNull(loadMapView.getViewName());
+        assertNotNull(loadMapView.getPresenter());
+        assertNotNull(loadMapView.getController());
+        assertNotNull(loadMapView.getViewModel());
+        assertNotNull(loadMapView.getViewEventViewModel());
+        assertNotNull(loadMapView.getViewEventController());
+        assertNotNull(loadMapView.getStackPane());
+        assertNotNull(loadMapView.getAddEventViewModel());
+        assertNotNull(loadMapView.getAddEventController());
+        assertNotNull(loadMapView.getDeleteEventViewModel());
+        assertNotNull(loadMapView.getDeleteEventController());
+        assertNotNull(loadMapView.getMapViewer());
+        assertNotNull(loadMapView.getMapViewerforViewing());
+        assertNull(loadMapView.getAddEvent());
+        assertNotNull(loadMapView.getRegisterController());
+        assertNotNull(loadMapView.getViewProfileViewModel());
+        assertNotNull(loadMapView.getViewProfileController());
+        assertNotNull(loadMapView.getFilterEventsView());
     }
 
 

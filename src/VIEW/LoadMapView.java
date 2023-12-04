@@ -57,22 +57,16 @@ import java.beans.PropertyChangeListener;
 public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
-    @Getter
     private LoadMapPresenter presenter;
 
-    @Getter
     private LoadMapController controller;
 
-    @Getter
     private LoadMapViewModel viewModel;
-    @Getter
     private ViewEventViewModel viewEventViewModel;
-    @Getter
     private ViewEventController viewEventController;
 
     // private final LogOutController logOutController;
 
-    @Getter
     private static StackPane pane;
 
     private final AddEventViewModel addEventViewModel;

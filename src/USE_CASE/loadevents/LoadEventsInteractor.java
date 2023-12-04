@@ -33,10 +33,6 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
     @Getter
     private Set<ENTITY.Event> events;
-//    LocalDate localDate = LocalDate.of(2023, 12, 3);
-//    LocalTime localTime = LocalTime.of(12, 12, 12);
-//    Event event = new Event("music show", "music", "jdhjvhf", localDate, localTime, new User("ff","ff","ff", "ff"), null, 43.66171701890102, -79.40012991428375
-//    );
 
     @Getter
     private GeoPosition currentGeoposition;
@@ -78,13 +74,6 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
         }
 
         if(problem == "Database_error") {
-            presenter.PrepareFailView(problem, loadMapView);
-            return;
-        }
-
-        if(events == null) {
-            problem = "No_events";
-            System.out.println("No events at this location");
             presenter.PrepareFailView(problem, loadMapView);
             return;
         }
