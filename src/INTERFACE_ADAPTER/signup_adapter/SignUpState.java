@@ -1,3 +1,7 @@
+/**
+ * The SignUpState class represents the state of the sign-up view, including user input fields and associated error messages.
+ */
+
 package INTERFACE_ADAPTER.signup_adapter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
