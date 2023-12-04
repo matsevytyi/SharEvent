@@ -2,8 +2,8 @@
 package INTERFACE_ADAPTER.loadmap_adapter;
 
 import DATA_ACCESS.DatabaseDAO;
-import DATA_ACCESS.FilterEventsDAO;
-import DATA_ACCESS.SearchEventsDAO;
+import DATA_ACCESS.FilterEventsDataAccessInterface;
+import DATA_ACCESS.SearchEventsDataAccessInterface;
 import ENTITY.Event;
 
 import VIEW.*;

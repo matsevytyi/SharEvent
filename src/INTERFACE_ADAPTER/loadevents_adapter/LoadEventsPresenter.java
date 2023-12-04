@@ -43,6 +43,7 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         eventPainter.setWaypoints(localEvents);
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
+
         System.out.println("LoadEvents mapkit: " + mapKit);
         return true;
     }
