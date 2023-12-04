@@ -2,6 +2,7 @@
 package view;
 
 import DATA_ACCESS.DatabaseDAO;
+import DATA_ACCESS.UserSignUpDataAccessInterface;
 import ENTITY.User;
 import ENTITY.UserFactory;
 import ENTITY.UserFactoryImplementation;
@@ -226,6 +227,37 @@ public class SignUpUseCaseTest {
         verify(loginViewModel).setState(any());
         verify(loginViewModel).firePropertyChanged();
         verify(viewManagerModel).firePropertyChanged();
+    }
+
+    @Test
+    void testExecute_SuccessfulSignUp() throws SQLException {
+        // Mock dependencies
+        UserSignUpDataAccessInterface userDataAccessObject = mock(UserSignUpDataAccessInterface.class);
+        SignUpOutputBoundary userPresenter = mock(SignUpOutputBoundary.class);
+        UserFactory userFactory = mock(UserFactory.class);
+
+        // Create an instance of SignUpInteractor with the mock objects
+        SignUpInteractor signUpInteractor = new SignUpInteractor(userDataAccessObject, userPresenter, userFactory);
+
+        // Create SignUpInputData for testing
+        SignUpInputData signUpInputData = new SignUpInputData("TestUser", "TestUser", "TestUser", "TestUser", "TestUser");
+
+        // Mock behavior of userDataAccessObject
+        when(userDataAccessObject.existsByName(anyString())).thenReturn(false);
+
+        // Mock behavior of userFactory
+        User mockUser = mock(User.class);
+        when(userFactory.create(anyString(), anyString(), anyString(), anyString())).thenReturn(mockUser);
+
+        // Call the method to be tested
+        signUpInteractor.execute(signUpInputData);
+
+        // Verify interactions
+        verify(userDataAccessObject, times(1)).existsByName("TestUser");
+        verify(userFactory, times(1)).create("TestUser", "TestUser", "TestUser", "TestUser");
+        verify(userDataAccessObject, times(1)).save(mockUser);
+
+
     }
 
 }
