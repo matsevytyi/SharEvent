@@ -8,5 +8,4 @@ import lombok.Setter;
 public class DeleteEventInputData {
     final private int eventId;
 
-
 }

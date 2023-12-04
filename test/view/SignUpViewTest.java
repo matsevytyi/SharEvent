@@ -1,4 +1,4 @@
-package view;
+package VIEW;
 
 import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.login_adapter.LoginState;
