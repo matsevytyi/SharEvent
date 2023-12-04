@@ -4,11 +4,7 @@ package USE_CASE.loadmap;
 import API.LoadMapAPIAccessInterface;
 import API.LoadMap_API;
 
-import INTERFACE_ADAPTER.loadmap_adapter.LoadMapInputData;
-import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapPresenter;
-import USE_CASE.loadevents.LoadEventsInputBoundary;
-import USE_CASE.loadmap.LoadMapOutputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
 
 import lombok.Getter;
@@ -23,11 +19,8 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
     public LoadMapInteractor() {
     }
 
-    @Getter
-    @Setter
     JXMapKit mapKit;
 
-    @Getter
     LoadMapAPIAccessInterface loadmapAPI;
     @Override
     public void execute(LoadMapOutputData loadMapOutputData, LoadMapViewModel loadMapViewModel){
@@ -47,6 +40,20 @@ public class LoadMapInteractor implements LoadMapInputBoundary {
             loadMapPresenter.PrepareFailView("API_error", loadMapViewModel);
         }
     }
+
+    public JXMapKit getMapKit(){
+        return mapKit;
+    }
+
+    public void setMapKit(JXMapKit mapKit){
+        this.mapKit = mapKit;
+    }
+
+    public LoadMapAPIAccessInterface getLoadmapAPI(){
+        return loadmapAPI;
+    }
+
+
 
 
 }

@@ -1,13 +1,10 @@
 package USE_CASE;
 
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
-import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
+import USE_CASE.loadevents.LoadEventsOuputData;
 import USE_CASE.loadevents.LoadEventsInteractor;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.jxmapviewer.viewer.GeoPosition;
-
-import java.lang.reflect.Field;
 
 public class LoadEventsInteractorTest {
     @Test

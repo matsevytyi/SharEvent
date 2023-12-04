@@ -6,6 +6,7 @@ import DATA_ACCESS.FilterEventsDataAccessInterface;
 import DATA_ACCESS.SearchEventsDataAccessInterface;
 import ENTITY.Event;
 
+import USE_CASE.loadmap.LoadMapOutputData;
 import VIEW.*;
 import VIEW_CREATOR.LoadMapViewModel;
 

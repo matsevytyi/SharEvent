@@ -1,8 +1,7 @@
 package USE_CASE;
 
 import API.LoadMapAPIAccessInterface;
-import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
-import USE_CASE.loadmap.LoadMapInputBoundary;
+import USE_CASE.loadmap.LoadMapOutputData;
 import USE_CASE.loadmap.LoadMapInteractor;
 import VIEW_CREATOR.LoadMapViewModel;
 import org.junit.Assert;
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.jxmapviewer.JXMapKit;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.io.IOException;
 
 import static org.mockito.Mockito.doThrow;
 
@@ -46,7 +43,7 @@ public class LoadMapInteractorTest {
     @Test
     public void execute_test_getters_setters() {
         LoadMapOutputData loadMapOutputData = new LoadMapOutputData();
-        loadMapInteractor = new LoadMapInteractor();
+        LoadMapInteractor loadMapInteractor = new LoadMapInteractor();
         loadMapInteractor.execute(loadMapOutputData, loadMapViewModel);
         Assert.assertNotNull(loadMapInteractor.getLoadmapAPI());
         loadMapInteractor.setMapKit(new JXMapKit());

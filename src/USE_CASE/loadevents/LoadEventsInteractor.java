@@ -6,8 +6,6 @@ import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsInputData;
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
 import VIEW.LoadMapView;
 
@@ -19,14 +17,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.util.HashSet;
 import java.util.Set;
 
-import VIEW.LoadMapView;
-
 
 import ENTITY.Event;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.Set;
 
 
 public class LoadEventsInteractor implements LoadEventsOutputBoundary {

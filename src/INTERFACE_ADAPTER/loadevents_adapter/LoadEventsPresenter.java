@@ -4,8 +4,8 @@ package INTERFACE_ADAPTER.loadevents_adapter;
 import ENTITY.Event;
 import USE_CASE.loadevents.LoadEventsInputBoundary;
 
+import USE_CASE.loadevents.LoadEventsInputData;
 import VIEW_CREATOR.FailViewFactory;
-import ENTITY.Event;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 

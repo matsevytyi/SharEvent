@@ -1,17 +1,11 @@
 package interface_adapter;
 
-import INTERFACE_ADAPTER.filter.FilterController;
 import INTERFACE_ADAPTER.loadmap_adapter.LoadMapController;
-import INTERFACE_ADAPTER.loadmap_adapter.LoadMapOutputData;
-import USE_CASE.loadmap.LoadMapInputBoundary;
 import USE_CASE.loadmap.LoadMapInteractor;
 import VIEW.FilterEventsView;
-import VIEW.LoadMapView;
-import VIEW_CREATOR.FilterEventsViewModel;
 import VIEW_CREATOR.LoadMapViewModel;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 

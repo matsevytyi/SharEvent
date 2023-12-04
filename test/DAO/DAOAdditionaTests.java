@@ -1,7 +1,6 @@
 package DAO;
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.jxmapviewer.viewer.GeoPosition;

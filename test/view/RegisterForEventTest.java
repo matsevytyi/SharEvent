@@ -1,4 +1,4 @@
-package view;
+package VIEW;
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import INTERFACE_ADAPTER.ViewManagerModel;

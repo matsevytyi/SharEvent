@@ -1,15 +1,14 @@
 package VIEW;
 
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsController;
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsInputData;
-import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsOuputData;
+import USE_CASE.loadevents.LoadEventsInputData;
+import USE_CASE.loadevents.LoadEventsOuputData;
 import INTERFACE_ADAPTER.loadevents_adapter.LoadEventsPresenter;
 import USE_CASE.loadevents.LoadEventsInteractor;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.Test;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.mockito.Mock;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
