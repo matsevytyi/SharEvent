@@ -1,3 +1,8 @@
+/**
+ * The LoginPresenter class acts as a presenter for handling the output data related to the login use case.
+
+ */
+
 package INTERFACE_ADAPTER.login_adapter;
 
 import APP.main;
@@ -25,12 +30,25 @@ public class LoginPresenter implements LoginOutputDataBoundary {
     private LoginViewModel loginViewModel; // final
     private ViewManagerModel viewManagerModel;
 
+
+    /**
+     * Constructs a new LoginPresenter with the provided LoginViewModel, ViewManagerModel, and LoadMapViewModel.
+     *
+     * @param loginViewModel    The view model associated with the login functionality.
+     * @param viewManagerModel  The model managing the views in the application.
+     * @param mapViewModel      The view model associated with the map functionality.
+     */
     public LoginPresenter(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, LoadMapViewModel mapViewModel) {
         this.loginViewModel = loginViewModel;
         this.viewManagerModel = viewManagerModel;
         this.mapViewModel = mapViewModel;
     }
 
+    /**
+     * Prepares the success view for the user upon successful login.
+     *
+     * @param user The output data containing user information after a successful login.
+     */
     @Override
     public void prepareSuccessView(LoginOutputData user) {
 
@@ -56,20 +74,13 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         viewManagerModel.firePropertyChanged();
 
 
-//        User curruser = user.getUser();
-//
-//        LoadMapState mapState = mapViewModel.getState();
-//        mapState.setUsername(user);
-//        this.mapViewModel.setLoggedInUser(user);
-//        this.mapViewModel.setLoggedInUserObject(curruser);
-//        mapViewModel.firePropertyChanged();
-//
-//        viewManagerModel.setActiveView(mapViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
-
-
     }
 
+    /**
+     * Prepares the failure view with the provided error message.
+     *
+     * @param error The error message to be displayed on the login view in case of login failure.
+     */
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
@@ -77,6 +88,9 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         loginViewModel.firePropertyChanged();
     }
 
+    /**
+     * Opens the JavaFX map view for the logged-in user.
+     */
     public void openJavaFXMapView() {
 
         Platform.runLater(() -> {
