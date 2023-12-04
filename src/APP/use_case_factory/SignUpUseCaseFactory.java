@@ -19,14 +19,10 @@ import javax.swing.*;
 import java.io.IOException;
 
 /**
- * The {@code SignUpUseCaseFactory} class is responsible for creating and initializing
+ * The SignUpUseCaseFactory class is responsible for creating and initializing
  * instances related to the signup functionality in the application. It provides methods
  * to create a {@code SignUpView} and a {@code SignUpController} by coordinating the
  * necessary components such as data access objects, presenters, and interactors.
- * <p>
- * This factory follows the Factory design pattern, ensuring that the creation and
- * configuration of signup-related components are encapsulated in a centralized location.
- * </p>
  */
 public class SignUpUseCaseFactory {
 

@@ -1,5 +1,5 @@
 /**
- * The {@code LoginUseCaseFactory} class is responsible for creating and initializing
+ * The LoginUseCaseFactory class is responsible for creating and initializing
  * instances related to the login functionality in the application. It provides methods
  * to create a {@code LoginView} and a {@code LoginController} by coordinating the
  * necessary components such as data access objects, presenters, and interactors.
