@@ -9,6 +9,10 @@ public abstract class ViewModel {
     public ViewModel(String viewName) {
         this.viewName = viewName;
     }
+    /**
+     * Пуеі the name of the currently active view.
+     * @return The view name of the active view.
+     */
     public String getViewName() {
         return this.viewName;
     }

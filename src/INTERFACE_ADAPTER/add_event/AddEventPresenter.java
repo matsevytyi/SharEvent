@@ -6,8 +6,8 @@ import USE_CASE.add_event.AddEventOutputData;
 
 
 /**
- * The {@code AddEventPresenter} class is responsible for presenting the output of the "add event" use case.
- * It implements the {@link AddEventOutputBoundary} interface to receive and process the output data,
+ * The class is responsible for presenting the output of the "add event" use case.
+ * It implements the  AddEventOutputBoundary interface to receive and process the output data,
  * updating the associated view models accordingly.
  */
 public class AddEventPresenter implements AddEventOutputBoundary {
@@ -16,8 +16,7 @@ public class AddEventPresenter implements AddEventOutputBoundary {
 //    private final MapViewModel mapViewModel;
     private ViewManagerModel viewManagerModel;
     /**
-     * Constructs an {@code AddEventPresenter} with the specified view model and view manager model.
-     *
+     * Constructs with the specified view model and view manager model.
      * @param addEventViewModel The view model for the "add event" functionality.
      * @param viewManagerModel  The view manager model for managing views in the application.
      */
@@ -27,9 +26,8 @@ public class AddEventPresenter implements AddEventOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
     /**
-     * Prepares the success view based on the provided {@link AddEventOutputData}.
+     * Prepares the success view based on the provided AddEventOutputData.
      * Updates the view model and triggers property change events.
-     *
      * @param event The output data containing information about the added event.
      */
     @Override
@@ -43,7 +41,6 @@ public class AddEventPresenter implements AddEventOutputBoundary {
     /**
      * Prepares the fail view based on the provided error message.
      * Updates the view model with the error information and triggers property change events.
-     *
      * @param error The error message describing the failure.
      */
     @Override

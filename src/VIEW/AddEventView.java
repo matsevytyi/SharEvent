@@ -30,7 +30,11 @@ public class AddEventView extends VBox implements PropertyChangeListener {
     private final TextField descriptionInputField = new TextField();
     private final Button addEventButton = new Button(AddEventViewModel.ADD_EVENT_BUTTON_LABEL);
 
-
+    /**
+     * Constructs an AddEventView with the specified view model and controller.
+     * @param addEventViewModel  The view model responsible for managing the state of the add event view.
+     * @param addEventController The controller responsible for handling user actions in the add event view.
+     */
     public AddEventView(AddEventViewModel addEventViewModel, AddEventController addEventController) {
         this.addEventViewModel = addEventViewModel;
         this.addEventController = addEventController;
@@ -40,7 +44,9 @@ public class AddEventView extends VBox implements PropertyChangeListener {
 
     }
 
-
+    /**
+     * Initializes the user interface components for the "Add Event" view.
+     */
     private void initUI() {
         Label title = new Label("Add Event");
         title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
@@ -65,7 +71,10 @@ public class AddEventView extends VBox implements PropertyChangeListener {
 
         getChildren().add(contentBox);
     }
-
+    /**
+     * Responds to property change events and updates the view accordingly.
+     * @param evt The property change event.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         AddEventState addEventState = (AddEventState) evt.getNewValue();

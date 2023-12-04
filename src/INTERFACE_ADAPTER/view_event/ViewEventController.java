@@ -11,17 +11,16 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 /**
- * The {@code ViewEventController} class serves as the controller for the "view event" use case.
- * It facilitates the communication between the external interface and the use case interactor.
+ * The class is the controller for the "view event" use case.
+ * It makes the communication between the external interface and the use case interactor.
  * This class receives input parameters related to the location (latitude and longitude) and the map viewer,
- * then delegates the execution of the use case to the provided {@link ViewEventInputBoundary} instance.
+ * then delegates the execution of the use case to the provided ViewEventInputBoundary instance.
  */
 public class ViewEventController  {
 
     /**
-     * Constructs a {@code ViewEventController} with the specified {@link ViewEventInputBoundary}.
-     *
-     * @param viewEventUseCaseInteractor The use case interactor for the "view event" functionality.
+     * Constructs a constructor with the specified  ViewEventInputBoundary.
+     * @param viewEventUseCaseInteractor The use case input boundary  for the "view event" functionality.
      */
     public ViewEventController(ViewEventInputBoundary viewEventUseCaseInteractor) {
         this.viewEventUseCaseInteractor = viewEventUseCaseInteractor;
@@ -31,10 +30,9 @@ public class ViewEventController  {
 
     /**
      * Executes the "view event" use case with the provided latitude, longitude, and map viewer.
-     *
      * @param latitude   The latitude coordinate of the location to view events.
      * @param longitude  The longitude coordinate of the location to view events.
-     * @param mapViewer  The {@link JXMapViewer} used to display the map.
+     * @param mapViewer  The JXMapViewer used to display the map.
      */
     public void execute(double latitude, double longitude, JXMapViewer mapViewer) {
         ViewEventInputData inputData= new ViewEventInputData(latitude, longitude, mapViewer);

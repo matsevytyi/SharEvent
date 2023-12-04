@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 /**
- * The {@code AddEventState} class encapsulates the state information for the "add event" functionality.
+ * The class encapsulates the state information for the "add event" functionality.
  * It includes properties such as event name, type, description, date, time, creator, attendants,
  * longitude, latitude, and corresponding error messages.
  */

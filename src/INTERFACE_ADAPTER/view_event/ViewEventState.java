@@ -7,7 +7,7 @@ import org.jxmapviewer.JXMapViewer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 /**
- * The {@code ViewEventState} class encapsulates the state information for the "view event" functionality.
+ * The class encapsulates the state information for the "view event" functionality.
  * It includes properties such as event ID, name, type, description, date, time, creator, registered users,
  * latitude, longitude, map viewer, logged-in user, and error messages.
  */
@@ -15,8 +15,7 @@ import java.time.LocalTime;
 public class ViewEventState {
 
     /**
-     * Sets the details of the viewed event based on the provided parameters.
-     *
+     * Method sets the details of the viewed event based on the provided parameters.
      * @param eventId         The ID of the event.
      * @param eventName       The name of the event.
      * @param type            The type or category of the event.

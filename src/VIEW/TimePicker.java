@@ -13,7 +13,9 @@ public class TimePicker extends HBox {
     protected final ComboBox<Integer> hourComboBox;
     protected final ComboBox<Integer> minuteComboBox;
     protected final ComboBox<String> amPmComboBox;
-
+    /**
+     * Constructs a TimePicker.
+     */
     public TimePicker() {
         hourComboBox = new ComboBox<>();
         minuteComboBox = new ComboBox<>();
@@ -21,7 +23,9 @@ public class TimePicker extends HBox {
 
         initUI();
     }
-
+    /**
+     * Initializes the user interface components for the time picker.
+     */
     private void initUI() {
 
         for (int i = 1; i <= 12; i++) {
@@ -45,7 +49,10 @@ public class TimePicker extends HBox {
         setAlignment(Pos.CENTER);
         setSpacing(5);
     }
-
+    /**
+     * Method takes the selected time from the time picker.
+     * @return The selected time as a LocalTime object.
+     */
     public LocalTime getSelectedTime() {
         int hour = hourComboBox.getValue();
         int minute = minuteComboBox.getValue();

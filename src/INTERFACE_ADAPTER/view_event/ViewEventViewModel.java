@@ -8,7 +8,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 /**
- * The  class serves as the view model for the "view event" functionality.
+ * The  class is the view model for the "view event" functionality.
  * It extends the  ViewModel class and encapsulates the state of the view
  * along with methods for managing property change events.
  */
@@ -28,21 +28,21 @@ public class ViewEventViewModel extends ViewModel {
         support.firePropertyChange("VIEW", null, this.state);
     }
     /**
-     * Adds a property change listener to the view model.
+     * Method adds a property change listener to the view model.
      * @param listener The property change listener to be added.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
     /**
-     * Gets the name associated with the "view event" functionality.
+     * Method gets the name associated with the "view event" functionality.
      * @return The name of the view.
      */
     public String getViewName() {
         return VIEW_NAME;
     }
     /**
-     * Gets the current state of the "view event" form.
+     * Method gets the current state of the "view event" form.
      * @return The state object representing the current state of the form.
      */
 

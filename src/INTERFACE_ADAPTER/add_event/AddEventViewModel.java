@@ -8,8 +8,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 /**
- * The {@code AddEventViewModel} class serves as the view model for the "add event" functionality.
- * It extends the {@link ViewModel} class and encapsulates the state of the view, including the
+ * The class serves as the view model for the "add event" functionality.
+ * It extends the  ViewModel  class and encapsulates the state of the view, including the
  * current state of the "add event" form and methods for managing property change events.
  */
 public class AddEventViewModel extends ViewModel {
@@ -24,8 +24,7 @@ public class AddEventViewModel extends ViewModel {
         super("Add event");
     }
     /**
-     * Sets the state of the "add event" form.
-     *
+     * This method sets the state of the "add event" form.
      * @param state The state object representing the current state of the form.
      */
     public void setState(AddEventState state) {
@@ -41,24 +40,21 @@ public class AddEventViewModel extends ViewModel {
         support.firePropertyChange("add", null, this.state);
     }
     /**
-     * Adds a property change listener to the view model.
-     *
+     * This method adds a property change listener to the view model.
      * @param listener The property change listener to be added.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
     /**
-     * Gets the current state of the "add event" form.
-     *
+     * This method gets the current state of the "add event" form.
      * @return The state object representing the current state of the form.
      */
     public  AddEventState getState() {
         return state;
     }
     /**
-     * Sets the latitude and longitude of the event location based on the provided {@link GeoPosition}.
-     *
+     * This method sets the latitude and longitude of the event location based on the provided GeoPosition.
      * @param clickedPosition The geographic position representing the clicked location.
      */
     public void setClickedPosition(GeoPosition clickedPosition) {

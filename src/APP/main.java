@@ -30,7 +30,11 @@ public class main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    /**
+     * The entry point for the JavaFX application. Initializes the main stage and sets up
+     * the initial views and view models.
+     * @param primaryStage The primary stage of the JavaFX application.
+     */
     @Override
     public void start(Stage primaryStage) {
 

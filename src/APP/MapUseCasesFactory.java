@@ -42,7 +42,20 @@ import java.io.IOException;
 public class MapUseCasesFactory {
 
     private MapUseCasesFactory(){};
-
+    /**
+     * Factory method to create an instance of LoadMapView .
+     * @param loadMapViewModel      The view model for loading maps.
+     * @param loginViewModel        The view model for login.
+     * @param addEventViewModel     The view model for adding events.
+     * @param viewEventViewModel    The view model for viewing events.
+     * @param loadEventsDataAccessInterface The data access interface.
+     * @param viewManagerModel      The view manager model.
+     * @param deleteEventViewModel   The view model for deleting events.
+     * @param registerViewModel      The view model for registering users for events.
+     * @param viewProfileViewModel   The view model for viewing user profiles.
+     * @return                       An instance of LoadMapView.
+     * @throws RuntimeException     If there's an IOException during the creation of controllers.
+     */
     public static LoadMapView create(LoadMapViewModel loadMapViewModel, LoginViewModel loginViewModel, AddEventViewModel addEventViewModel, ViewEventViewModel viewEventViewModel, LoadEventsDataAccessInterface loadEventsDataAccessInterface, ViewManagerModel viewManagerModel, DeleteEventViewModel deleteEventViewModel, RegisterViewModel registerViewModel, ViewProfileViewModel viewProfileViewModel){
         AddEventController addEventController = null;
         try {

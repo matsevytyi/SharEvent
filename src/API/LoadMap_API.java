@@ -59,7 +59,6 @@ public class LoadMap_API implements LoadMapAPIAccessInterface {
             double maxLongitude = Double.parseDouble(longitude) + delta;
             double minLongitude = Double.parseDouble(longitude) - delta;
 
-            // Output latitude and longitude
             System.out.println("Latitude: " + latitude);
             System.out.println("Max Latitude: " + maxLatitude);
             System.out.println("Min Latitude: " + minLatitude);
@@ -74,7 +73,12 @@ public class LoadMap_API implements LoadMapAPIAccessInterface {
 
         return new GeoPosition(Double.parseDouble(latitude), Double.parseDouble(longitude));
     }
-
+    /**
+     * Converts a screen point to a geographic position on the map.
+     * @param clickPoint The screen point representing the mouse click.
+     * @param mapViewer  The JXMapViewer instance.
+     * @return A GeoPosition object representing the latitude and longitude of the clicked position.
+     */
     public static GeoPosition getClickedPosition(Point clickPoint, JXMapViewer mapViewer) {
         double latitude = mapViewer.convertPointToGeoPosition(clickPoint).getLatitude();
         double longitude = mapViewer.convertPointToGeoPosition(clickPoint).getLongitude();
