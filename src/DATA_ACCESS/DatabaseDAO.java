@@ -1,3 +1,7 @@
+/**
+ * DatabaseDAO provides data access operations for operations with data
+ */
+
 package DATA_ACCESS;
 
 import java.awt.geom.Point2D;
@@ -22,6 +26,11 @@ import org.jxmapviewer.viewer.GeoPosition;
 public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginDataAccessInterface, UserSignUpDataAccessInterface, FilterEventsDataAccessInterface, SearchEventsDataAccessInterface {
     Database database = Database.getInstance();
 
+    /**
+     * Deletes an event from the database based on its ID.
+     *
+     * @param event_id The ID of the event to be deleted.
+     */
     public void deleteEvent(int event_id) {
 
         String query = "DELETE FROM public.event WHERE id_event = " + event_id;
@@ -30,6 +39,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
+    /**
+     * Retrieves the name of an event based on its ID.
+     *
+     * @param eventId The ID of the event to retrieve.
+     * @return The name of the event with the specified ID.
+     */
     @Override
     public String getEventById(int eventId) {
         String query = "select * from public.event where id_event = " + eventId;
@@ -39,7 +54,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         return event.getEventName();
     }
 
-    public void updateEvent(String old_event_name, String old_event_time, String old_event_date, String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
+    /*public void updateEvent(String old_event_name, String old_event_time, String old_event_date, String event_name, String event_description, String type, String time, String date, String creator, String longitude, String latitude) {
 
         String query = "update public.event" +
                 " set " +
@@ -58,15 +73,19 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
         database.executeQuery(query, true);
 
-    }
+    }*/
 
+    /**
+     * Registers a user for a specific event.
+     *
+     * @param username The username of the user to register.
+     * @param event_id The ID of the event to register for.
+     */
     public void registerUserForEvent(String username, int event_id) {
 
         String query = "INSERT INTO public.attendedEvents (visitor, event) VALUES (?, ?)";
 
         database.executeQuery(query, true, username, event_id);
-
-
     }
 
     public void unregisterUserFromEvent(String username, String event_id) {
@@ -77,7 +96,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
-    // public List<Event> FilterEvents(String type, String latitude1, String latitude2, String longitude1, String longitude2) {
+    /**
+     * Filters events based on the provided type.
+     *
+     * @param type The type of events to filter.
+     * @return A set of events matching the specified type.
+     */
     public Set<Event> FilterEvents(String type) {
 
 //        String query = "SELECT * " +
@@ -100,6 +124,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
+    /**
+     * Searches for events based on the provided event name.
+     *
+     * @param event_name The name of the event to search for.
+     * @return A set of events matching the specified event name.
+     */
     public Set<Event> SearchEvent(String event_name) {
 
 //        String query = "SELECT * " +
@@ -113,14 +143,18 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Set<Event> eventList = (Set<Event>) database.executeQueryEvent(query);
 
 
+
         return eventList;
     }
 
+    /**
+     * Retrieves events within a specified range.
+     *
+     * @param inputData Input data specifying the range.
+     * @return Output data containing events within the specified range.
+     * @throws SQLException If a SQL-related error occurs during data retrieval.
+     */
     public LoadEventsDAO_OutputData getEventsInRange(LoadEventsDAO_InputData inputData) throws SQLException {
-//        String query = "SELECT * FROM public.event " +
-//                "WHERE latitude > " + inputData.getLatitude1() + " AND latitude < " + inputData.getLatitude2() +
-//                " AND longitude > " + inputData.getLongitude1() + " AND longitude < " + inputData.getLongitude2() +
-//                ";";
 
         String query = "SELECT * FROM public.event;";
         Set<Event> events = (Set<Event>) database.executeQueryEvent(query);
@@ -129,6 +163,11 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
+    /**
+     * Adds a new event to the database.
+     *
+     * @param event The event to be added.
+     */
     @Override
     public void addEvent(Event event) {
         String query = "INSERT INTO public.event (event_name, type, description, date, time, creator, latitude, longitude) " +
@@ -137,6 +176,14 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         database.executeQuery(query, true, event.getEventName(), event.getType(), event.getDescription(), event.getEventDate(), event.getEventTime(), event.getCreator().getName(), event.getLatitude(), event.getLongitude());
     }
 
+    /**
+     * Retrieves an event based on the geographical position.
+     *
+     * @param latitude    The latitude of the position.
+     * @param longitude   The longitude of the position.
+     * @param mapViewer   The JXMapViewer instance.
+     * @return The event found near the specified position, or null if none is found.
+     */
     @Override
     public Event getEventByPosition(double latitude, double longitude, JXMapViewer mapViewer) {
 
@@ -153,21 +200,23 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
-
     private boolean isClickNearWaypoint(GeoPosition clickPosition, GeoPosition waypointPosition, JXMapViewer mapViewer) {
-        // Convert GeoPositions to screen coordinates
         Point2D.Double clickPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(clickPosition, mapViewer.getZoom());
         Point2D.Double waypointPoint = (Point2D.Double) mapViewer.getTileFactory().geoToPixel(waypointPosition, mapViewer.getZoom());
 
-        // Define a threshold for considering the click as near the waypoint
         int threshold = 23;
 
-        // Check if the click is within the threshold distance of the waypoint
         return clickPoint.distance(waypointPoint) < threshold;
     }
 
-    // User
 
+    /**
+     * Checks if a user with the given identifier (username) exists in the database.
+     *
+     * @param identifier The username to check for existence.
+     * @return True if the user exists, false otherwise.
+     * @throws SQLException If a SQL-related error occurs during the check.
+     */
     @Override
     public boolean existsByName(String identifier) throws SQLException {
         String query = "SELECT * FROM public.user WHERE username=?";
@@ -177,7 +226,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
-
+    /**
+     * Saves a new user to the database.
+     *
+     * @param user The user to be saved.
+     * @return True if the user is successfully saved, false otherwise.
+     */
     @Override
     public boolean save(User user) {
 
@@ -188,6 +242,12 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
+    /**
+     * Retrieves a user from the database based on the username.
+     *
+     * @param username The username of the user to retrieve.
+     * @return The user found based on the provided username, or null if not found.
+     */
     public User getUserByUsername(String username) {
         String query = "select * from public.user where username=?";
         Object result = database.executeQueryUser(query, username);
@@ -196,6 +256,13 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
 
     }
 
+    /**
+     * Checks if the provided password matches the password of the user with the given username.
+     *
+     * @param username The username of the user for password verification.
+     * @param password The password to check against the stored user password.
+     * @return True if the password is correct, false otherwise.
+     */
     @Override
     public boolean checkPassword(String username, String password) {
         String query = "select * from public.user where username=?";
@@ -205,7 +272,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
     }
 
 
-    public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
+    /*public List<Event> FindUsersEventsToAttend(String username) throws SQLException {
         String query = "select event.event_name from public.event\n" +
                 "   where id_event in (select event\n" +
                 "                    from public.attendedEvents\n" +
@@ -225,29 +292,7 @@ public class DatabaseDAO implements LoadEventsDataAccessInterface, UserLoginData
         Object eventList = database.executeQueryEventList(query, username);
 
         return (List<Event>) eventList;
-    }
-
-    public boolean FollowUser(String username) {
-        String query = "insert into public.following (id_relation, target_user, follower)\n" +
-                "\t values (?, ?, ?)\n";
-
-        Object result = database.executeQuery(query, true, username);
-
-        return (boolean) result;
-
-    }
-
-    public boolean UnFollowUser(String username) {
-        String query = "delete from public.following where follower = ?";
-
-        Object result = database.executeQuery(query, true, username);
-
-        return (boolean) result;
-
-    }
-
-
-
+    }*/
 
 }
 

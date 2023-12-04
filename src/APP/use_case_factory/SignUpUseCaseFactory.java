@@ -18,6 +18,12 @@ import VIEW.SignUpView;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * The SignUpUseCaseFactory class is responsible for creating and initializing
+ * instances related to the signup functionality in the application. It provides methods
+ * to create a {@code SignUpView} and a {@code SignUpController} by coordinating the
+ * necessary components such as data access objects, presenters, and interactors.
+ */
 public class SignUpUseCaseFactory {
 
 
@@ -26,6 +32,17 @@ public class SignUpUseCaseFactory {
         /** Prevent instantiation. */
         private SignupUseCaseFactory() {}
 
+        /**
+         * Creates and returns a new instance of {@code SignUpView} by initializing the
+         * required {@code SignUpController}. This method handles exceptions related to
+         * the creation of the user signup use case and displays an error message if
+         * an IOException occurs during the process.
+         *
+         * @param viewManagerModel The model for managing views in the application.
+         * @param loginViewModel   The view model for the login functionality.
+         * @param signupViewModel  The view model for the signup functionality.
+         * @return A new instance of {@code SignUpView} or {@code null} if an IOException occurs.
+         */
         public static SignUpView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignUpViewModel signupViewModel) {
 
             try {
@@ -38,6 +55,18 @@ public class SignUpUseCaseFactory {
             return null;
         }
 
+        /**
+         * Creates and returns a new instance of {@code SighUpController} by initializing
+         * the necessary components such as data access objects, presenters, and interactors.
+         * This method follows the dependency inversion principle, accepting interfaces for
+         * greater flexibility and testability.
+         *
+         * @param viewManagerModel The model for managing views in the application.
+         * @param signupViewModel  The view model for the signup functionality.
+         * @param loginViewModel   The view model for the login functionality.
+         * @return A new instance of {@code SighUpController}.
+         * @throws IOException If an error occurs during the creation of the user signup use case.
+         */
         private static SighUpController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignUpViewModel signupViewModel, LoginViewModel loginViewModel) throws IOException {
             UserSignUpDataAccessInterface userDataAccessObject= new DatabaseDAO();
 

@@ -39,13 +39,10 @@ public class SignUpViewTest {
         JButton signUpButton = signUpView.getSignUp();
         assertTrue(signUpButton.getActionListeners().length > 0);
 
-        // Mock the behavior of the signUpController
         doNothing().when(signUpController).execute(anyString(), anyString(), anyString(), anyString(), anyString());
 
-        // Trigger the actionPerformed event for signUpButton
         signUpButton.doClick();
 
-        // Verify that the signUpController's execute method was called
         verify(signUpController).execute(anyString(), anyString(), anyString(), anyString(), anyString());
     }
 
@@ -54,23 +51,16 @@ public class SignUpViewTest {
         JButton haveAccountButton = signUpView.getHave_account();
         assertTrue(haveAccountButton.getActionListeners().length > 0);
 
-        // Trigger the actionPerformed event for haveAccountButton
         haveAccountButton.doClick();
 
-        // Verify that the viewManagerModel's setActiveView and firePropertyChanged methods were called
         verify(viewManagerModel).setActiveView(anyString());
         verify(viewManagerModel).firePropertyChanged();
     }
 
     @Test
     public void testPropertyChange() {
-        // Trigger a property change event on the signUpViewModel
         SignUpState newState = new SignUpState();
         newState.setUsernameError("Invalid username");
-        //signUpViewModel.firePropertyChanged(newState);
-
-        // Verify that the JOptionPane.showMessageDialog method was called
-        //assertTrue(((String) JOptionPane.getFrames()[0].getTitle()).contains("Invalid username"));
     }
 
     @Test
@@ -83,7 +73,6 @@ public class SignUpViewTest {
 
         SignUpView signUpView = new SignUpView(mockSignUpController, mockSignUpViewModel, mockLoginViewModel, mockViewManagerModel);
 
-        // Set up the state for the test
         SignUpState testState = new SignUpState();
         testState.setUsername("testUser");
         testState.setName("Test Name");
@@ -94,9 +83,7 @@ public class SignUpViewTest {
         when(mockSignUpViewModel.getState()).thenReturn(testState);
         signUpView.getSignUp().doClick();
 
-        // Assert
         verify(mockSignUpController).execute("testUser", "Test Name", "test@example.com", "testPassword", "testPassword");
-        //verify(mockViewManagerModel).setActiveView("login");
     }
 
     @Test
@@ -108,8 +95,6 @@ public class SignUpViewTest {
         ViewManagerModel mockViewManagerModel = mock(ViewManagerModel.class);
 
         SignUpView signUpView = new SignUpView(mockSignUpController, mockSignUpViewModel, mockLoginViewModel, mockViewManagerModel);
-
-        // Set up the state for the test
         LoginState testLoginState = new LoginState();
         testLoginState.setUsername("testUser");
         testLoginState.setPassword("testPassword");

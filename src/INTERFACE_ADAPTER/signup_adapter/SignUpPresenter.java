@@ -1,3 +1,7 @@
+/**
+ * The SignUpPresenter class is responsible for preparing views based on the outcome of the user sign-up process.
+ */
+
 package INTERFACE_ADAPTER.signup_adapter;
 
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -14,6 +18,13 @@ public class SignUpPresenter implements SignUpOutputBoundary {
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
 
+    /**
+     * Constructs a new SignUpPresenter with the specified ViewManagerModel, SignUpViewModel, and LoginViewModel.
+     *
+     * @param viewManagerModel The model managing views in the application.
+     * @param signupViewModel  The view model associated with user sign-up.
+     * @param loginViewModel   The view model associated with user login.
+     */
     public SignUpPresenter(ViewManagerModel viewManagerModel,
                            SignUpViewModel signupViewModel,
                            LoginViewModel loginViewModel) {
@@ -22,6 +33,11 @@ public class SignUpPresenter implements SignUpOutputBoundary {
         this.loginViewModel = loginViewModel;
     }
 
+    /**
+     * Prepares the view for a successful user sign-up.
+     *
+     * @param response The output data containing information about the signed-up user.
+     */
     @Override
     public void prepareSuccessView(SignUpOutputData response) {
         // On success, switch to the login view.
@@ -35,6 +51,11 @@ public class SignUpPresenter implements SignUpOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares the view for a failed user sign-up.
+     *
+     * @param error The error message associated with the sign-up failure.
+     */
     @Override
     public void prepareFailView(String error) {
         SignUpState signupState = signupViewModel.getState();

@@ -29,8 +29,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -113,7 +111,6 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
-        // Add a user to the database for testing
         String username = "testLoginPassword";
         String name = "testLoginPassword";
         String email = "testLoginPassword";
@@ -132,7 +129,6 @@ public class LoginUseCaseTest {
 
     @Test
     public void testExecute_SuccessfulExecution() throws SQLException {
-        // Arrange
         String username = "testUser";
         String password = "testPassword";
 
@@ -147,14 +143,11 @@ public class LoginUseCaseTest {
 
     @Test
     public void testControllerExecute() throws SQLException {
-        // Arrange
         LoginInputBoundary mockInteractor = mock(LoginInputBoundary.class);
         LoginController controller = new LoginController(mockInteractor);
 
-        // Act
         controller.execute("testUser", "testPassword");
 
-        // Assert
         verify(mockInteractor, times(1)).execute(any(LoginInputData.class));
     }
 
@@ -166,25 +159,19 @@ public class LoginUseCaseTest {
         LoadMapViewModel loadMapViewModel = new LoadMapViewModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginViewModel, viewManagerModel, loadMapViewModel);
 
-        // Mock the LoginViewModel
+
         LoginViewModel mockLoginViewModel = mock(LoginViewModel.class);
         Mockito.when(mockLoginViewModel.getState()).thenReturn(new LoginState());
 
-        // Set the mockLoginViewModel to the loginPresenter
-        loginPresenter.setLoginViewModel(mockLoginViewModel);
-
-        // Act
         String errorMessage = "Invalid credentials";
         loginPresenter.prepareFailView(errorMessage);
 
-        // Assert
         LoginState loginState = mockLoginViewModel.getState();
         assertEquals(errorMessage, loginState.getUsernameError());
     }
 
     @Test
     public void testGetLogged() {
-        // Create an instance of LoginViewModel
         LoginViewModel loginViewModel = new LoginViewModel();
 
         assertFalse(loginViewModel.getLogged());

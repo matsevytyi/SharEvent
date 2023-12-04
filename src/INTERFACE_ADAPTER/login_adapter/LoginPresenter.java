@@ -13,16 +13,15 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Setter
+
 public class LoginPresenter implements LoginOutputDataBoundary {
 
-    private LoadMapViewModel mapViewModel;
-    private LoginViewModel loginViewModel; // final
+    private final LoadMapViewModel mapViewModel;
+    private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, LoadMapViewModel mapViewModel) {
@@ -77,7 +76,7 @@ public class LoginPresenter implements LoginOutputDataBoundary {
         loginViewModel.firePropertyChanged();
     }
 
-    public void openJavaFXMapView() {
+    private void openJavaFXMapView() {
 
         Platform.runLater(() -> {
             LoadMapView loadMapView = main.loadMapView;
@@ -99,8 +98,6 @@ public class LoginPresenter implements LoginOutputDataBoundary {
             stage.show();
         });
     }
-
-
 
 
 

@@ -1,4 +1,6 @@
-
+/**
+ * The LoginView class represents the graphical user interface for the login functionality.
+ */
 package VIEW;
 
 import INTERFACE_ADAPTER.login_adapter.LoginController;
@@ -34,6 +36,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JButton logIn;
     final JButton cancel;
 
+
+    /**
+     * Constructs a new LoginView with the specified controllers and view models.
+     *
+     * @param loginController The controller for login operations.
+     * @param loginViewModel  The ViewModel for login.
+     */
     public LoginView(LoginController loginController, LoginViewModel loginViewModel) {
         this.loginController = loginController;
         this.loginViewModel = loginViewModel;
@@ -160,12 +169,20 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
 
 
-
+    /**
+     * Handles the action performed events.
+     *
+     * @param evt The ActionEvent object.
+     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
-
+    /**
+     * Responds to property change events.
+     *
+     * @param evt The PropertyChangeEvent object.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 

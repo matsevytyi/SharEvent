@@ -35,24 +35,17 @@ public class LoginViewTest {
         assertTrue(logInButton.getActionListeners().length > 0);
         assertTrue(cancelButton.getActionListeners().length > 0);
 
-        // Mock the behavior of the login controller
         doNothing().when(loginController).execute(anyString(), anyString());
 
-        // Trigger the actionPerformed event for logInButton
         logInButton.doClick();
 
-        // Verify that the login controller's execute method was called
         verify(loginController).execute(anyString(), anyString());
     }
 
     @Test
     public void testPropertyChange() {
-        // Trigger a property change event on the loginViewModel
         LoginState newState = new LoginState();
         newState.setUsernameError("Invalid username");
-        //loginViewModel.firePropertyChanged(newState);
-
-        // Verify that the JOptionPane.showMessageDialog method was called
         assertFalse(loginView.getUsernameErrorField().getText().contains("Invalid username"));
     }
 

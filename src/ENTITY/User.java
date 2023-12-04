@@ -1,3 +1,7 @@
+/**
+ * The User class represents a user in the system.
+ */
+
 package ENTITY;
 
 import lombok.Getter;
@@ -16,6 +20,14 @@ public class User implements UserInterface {
     private final List<EventInterface> hosted_events;
 
 
+    /**
+     * Constructs a new User with the specified details.
+     *
+     * @param name     The name of the user.
+     * @param password The password associated with the user.
+     * @param userId   The unique username of the user.
+     * @param email    The email address of the user.
+     */
     public User(String name, String password, String userId, String email) {
         this.name = name;
         this.password = password;
@@ -27,10 +39,20 @@ public class User implements UserInterface {
     }
 
 
+    /**
+     * Gets the list of events the user is registered for.
+     *
+     * @return The list of registered events.
+     */
     public List<EventInterface> getRegisteredEvents() {
         return this.registered_events;
     }
 
+    /**
+     * Gets the list of events hosted by the user.
+     *
+     * @return The list of hosted events.
+     */
     public List<EventInterface> getHostedEvents() {
         return this.hosted_events;
     }
@@ -44,18 +66,39 @@ public class User implements UserInterface {
 //        this.friends.remove(friend);
 //    }
 
+    /**
+     * Adds a registered event to the user's list.
+     *
+     * @param event The event to be added.
+     */
     public void add_registered_event(EventInterface event) {
         this.registered_events.add(event);
     }
 
+    /**
+     * Removes a registered event from the user's list.
+     *
+     * @param event The event to be removed.
+     */
+    @Override
     public void remove_registered_event(EventInterface event) {
         this.registered_events.remove(event);
     }
 
+    /**
+     * Adds a hosted event to the user's list.
+     *
+     * @param event The event to be added.
+     */
     public void add_hosted_event(EventInterface event) {
         this.hosted_events.add(event);
     }
 
+    /**
+     * Removes a hosted event from the user's list.
+     *
+     * @param event The event to be removed.
+     */
     public void remove_hosted_event(EventInterface event) {
         this.hosted_events.remove(event);
     }

@@ -4,4 +4,5 @@ import USE_CASE.delete_event.DeleteEventOutputData;
 
 public interface RegisterOutputBoundary {
     void prepareSuccessCase();
+
 }
