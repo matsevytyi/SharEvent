@@ -1,4 +1,6 @@
-
+/**
+ * The SignUpView class represents the graphical user interface for the sign-up functionality.
+ */
 package VIEW;
 
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -37,6 +39,14 @@ import java.sql.SQLException;
             private final JButton signUp;
             private final JButton have_account;
 
+    /**
+     * Constructs a new SignUpView with the specified controllers and view models.
+     *
+     * @param sighUpController The controller for sign-up operations.
+     * @param signupViewModel  The ViewModel for sign-up.
+     * @param loginViewModel   The ViewModel for login (used for navigation).
+     * @param viewManagerModel The ViewModel for managing views.
+     */
             public SignUpView(SighUpController sighUpController, SignUpViewModel signupViewModel, LoginViewModel loginViewModel, ViewManagerModel viewManagerModel) {
 
                 this.sighUpController = sighUpController;
@@ -247,11 +257,21 @@ import java.sql.SQLException;
             }
 
 
-
+    /**
+     * Handles the action performed events.
+     *
+     * @param evt The ActionEvent object.
+     */
             public void actionPerformed(ActionEvent evt) {
                 System.out.println("Cancel not implemented yet.");
             }
 
+
+    /**
+     * Responds to property change events.
+     *
+     * @param evt The PropertyChangeEvent object.
+     */
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 SignUpState state = (SignUpState) evt.getNewValue();

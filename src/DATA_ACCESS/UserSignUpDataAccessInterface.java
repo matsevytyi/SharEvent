@@ -1,3 +1,8 @@
+/**
+ * The UserSignUpDataAccessInterface provides methods for accessing user-related data for SignUp operations.
+ * Implementing classes are responsible for interacting with database.
+ */
+
 package DATA_ACCESS;
 
 import ENTITY.User;
