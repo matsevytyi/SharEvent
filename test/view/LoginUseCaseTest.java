@@ -29,7 +29,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -44,9 +43,9 @@ import static org.mockito.Mockito.*;
 public class LoginUseCaseTest {
 
     @Test
-    public void testUserExistsPasswordsMatch() throws SQLException {
+    public void testExecute_UserExists_PasswordsMatch() throws SQLException {
         // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO();
+        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         LoadMapViewModel mapViewModel = new LoadMapViewModel();
@@ -56,7 +55,7 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
-        // Add a user to the database
+        // Add a user to the database for testing
         String username = "testLogin02";
         String name = "testLogin02";
         String email = "testLogin02";
@@ -75,9 +74,9 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testUserDoesNotExist() throws SQLException {
+    public void testExecute_UserDoesNotExist() throws SQLException {
         // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO();
+        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         LoadMapViewModel mapViewModel = new LoadMapViewModel();
@@ -87,8 +86,9 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
+        // Ensure the user does not exist in the database
         String username = "nonExistentUser";
-        String password = "password";
+        String password = "password123";
 
         LoginInputData input = new LoginInputData(username, password);
 
@@ -99,7 +99,7 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testIncorrectPassword() throws SQLException {
+    public void testExecute_IncorrectPassword() throws SQLException {
         // Arrange
         DatabaseDAO databaseDAO = new DatabaseDAO();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -111,7 +111,6 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
-        // Add a user to the database for testing
         String username = "testLoginPassword";
         String name = "testLoginPassword";
         String email = "testLoginPassword";
@@ -129,8 +128,7 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testSuccessfulExecution() throws SQLException {
-        // Arrange
+    public void testExecute_SuccessfulExecution() throws SQLException {
         String username = "testUser";
         String password = "testPassword";
 
@@ -155,15 +153,15 @@ public class LoginUseCaseTest {
 
     @Test
     public void testPrepareFailView() {
+        // Arrange
         LoginViewModel loginViewModel = new LoginViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoadMapViewModel loadMapViewModel = new LoadMapViewModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginViewModel, viewManagerModel, loadMapViewModel);
 
+
         LoginViewModel mockLoginViewModel = mock(LoginViewModel.class);
         Mockito.when(mockLoginViewModel.getState()).thenReturn(new LoginState());
-
-        loginPresenter.setLoginViewModel(mockLoginViewModel);
 
         String errorMessage = "Invalid credentials";
         loginPresenter.prepareFailView(errorMessage);

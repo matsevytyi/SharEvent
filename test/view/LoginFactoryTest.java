@@ -12,7 +12,6 @@ import VIEW_CREATOR.LoadMapViewModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.io.IOException;
 
