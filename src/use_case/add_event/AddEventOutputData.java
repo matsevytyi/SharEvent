@@ -10,12 +10,7 @@ public class AddEventOutputData {
         return useCaseFailed;
     }
 
-    public void setUseCaseFailed(boolean useCaseFailed) {
-        this.useCaseFailed = useCaseFailed;
-    }
-
     private final String eventName;
-
     private boolean useCaseFailed;
 
     public AddEventOutputData(String eventName,boolean useCaseFailed) {

@@ -4,6 +4,9 @@ package USE_CASE.view_event;
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.Event;
+import ENTITY.User;
+
+import java.util.List;
 
 public class ViewEventInteractor implements ViewEventInputBoundary {
     private final LoadEventsDataAccessInterface eventDataAccessInterface;

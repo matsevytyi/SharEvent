@@ -36,11 +36,10 @@ public class AddEventInteractor implements AddEventInputBoundary{
         } else if(addEventInputData.getEventDate().isBefore(LocalDate.now())){
             addEventPresenter.prepareFailView("Enter right date, please");
         } else if (addEventInputData.getType() == null) {
-            addEventPresenter.prepareFailView("Add time of event, please");
+            addEventPresenter.prepareFailView("Add type of event, please");
         } else {
             Event event = eventFactory.create(addEventInputData.getEventName(), addEventInputData.getType(), addEventInputData.getDescription(), addEventInputData.getEventDate(), addEventInputData.getEventTime(), addEventInputData.getCreator(), null, addEventInputData.getLatitude(), addEventInputData.getLongitude());
             eventDataAccessInterface.addEvent(event);
-
             AddEventOutputData signupOutputData = new AddEventOutputData(event.getEventName(), false);
             addEventPresenter.prepareSuccessView(signupOutputData);
         }
