@@ -12,7 +12,6 @@
 
 package APP;
 
-import DATA_ACCESS.FilterEventsDAO;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import ENTITY.EventFactory;
 import INTERFACE_ADAPTER.ViewManagerModel;
