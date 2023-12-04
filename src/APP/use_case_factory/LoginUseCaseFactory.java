@@ -33,7 +33,7 @@ public class LoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoadMapViewModel loggedViewModel) throws IOException {
+    public static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoadMapViewModel loggedViewModel) throws IOException {
         UserLoginDataAccessInterface userDataAccessObject = new DatabaseDAO();
 
         // Notice how we pass this method's parameters to the Presenter.

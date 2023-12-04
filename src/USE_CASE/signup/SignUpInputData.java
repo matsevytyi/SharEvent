@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class SignUpInputData {
 
-    final private String username;
-    final private String name;
-    final private String email;
-    final private String password;
-    final private String repeatPassword;
+    private String username;
+    private String name;
+    private String email;
+    private String password;
+    private String repeatPassword;
 
     public SignUpInputData(String username, String name, String email, String password, String repeatPassword) {
         this.username = username;

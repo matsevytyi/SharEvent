@@ -5,7 +5,9 @@ import INTERFACE_ADAPTER.login_adapter.LoginState;
 import INTERFACE_ADAPTER.login_adapter.LoginViewModel;
 import USE_CASE.signup.SignUpOutputBoundary;
 import USE_CASE.signup.SignUpOutputData;
+import lombok.Getter;
 
+@Getter
 public class SignUpPresenter implements SignUpOutputBoundary {
 
     private final SignUpViewModel signupViewModel;
