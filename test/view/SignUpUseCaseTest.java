@@ -29,7 +29,7 @@ import java.sql.SQLException;
 public class SignUpUseCaseTest {
 
     @Test
-    public void testCreate_Success() {
+    public void testCreateSuccess() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         SignUpViewModel signupViewModel = new SignUpViewModel();
@@ -40,7 +40,7 @@ public class SignUpUseCaseTest {
     }
 
     @Test
-    public void testCreate_ExceptionThrown() {
+    public void testExceptionThrown() {
         ViewManagerModel viewManagerModel = new ViewManagerModel() {
             @Override
             public void setActiveView(String viewName) {
@@ -62,9 +62,8 @@ public class SignUpUseCaseTest {
     }
 
     @Test
-    public void testExecute_UserDoesNotExist() throws SQLException {
-        // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+    public void testUserDoesNotExist() throws SQLException {
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         SignUpPresenter mockPresenter = new SignUpPresenter(new ViewManagerModel(), new SignUpViewModel(), new LoginViewModel());
         UserFactory userFactory = new UserFactoryImplementation();
 
@@ -77,14 +76,12 @@ public class SignUpUseCaseTest {
 
         SignUpState signUpState = mockPresenter.getSignupViewModel().getState();
         assertTrue(signUpState.getUsernameError().equals("User already exists."));
-       // assertFalse(signUpState.getPasswordError().equals("Passwords don't match."));
 
     }
 
     @Test
-    public void testExecute_PasswordsMatch() throws SQLException {
-        // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+    public void testPasswordsMatch() throws SQLException {
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         SignUpPresenter mockPresenter = new SignUpPresenter(new ViewManagerModel(), new SignUpViewModel(), new LoginViewModel());
         UserFactory userFactory = new UserFactoryImplementation();
 
@@ -100,9 +97,8 @@ public class SignUpUseCaseTest {
     }
 
     @Test
-    public void testExecute_UserDoesNotExist_PasswordsMatch() throws SQLException {
-        // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+    public void testUserDoesNotExistPasswordsMatch() throws SQLException {
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         SignUpPresenter mockPresenter = new SignUpPresenter(new ViewManagerModel(), new SignUpViewModel(), new LoginViewModel());
         UserFactory userFactory = new UserFactoryImplementation();
 
@@ -121,9 +117,9 @@ public class SignUpUseCaseTest {
     }
 
     @Test
-    public void testExecute_DuplicateUser() throws SQLException {
+    public void testExecuteDuplicateUser() throws SQLException {
 
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         SignUpPresenter mockPresenter = new SignUpPresenter(new ViewManagerModel(), new SignUpViewModel(), new LoginViewModel());
         UserFactory userFactory = new UserFactoryImplementation();
 
@@ -143,20 +139,16 @@ public class SignUpUseCaseTest {
 
     @Test
     public void testControllerExecute() throws SQLException {
-        // Arrange
         SignUpInputBoundary mockInteractor = mock(SignUpInputBoundary.class);
         SighUpController controller = new SighUpController(mockInteractor);
 
-        // Act
         controller.execute("newUser", "New User", "new@example.com", "password123", "password123");
 
-        // Assert
         verify(mockInteractor, times(1)).execute(any(SignUpInputData.class));
     }
 
     @Test
     public void testPrepareSuccessView() {
-        // Create mock objects
         ViewManagerModel viewManagerModel = mock(ViewManagerModel.class);
         SignUpViewModel signupViewModel = mock(SignUpViewModel.class);
         LoginViewModel loginViewModel = mock(LoginViewModel.class);
@@ -171,21 +163,18 @@ public class SignUpUseCaseTest {
         signUpPresenter.prepareSuccessView(signUpOutputData);
 
 
-        verify(signupViewModel, times(1)).getState();  // Verify getState is called
-        verify(loginViewModel, times(1)).setState(any());  // Verify setState is called with any argument
+        verify(signupViewModel, times(1)).getState();
+        verify(loginViewModel, times(1)).setState(any());
         verify(loginViewModel, times(1)).firePropertyChanged();
 
     }
 
     @Test
     public void testGetterSetter() {
-        // Create an instance of SignUpOutputData
         SignUpOutputData signUpOutputData = new SignUpOutputData("john_doe", true);
 
-        // Test the generated getter for 'username'
         assertEquals("john_doe", signUpOutputData.getUsername());
 
-        // Test the generated getter and setter for 'useCaseFailed'
         assertEquals(true, signUpOutputData.isUseCaseFailed());
         signUpOutputData.setUseCaseFailed(false);
         assertEquals(false, signUpOutputData.isUseCaseFailed());
@@ -193,24 +182,20 @@ public class SignUpUseCaseTest {
 
     @Test
     public void testGetterSetter2() {
-        // Create an instance of SignUpInputData
         SignUpInputData signUpInputData = new SignUpInputData("john_doe", "John Doe", "john@example.com", "password123", "password123");
 
-        // Test the generated getters
         assertThat(signUpInputData.getUsername()).isEqualTo("john_doe");
         assertThat(signUpInputData.getName()).isEqualTo("John Doe");
         assertThat(signUpInputData.getEmail()).isEqualTo("john@example.com");
         assertThat(signUpInputData.getPassword()).isEqualTo("password123");
         assertThat(signUpInputData.getRepeatPassword()).isEqualTo("password123");
 
-        // Test the generated setters (if you need to)
         signUpInputData.setUsername("new_username");
         signUpInputData.setName("New Name");
         signUpInputData.setEmail("new_email@example.com");
         signUpInputData.setPassword("new_password");
         signUpInputData.setRepeatPassword("new_password");
 
-        // Assert that the values have been updated
         assertThat(signUpInputData.getUsername()).isEqualTo("new_username");
         assertThat(signUpInputData.getName()).isEqualTo("New Name");
         assertThat(signUpInputData.getEmail()).isEqualTo("new_email@example.com");
@@ -235,8 +220,6 @@ public class SignUpUseCaseTest {
     @Test
     public void testPrepareSuccessView02() {
         SignUpOutputData response = new SignUpOutputData("john_doe", false);
-
-        SignUpState signupState = mock(SignUpState.class);
         when(loginViewModel.getState()).thenReturn(mock(LoginState.class));
 
         signUpPresenter.prepareSuccessView(response);

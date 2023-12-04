@@ -45,9 +45,9 @@ import static org.mockito.Mockito.*;
 public class LoginUseCaseTest {
 
     @Test
-    public void testExecute_UserExists_PasswordsMatch() throws SQLException {
+    public void testUserExistsPasswordsMatch() throws SQLException {
         // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         LoadMapViewModel mapViewModel = new LoadMapViewModel();
@@ -57,7 +57,7 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
-        // Add a user to the database for testing
+        // Add a user to the database
         String username = "testLogin02";
         String name = "testLogin02";
         String email = "testLogin02";
@@ -76,9 +76,9 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testExecute_UserDoesNotExist() throws SQLException {
+    public void testUserDoesNotExist() throws SQLException {
         // Arrange
-        DatabaseDAO databaseDAO = new DatabaseDAO(); // or the actual implementation you're using
+        DatabaseDAO databaseDAO = new DatabaseDAO();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         LoadMapViewModel mapViewModel = new LoadMapViewModel();
@@ -88,9 +88,8 @@ public class LoginUseCaseTest {
 
         LoginInteractor interactor = new LoginInteractor(databaseDAO, mockPresenter, userFactory);
 
-        // Ensure the user does not exist in the database
         String username = "nonExistentUser";
-        String password = "password123";
+        String password = "password";
 
         LoginInputData input = new LoginInputData(username, password);
 
@@ -101,7 +100,7 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testExecute_IncorrectPassword() throws SQLException {
+    public void testIncorrectPassword() throws SQLException {
         // Arrange
         DatabaseDAO databaseDAO = new DatabaseDAO();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -131,7 +130,7 @@ public class LoginUseCaseTest {
     }
 
     @Test
-    public void testExecute_SuccessfulExecution() throws SQLException {
+    public void testSuccessfulExecution() throws SQLException {
         // Arrange
         String username = "testUser";
         String password = "testPassword";
@@ -147,44 +146,35 @@ public class LoginUseCaseTest {
 
     @Test
     public void testControllerExecute() throws SQLException {
-        // Arrange
         LoginInputBoundary mockInteractor = mock(LoginInputBoundary.class);
         LoginController controller = new LoginController(mockInteractor);
 
-        // Act
         controller.execute("testUser", "testPassword");
 
-        // Assert
         verify(mockInteractor, times(1)).execute(any(LoginInputData.class));
     }
 
     @Test
     public void testPrepareFailView() {
-        // Arrange
         LoginViewModel loginViewModel = new LoginViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         LoadMapViewModel loadMapViewModel = new LoadMapViewModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginViewModel, viewManagerModel, loadMapViewModel);
 
-        // Mock the LoginViewModel
         LoginViewModel mockLoginViewModel = mock(LoginViewModel.class);
         Mockito.when(mockLoginViewModel.getState()).thenReturn(new LoginState());
 
-        // Set the mockLoginViewModel to the loginPresenter
         loginPresenter.setLoginViewModel(mockLoginViewModel);
 
-        // Act
         String errorMessage = "Invalid credentials";
         loginPresenter.prepareFailView(errorMessage);
 
-        // Assert
         LoginState loginState = mockLoginViewModel.getState();
         assertEquals(errorMessage, loginState.getUsernameError());
     }
 
     @Test
     public void testGetLogged() {
-        // Create an instance of LoginViewModel
         LoginViewModel loginViewModel = new LoginViewModel();
 
         assertFalse(loginViewModel.getLogged());

@@ -47,17 +47,12 @@ public class RegisterForEventTest {
 
     @Test
     public void testRegisterInteractor() {
-        // Mock the dependencies
         LoadEventsDataAccessInterface mockDataAccess = mock(LoadEventsDataAccessInterface.class);
         RegisterOutputBoundary mockOutputBoundary = mock(RegisterOutputBoundary.class);
-
-        // Create the interactor with the mocked dependencies
         RegisterInteractor registerInteractor = new RegisterInteractor(mockDataAccess, mockOutputBoundary);
 
-        // Prepare test data
         RegisterInputData inputData = new RegisterInputData(1, "testUser");
 
-        // Execute the interactor
         registerInteractor.execute(inputData);
         verify(mockOutputBoundary).prepareSuccessCase();
     }
@@ -67,7 +62,6 @@ public class RegisterForEventTest {
         RegisterViewModel mockRegisterViewModel = mock(RegisterViewModel.class);
         ViewManagerModel mockViewManagerModel = mock(ViewManagerModel.class);
 
-        // Create the presenter
         RegisterPresenter registerPresenter = new RegisterPresenter(mockRegisterViewModel, mockViewManagerModel);
         assertNotNull(registerPresenter);
     }

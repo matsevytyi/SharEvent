@@ -27,11 +27,11 @@ import static org.mockito.Mockito.mock;
 public class LoginFactoryTest {
 
     @Test
-    public void testCreate_SuccessfulCreation() {
+    public void testSuccessfulCreation() {
         // Set up the necessary dependencies
-        ViewManagerModel viewManagerModel = new ViewManagerModel(); // You may need to initialize a real instance
-        LoginViewModel loginViewModel = new LoginViewModel(); // You may need to initialize a real instance
-        LoadMapViewModel mapViewModel = new LoadMapViewModel(); // You may need to initialize a real instance
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        LoadMapViewModel mapViewModel = new LoadMapViewModel();
 
         LoginView result = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
 
@@ -39,7 +39,7 @@ public class LoginFactoryTest {
     }
 
     @Test
-    public void testCreate_ExceptionThrown() {
+    public void testExceptionThrown() {
         ViewManagerModel viewManagerModel = new ViewManagerModel() {
             @Override
             public void setActiveView(String viewName) {
@@ -53,7 +53,6 @@ public class LoginFactoryTest {
         try {
             loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
         } catch (Exception e) {
-            // Catch the exception thrown during creation
             assertTrue(e instanceof RuntimeException);
         }
 
