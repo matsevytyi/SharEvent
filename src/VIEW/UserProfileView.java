@@ -39,7 +39,9 @@ public class UserProfileView extends VBox implements PropertyChangeListener {
     }
 
     private final ViewProfileController viewProfileController;
-
+    /**
+     * Initializes the user interface components for the "View profile" view.
+     */
     private void initUI() {
         Label title = new Label("User Profile");
         title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
@@ -73,15 +75,20 @@ public class UserProfileView extends VBox implements PropertyChangeListener {
 
     }
 
+    /**
+     * Update all fields of window with received from state information
+     */
     public void updateProfile() {
-        // Встановлення нових значень для елементів інтерфейсу на основі даних користувача
         usernameLabel.setText( viewProfileViewModel.getState().getUsername());
         nameLabel.setText(viewProfileViewModel.getState().getName());
         emailLabel.setText( viewProfileViewModel.getState().getEmail());
         registeredEventsLabel.setText(viewProfileViewModel.getState().getRegistered_events().toString());
         hostedEventsLabel.setText(viewProfileViewModel.getState().getHosted_events().toString());
     }
-
+    /**
+     * Responds to property change events and updates the view accordingly.
+     * @param evt The property change event.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ViewProfileState viewProfileState = (ViewProfileState) evt.getNewValue();

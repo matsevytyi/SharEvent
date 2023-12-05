@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import APP.MapUseCasesFactory;
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
@@ -22,11 +24,11 @@ public class MapUseCaseFactoryTests {
     @BeforeAll
     public static void initJavaFX() {
         System.setProperty("javafx.headless", "true");
-        new JFXPanel(); // initializes JavaFX environment
+        new JFXPanel();
     }
     @Test
-    void createLoadMapView_ValidViewModels_SuccessfulCreation() {
-        // Arrange
+    void createLoadMapViewSuccess() {
+
         LoadMapViewModel loadMapViewModel = new LoadMapViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         AddEventViewModel addEventViewModel = new AddEventViewModel();
@@ -37,14 +39,14 @@ public class MapUseCaseFactoryTests {
         RegisterViewModel registerViewModel = new RegisterViewModel();
         ViewProfileViewModel viewProfileViewModel = new ViewProfileViewModel();
         Platform.runLater(() -> {
-            // Act
+
             LoadMapView loadMapView = MapUseCasesFactory.create(
                     loadMapViewModel, loginViewModel, addEventViewModel, viewEventViewModel,
                     loadEventsDataAccessInterface, viewManagerModel, deleteEventViewModel,
                     registerViewModel, viewProfileViewModel
             );
 
-            // Assert
+
             assertNotNull(loadMapView);
         });
 

@@ -9,16 +9,8 @@ import INTERFACE_ADAPTER.signup_adapter.SignUpViewModel;
 import VIEW.LoginView;
 import VIEW.SignUpView;
 import VIEW_CREATOR.LoadMapViewModel;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockedStatic;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -35,7 +27,7 @@ public class LoginFactoryTest {
 
         LoginView result = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mapViewModel);
 
-        Assert.assertNotNull(result);
+        assertNotNull(result);
     }
 
     @Test

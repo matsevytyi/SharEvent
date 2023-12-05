@@ -9,5 +9,4 @@ public class ViewProfileInputData {
     private final String username;
 
 
-
 }

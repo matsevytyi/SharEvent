@@ -1,4 +1,4 @@
-package view;
+package VIEW;
 
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDataAccessInterface;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -13,16 +13,17 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.junit.Test;
+
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import static org.hamcrest.CoreMatchers.is;
+
 
 import java.util.Optional;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
@@ -47,17 +48,15 @@ public class RegisterForEventTest {
 
     @Test
     public void testRegisterInteractor() {
-        // Mock the dependencies
+
         LoadEventsDataAccessInterface mockDataAccess = mock(LoadEventsDataAccessInterface.class);
         RegisterOutputBoundary mockOutputBoundary = mock(RegisterOutputBoundary.class);
 
-        // Create the interactor with the mocked dependencies
         RegisterInteractor registerInteractor = new RegisterInteractor(mockDataAccess, mockOutputBoundary);
 
-        // Prepare test data
+
         RegisterInputData inputData = new RegisterInputData(1, "testUser");
 
-        // Execute the interactor
         registerInteractor.execute(inputData);
         verify(mockOutputBoundary).prepareSuccessCase();
     }
@@ -67,7 +66,6 @@ public class RegisterForEventTest {
         RegisterViewModel mockRegisterViewModel = mock(RegisterViewModel.class);
         ViewManagerModel mockViewManagerModel = mock(ViewManagerModel.class);
 
-        // Create the presenter
         RegisterPresenter registerPresenter = new RegisterPresenter(mockRegisterViewModel, mockViewManagerModel);
         assertNotNull(registerPresenter);
     }

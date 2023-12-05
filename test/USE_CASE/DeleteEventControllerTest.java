@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_InputData;
 import DATA_ACCESS.loadevents_dataaccess.LoadEventsDAO_OutputData;
@@ -22,7 +24,6 @@ class DeleteEventInteractorTest {
     private static class TestLoadEventsDataAccess implements LoadEventsDataAccessInterface {
         @Override
         public String getEventById(int eventId) {
-            // Provide a test implementation
             return "TestEvent";
         }
 
@@ -53,7 +54,7 @@ class DeleteEventInteractorTest {
 
         @Override
         public void deleteEvent(int eventId) {
-            // Provide a test implementation
+
         }
 
         private LoadEventsDataAccessInterface loadEventsDataAccessInterface;
@@ -67,21 +68,6 @@ class DeleteEventInteractorTest {
             deleteEventInteractor = new DeleteEventInteractor(loadEventsDataAccessInterface, deleteEventPresenter);
         }
 
-        @Test
-        void execute_DeletesEventAndNotifiesPresenterOnSuccess() {
-            // Arrange
-            int eventId = 123;
-
-            // Act
-            deleteEventInteractor.execute(new DeleteEventInputData(eventId));
-
-            // Assert
-            // Verify that the event is deleted (for the sake of this example, check the test implementation)
-            // You might want to enhance this based on your actual implementation
-            assertNotNull(deleteEventPresenter.outputData);
-            assertEquals("TestEvent", deleteEventPresenter.outputData.getDeletedEvent());
-            assertFalse(deleteEventPresenter.outputData.isUseCaseFailed());
-        }
     }
 
     private static class TestDeleteEventPresenter implements DeleteEventOutputBoundary {
@@ -94,7 +80,7 @@ class DeleteEventInteractorTest {
 
         @Override
         public void prepareFailCase(String error) {
-            // Implement if needed for failure case
+
         }
     }
 
@@ -114,13 +100,13 @@ class DeleteEventInteractorTest {
 
     @Test
     void execute_DeletesEventAndNotifiesPresenterOnSuccess() {
-        // Arrange
+
         int eventId = 123;
 
-        // Act
+
         deleteEventInteractor.execute(new DeleteEventInputData(eventId));
 
-        // Assert
+
         assertNotNull(deleteEventPresenter.outputData);
         assertEquals("TestEvent", deleteEventPresenter.outputData.getDeletedEvent());
         assertFalse(deleteEventPresenter.outputData.isUseCaseFailed());
@@ -129,13 +115,13 @@ class DeleteEventInteractorTest {
 
     @Test
     void execute_HandlesFailureCase() {
-        // Arrange
+
         int eventId = 456;
 
-        // Act
+
         deleteEventInteractor.execute(new DeleteEventInputData(eventId));
 
-        // Assert
+
         assertNotNull(deleteEventPresenter.outputData);
         assertFalse(deleteEventPresenter.outputData.isUseCaseFailed());
     }
@@ -145,16 +131,15 @@ public class DeleteEventControllerTest {
 
     @Test
     public void testExecute() {
-        // Arrange
+
         DeleteEventInputBoundary deleteEventUseCaseInteractor = new TestDeleteEventUseCaseInteractor();
         DeleteEventController deleteEventController = new DeleteEventController(deleteEventUseCaseInteractor);
 
-        // Act
+
         deleteEventController.execute(1);
 
-        // Assert
         assertTrue(((TestDeleteEventUseCaseInteractor) deleteEventUseCaseInteractor).wasExecuteCalled());
-        // Add more assertions based on the behavior you want to test
+
     }
 
     private static class TestDeleteEventUseCaseInteractor implements DeleteEventInputBoundary {
@@ -173,36 +158,20 @@ public class DeleteEventControllerTest {
 
  class DeleteEventPresenterTest {
 
-//     @Test
-//     public void testPrepareSuccessCase() {
-//         // Arrange
-//         DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
-//         ViewManagerModel viewManagerModel = new ViewManagerModel(); // Assuming ViewManagerModel is a mock or test implementation
-//         DeleteEventPresenter deleteEventPresenter = new DeleteEventPresenter(deleteEventViewModel, viewManagerModel);
-//
-//         // Updated DeleteEventOutputData with a boolean flag
-//         DeleteEventOutputData eventData = new DeleteEventOutputData("EventName", false);
-//
-//         // Act
-//         deleteEventPresenter.prepareSuccessCase(eventData);
-//
-//         // Assert
-//         assertEquals("EventName", deleteEventViewModel.getState().getDeletedEventName());
-//
-//     }
+
      @Test
      public void testPrepareFailCase() {
-         // Arrange
+
          DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
          ViewManagerModel viewManagerModel = new ViewManagerModel(); // Assuming ViewManagerModel is a mock or test implementation
          DeleteEventPresenter deleteEventPresenter = new DeleteEventPresenter(deleteEventViewModel, viewManagerModel);
 
-         // Act
+
          deleteEventPresenter.prepareFailCase("Some error message"); // Pass the expected error message
 
-         // Assert
+
          assertEquals("Some error message", deleteEventViewModel.getState().getDeletedEventError());
-         // Add more assertions based on the behavior you want to test
+
      }
 }
 
@@ -210,45 +179,43 @@ class DeleteEventStateTest {
 
     @Test
     public void testInitialState() {
-        // Arrange
+
         DeleteEventState deleteEventState = new DeleteEventState();
 
-        // Assert
+
         assertEquals("", deleteEventState.getDeletedEventName());
         assertEquals("", deleteEventState.getDeletedEventError());
         assertEquals(0, deleteEventState.getDeletedEventId());
         assertEquals("", deleteEventState.getDeletedEventIdError());
     }
 
-    // Add more tests as needed to cover specific behaviors of DeleteEventState
+
 }
 
 class DeleteEventViewModelTest {
 
     @Test
     public void testInitialState() {
-        // Arrange
+
         DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
 
-        // Assert
         assertEquals("", deleteEventViewModel.getState().getDeletedEventName());
-        // Add more assertions based on the initial state you expect
+
     }
 
     @Test
     public void testSetState() {
-        // Arrange
+
         DeleteEventViewModel deleteEventViewModel = new DeleteEventViewModel();
         DeleteEventState newState = new DeleteEventState();
         newState.setDeletedEventName("NewEventName");
 
-        // Act
+
         deleteEventViewModel.setState(newState);
 
-        // Assert
+
         assertEquals("NewEventName", deleteEventViewModel.getState().getDeletedEventName());
-        // Add more assertions based on the behavior you want to test
+
     }
 
-    // Add more tests as needed to cover specific behaviors of DeleteEventViewModel
 }

@@ -1,3 +1,5 @@
+package VIEW;
+
 import APP.MapUseCasesFactory;
 import DATA_ACCESS.DatabaseDAO;
 import INTERFACE_ADAPTER.ViewManagerModel;
@@ -33,7 +35,7 @@ public class AddEventViewTest {
     @SneakyThrows
     @BeforeEach
     void setUp() {
-        new JFXPanel(); // Initializes JavaFX toolkit
+        new JFXPanel();
         viewModel = new AddEventViewModel();
         dao = new DatabaseDAO();
         viewManagerModel = new ViewManagerModel();
@@ -44,7 +46,7 @@ public class AddEventViewTest {
 
     @Test
     void testAddEventButtonClickShowsInformationAlert() {
-        // Arrange
+
         Platform.runLater(() -> {
             Stage stage = new Stage();
             stage.setScene(new Scene(addEventView));
@@ -56,20 +58,20 @@ public class AddEventViewTest {
             TextField descriptionInputField = find("#descriptionInputField");
             Button addEventButton = find("#addEventButton");
 
-            // Act
+
             Platform.runLater(() -> {
                 eventNameInputField.setText("Test Event");
-                eventTypeComboBox.getSelectionModel().select(0); // Assuming the first item is selected
+                eventTypeComboBox.getSelectionModel().select(0);
                 eventDatePicker.getEditor().setText("2023-12-31");
                 descriptionInputField.setText("This is a test event description");
                 addEventButton.fire();
             });
 
-            // Allow JavaFX thread to process events
+
             sleep(1000);
 
-            // Assert
-            assertNotNull(addEventView.getScene()); // Check if the scene is still present
+
+            assertNotNull(addEventView.getScene());
 
 
         });

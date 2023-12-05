@@ -1,3 +1,5 @@
+package VIEW;
+
 import INTERFACE_ADAPTER.view_profile.ViewProfileController;
 import INTERFACE_ADAPTER.view_profile.ViewProfileState;
 import INTERFACE_ADAPTER.view_profile.ViewProfileViewModel;
@@ -32,9 +34,9 @@ public class UserProfileViewTest {
                 new ViewProfileViewModel(),
                 new ViewProfileController(new RealViewProfileInputBoundary()));
 
-        // Assert initial state
+
         assertNotNull(userProfileView);
-        // Add more assertions based on the initial state of the UserProfileView
+
     }
 
 
@@ -43,8 +45,6 @@ public class UserProfileViewTest {
         @Override
         public void execute(ViewProfileInputData inputData) {
 
-            // Implement the actual logic for delete event use case
-            // For testing purposes, you can print a message or perform some dummy operations
             System.out.println("Executing DeleteEventInputBoundary with event ID: " + inputData.getUsername());
         }
     }}

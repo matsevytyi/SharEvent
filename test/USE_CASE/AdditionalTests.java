@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import ENTITY.Event;
 import ENTITY.User;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AdditionalTests {
 
     @Test
-    void eventConstructor_CreateEventWithNonNullValues_SuccessfulCreation() {
-        // Arrange
+    void eventConstructorSuccessfulCreation() {
+
         int eventId = 1;
         String eventName = "TestEvent";
         String type = "Type";
@@ -23,13 +25,12 @@ public class AdditionalTests {
         LocalTime eventTime = LocalTime.of(12, 30);
         User creator = new User("Creator", "username", "password", "email");
         List<User> eventAttendants = new ArrayList<>();
-        double latitude = 1.0;
-        double longitude = 2.0;
+        double latitude = 4.0;
+        double longitude = 15.0;
 
-        // Act
+
         Event event = new Event(eventId, eventName, type, description, eventDate, eventTime, creator, eventAttendants, latitude, longitude);
 
-        // Assert
         assertNotNull(event);
         assertEquals(eventId, event.getEventId());
         assertEquals(eventName, event.getEventName());
@@ -45,8 +46,8 @@ public class AdditionalTests {
     }
 
     @Test
-    void eventConstructor_CreateEventWithNullEventAttendants_SuccessfulCreation() {
-        // Arrange
+    void eventConstructorNullEventAttendants() {
+
         int eventId = 1;
         String eventName = "TestEvent";
         String type = "Type";
@@ -57,10 +58,8 @@ public class AdditionalTests {
         double latitude = 1.0;
         double longitude = 2.0;
 
-        // Act
         Event event = new Event(eventId, eventName, type, description, eventDate, eventTime, creator, null, latitude, longitude);
 
-        // Assert
         assertNotNull(event);
         assertEquals(eventId, event.getEventId());
         assertEquals(eventName, event.getEventName());

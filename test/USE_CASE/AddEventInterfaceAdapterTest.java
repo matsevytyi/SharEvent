@@ -1,3 +1,5 @@
+package USE_CASE;
+
 import ENTITY.User;
 import INTERFACE_ADAPTER.ViewManagerModel;
 import INTERFACE_ADAPTER.add_event.AddEventController;
@@ -22,8 +24,6 @@ class TestAddEventInputBoundary implements AddEventInputBoundary {
     public void execute(AddEventInputData inputData) {
         this.inputData = inputData;
     }
-
-    // Getter for the recorded input data.
     public AddEventInputData getInputData() {
         return inputData;
     }
@@ -32,7 +32,7 @@ class AddEventControllerTest {
 
     @Test
     void testExecute() {
-        // Arrange
+
         TestAddEventInputBoundary testInputBoundary = new TestAddEventInputBoundary();
         AddEventController addEventController = new AddEventController(testInputBoundary);
 
@@ -45,7 +45,6 @@ class AddEventControllerTest {
         double latitude = 10.0;
         double longitude = 20.0;
 
-        // Act
         addEventController.execute(eventName, type, description, eventDate, eventTime, creator, latitude, longitude);
 
         AddEventInputData recordedInputData = testInputBoundary.getInputData();
@@ -68,30 +67,30 @@ class AddEventPresenterTest {
 
     @Test
     void testPrepareSuccessView() {
-        // Arrange
+
         AddEventOutputData eventData = new AddEventOutputData("cook",false);
 
-        // Act
+
         addEventPresenter.prepareSuccessView(eventData);
 
-        // Assert
+
         AddEventState state = addEventViewModel.getState();
         assertEquals(eventData.getEventName(), state.getEventName());
-        // Add more assertions based on the expected behavior
+
     }
 
     @Test
     void testPrepareFailView() {
-        // Arrange
+
         String error = "Error message";
 
-        // Act
+
         addEventPresenter.prepareFailView(error);
 
-        // Assert
+
         AddEventState state = addEventViewModel.getState();
         assertEquals(error, state.getEventNameError());
-        // Add more assertions based on the expected behavior
+
     }
 }
 
@@ -108,46 +107,46 @@ class AddEventStateTest {
 
     @Test
     void testInitialState() {
-        // Assert
+
         assertNull(addEventState.getEventName());
         assertNull(addEventState.getEventNameError());
-        // Add more assertions based on the expected initial state
+
     }
 
     @Test
     void testSettersAndGetters() {
-        // Arrange
+
         String eventName = "Test Event";
         String eventNameError = "Invalid event name";
 
-        // Act
+
         addEventState.setEventName(eventName);
         addEventState.setEventNameError(eventNameError);
 
-        // Assert
+
         assertEquals(eventName, addEventState.getEventName());
         assertEquals(eventNameError, addEventState.getEventNameError());
-        // Add more assertions based on the expected behavior
+
     }
 
     @Test
     void testSetState() {
-        // Arrange
-        AddEventState initialState = addEventViewModel.getState();
+
+
         AddEventState newState = new AddEventState();
         newState.setEventName("New Event");
 
-        // Act
+
         addEventViewModel.setState(newState);
 
-        // Assert
+
         assertEquals(newState, addEventViewModel.getState());
         assertEquals("New Event", addEventViewModel.getState().getEventName());
     addEventViewModel.firePropertyChanged();
-        // Verify that the state change triggers a property change event
+
         AddEventState updatedState =  addEventViewModel.getState();
         assertEquals(newState, updatedState);
-        // Add more assertions based on the expected behavior
+
     }
 }
 
@@ -162,24 +161,23 @@ class AddEventViewModelTest {
 
     @Test
     void testInitialState() {
-        // Assert
+
         assertNull(addEventViewModel.getState().getEventName());
         assertNull(addEventViewModel.getState().getEventNameError());
-        // Add more assertions based on the expected initial state
+
     }
 
     @Test
     void testSetClickedPosition() {
-        // Arrange
+
         double latitude = 10.0;
         double longitude = 20.0;
 
-        // Act
+
         addEventViewModel.setClickedPosition(new GeoPosition(latitude, longitude));
 
-        // Assert
+
         assertEquals(latitude, addEventViewModel.getState().getEventLatitude());
         assertEquals(longitude, addEventViewModel.getState().getEventLongitude());
-        // Add more assertions based on the expected behavior
     }
 }

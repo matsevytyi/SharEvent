@@ -9,7 +9,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class OtherViewFactory {
-
+    /**
+     * Creates an overlay view with the specified content.
+     * @param parentPane The parent pane to which the overlay and content will be added.
+     * @param centerBox  The content box to be displayed in the center of the overlay.
+     */
     public static void createOtherView(StackPane parentPane, VBox centerBox) {
 
             Rectangle overlay = new Rectangle(1600, 1200);
@@ -19,10 +23,9 @@ public class OtherViewFactory {
             centerBox.setStyle("-fx-background-color: white; -fx-padding: 10px; -fx-spacing: 10px;");
             centerBox.setAlignment(Pos.CENTER);
             centerBox.setMaxSize(600, 400);
-          Button closeButton = new Button("Close");
+             Button closeButton = new Button("Close");
           closeButton.setStyle("-fx-text-fill: #3B59B6; -fx-font-weight: bold; -fx-font-size: 16;-fx-padding: 10;");
           closeButton.setOnAction(event -> {
-            // Close the view or perform any necessary actions
             parentPane.getChildren().removeAll(overlay, centerBox);
 
         });

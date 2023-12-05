@@ -50,7 +50,9 @@ public class ViewEventView extends VBox implements PropertyChangeListener {
 viewEventViewModel.addPropertyChangeListener(this);
         initUI();
     }
-
+    /**
+     * Initializes the user interface components for the ViewEvent" view.
+     */
     private void initUI() {
         Label title = new Label("Event Details");
         title.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #3B59B6;");
@@ -69,9 +71,10 @@ viewEventViewModel.addPropertyChangeListener(this);
         setPadding(new Insets(10));
         actionButton.setOnAction(event -> handleActionButtonClick());
     }
-
+    /**
+     * Updates the view with the latest information from the ViewEventViewModel.
+     */
     public void updateView() {
-        // Assuming ViewEventViewModel has appropriate getters
         eventNameLabel.setText(viewEventViewModel.getState().getEventName());
         typeLabel.setText(viewEventViewModel.getState().getType());
         eventDateLabel.setText(String.valueOf(viewEventViewModel.getState().getDate()));
@@ -81,22 +84,25 @@ viewEventViewModel.addPropertyChangeListener(this);
         attendantsLabel.setText(viewEventViewModel.getState().getRegisteredUsers());
 
         boolean isCreator = isUserCreator(viewEventViewModel.getState().getCreatedBy());
-
-        // Set the text of the actionButton based on the user's role
         actionButton.setText(isCreator ? "Delete" : "Register for Event");
     }
-
+    /**
+     * Checks if the logged-in user is the creator of the event.
+     * @param eventCreator The username of the event creator.
+     * @return true if the logged-in user is the creator, false otherwise.
+     */
     private boolean isUserCreator(String eventCreator) {
-        // Get the logged-in user from your authentication system
 
-        String loggedInUser = viewEventViewModel.getLoggedInUser(); // Adjust this according to your actual implementation
-
-        // Compare the usernames
+        String loggedInUser = viewEventViewModel.getLoggedInUser();
         return loggedInUser != null && loggedInUser.equals(eventCreator);
     }
-
+    /**
+     * Handles the click event of the action button .
+     * If the text is "Delete," a confirmation dialog is shown, and the event is deleted.
+     * If the text is "Register for Event," a confirmation dialog is shown, and the user is registered for the event upon confirmation.
+     */
     public void handleActionButtonClick() {
-        // Implement the logic for the actionButton click based on the text
+
         String buttonText = actionButton.getText();
         if ("Delete".equals(buttonText)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this event?", ButtonType.YES, ButtonType.NO);
@@ -108,7 +114,6 @@ viewEventViewModel.addPropertyChangeListener(this);
 
             }
         } else if ("Register for Event".equals(buttonText)) {
-            // Implement register for event logic
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to register this event?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
@@ -122,6 +127,10 @@ viewEventViewModel.addPropertyChangeListener(this);
             }
         }
     }
+    /**
+     * Responds to property change events and updates the view accordingly.
+     * @param evt The property change event.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         ViewEventState viewEventState =( ViewEventState) evt.getNewValue();
