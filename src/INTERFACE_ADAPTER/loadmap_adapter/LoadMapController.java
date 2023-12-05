@@ -5,6 +5,8 @@ import DATA_ACCESS.DatabaseDAO;
 import DATA_ACCESS.FilterEventsDataAccessInterface;
 import DATA_ACCESS.SearchEventsDataAccessInterface;
 import ENTITY.Event;
+
+import USE_CASE.loadmap.LoadMapOutputData;
 import VIEW.*;
 import VIEW_CREATOR.LoadMapViewModel;
 
@@ -12,53 +14,51 @@ import USE_CASE.loadmap.LoadMapInputBoundary;
 import USE_CASE.loadmap.LoadMapInteractor;
 
 import VIEW_CREATOR.SearchEventsViewFactory;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Getter
 public class LoadMapController {
 
+    LoadMapOutputData loadMapOutputData; //test in ViewTest
+    @Setter
+    LoadMapInputBoundary interactor; //test in ViewTest
+    FilterEventsDataAccessInterface filterEventsDAO;
+    Set<Event> allEvents;
+
+    SearchEventsView searchEventsView;
+    SearchEventsDataAccessInterface searchEventsDAO;
+    SearchEventsViewFactory searchEventsViewFactory;
+    LoadEventsView view; //test in ViewTest
+
     public void execute(LoadMapViewModel viewModel){
-        LoadMapOutputData loadMapOutputData = new LoadMapOutputData();
-        LoadMapInputBoundary interactor = new LoadMapInteractor();
+        loadMapOutputData = new LoadMapOutputData();
+        interactor = new LoadMapInteractor();
 
         interactor.execute(loadMapOutputData, viewModel);
     }
 
-    public void viewProfile(){
-        //TODO: switch to another Usecase (VIEW_PROFILE)
-    }
-
     public void filterEvents(FilterEventsView filterEventsView){
         filterEventsView.showMenu();
-        FilterEventsDataAccessInterface filterEventsDataAccessInterface = new DatabaseDAO();
-        Set<Event> allEvents = filterEventsDataAccessInterface.FilterEvents("");
+        filterEventsDAO = new DatabaseDAO();
+        allEvents = filterEventsDAO.FilterEvents("");
         filterEventsView.getController().setEvents(allEvents);
-
-        //TODO: switch to another Usecase (FILTER_EVENTS)
     }
 
     public void searchEvents(LoadMapViewModel viewModel){
-        SearchEventsViewFactory searchEventsViewFactory = new SearchEventsViewFactory();
-        SearchEventsView searchEventsView = searchEventsViewFactory.create(viewModel);
-        SearchEventsDataAccessInterface searchEventsDataAccessInterface = new DatabaseDAO();
-        Set<Event> allEvents = searchEventsDataAccessInterface.SearchEvent("");
+        searchEventsViewFactory = new SearchEventsViewFactory();
+        searchEventsView = searchEventsViewFactory.create(viewModel);
+        searchEventsDAO = new DatabaseDAO();
+        allEvents = searchEventsDAO.SearchEvent("");
         searchEventsView.getController().setEvents(allEvents);
 
-
-        //TODO: switch to another Usecase (SEARCH_EVENTS)
     }
 
-//    public void viewEvents(){
-//        //TODO: switch to another Usecase (VIEW_EVENTS)
-//    }
-
-//    public void addEvent(){
-//        //TODO: switch to another Usecase (ADD_EVENT)
-//    }
 
     public void updateEvents(LoadMapView loadMapView){
-        //TODO: switch to another Usecase (UPDATE_EVENTS)
-        LoadEventsView view = new LoadEventsView(loadMapView); //TODO: consider moving just this line to another class so that view will not be created each time
+        view = new LoadEventsView(loadMapView);
         view.reloadEvents(loadMapView);
     }
 }

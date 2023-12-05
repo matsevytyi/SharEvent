@@ -1,4 +1,4 @@
-package INTERFACE_ADAPTER.loadevents_adapter;
+package USE_CASE.loadevents;
 
 import ENTITY.Event;
 import lombok.Getter;

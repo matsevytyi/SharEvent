@@ -1,5 +1,5 @@
 
-package INTERFACE_ADAPTER.loadmap_adapter;
+package USE_CASE.loadmap;
 
 import lombok.Getter;
 import org.jxmapviewer.JXMapKit;

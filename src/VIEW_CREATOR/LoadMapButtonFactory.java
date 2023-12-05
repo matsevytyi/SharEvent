@@ -29,15 +29,7 @@ public class LoadMapButtonFactory {
         filterEventsButton.setMaxSize(buttonSize, buttonSize);
 
         try {
-            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-            buttonImage.setFitWidth(buttonSize - 30);
-            buttonImage.setFitHeight(buttonSize - 30);
-
-            buttonImage.setOpacity(0.7);
-
-            filterEventsButton.setGraphic(buttonImage);
-            filterEventsButton.setText("");
+            setImage(filterEventsButton, clazz, path, -30);
         } catch (Exception e) {
             System.out.println(e);
             filterEventsButton.setText("Filter Events");
@@ -55,15 +47,7 @@ public class LoadMapButtonFactory {
         searchEventsButton.setMaxSize(buttonSize, buttonSize);
 
         try {
-            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-            buttonImage.setFitWidth(buttonSize - 30);
-            buttonImage.setFitHeight(buttonSize - 35);
-
-            buttonImage.setOpacity(0.85);
-
-            searchEventsButton.setGraphic(buttonImage);
-            searchEventsButton.setText("");
+            setImage(searchEventsButton, clazz, path, -30);
         } catch (Exception e) {
             System.out.println(e);
             searchEventsButton.setText("Search");
@@ -76,16 +60,11 @@ public class LoadMapButtonFactory {
         Button viewEventsButton = new Button();
         viewEventsButton.setStyle(buttonStyle);
 
+        viewEventsButton.setPrefSize(buttonSize, buttonSize);
+        viewEventsButton.setMaxSize(buttonSize, buttonSize);
+
         try {
-            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-            buttonImage.setFitWidth(buttonSize - 30);
-            buttonImage.setFitHeight(buttonSize - 30);
-
-            buttonImage.setOpacity(0.7);
-
-            viewEventsButton.setGraphic(buttonImage);
-            viewEventsButton.setText("");
+            setImage(viewEventsButton, clazz, path, -30);
         } catch (Exception e) {
             System.out.println(e);
             viewEventsButton.setText("View Events");
@@ -105,15 +84,7 @@ public class LoadMapButtonFactory {
         addEventButton.setMaxSize(buttonSize, buttonSize);
 
         try {
-            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-            buttonImage.setFitWidth(buttonSize - 35);
-            buttonImage.setFitHeight(buttonSize - 35);
-
-            buttonImage.setOpacity(0.7);
-
-            addEventButton.setGraphic(buttonImage);
-            addEventButton.setText("");
+            setImage(addEventButton, clazz, path, -35);
         } catch (Exception e) {
             System.out.println(e);
             addEventButton.setText("Add Event");
@@ -130,21 +101,25 @@ public class LoadMapButtonFactory {
         viewProfileButton.setMaxSize(buttonSize, buttonSize);
 
         try {
-            ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
-
-            buttonImage.setFitWidth(buttonSize + 70);
-            buttonImage.setFitHeight(buttonSize + 70);
-
-            buttonImage.setOpacity(0.7);
-
-            viewProfileButton.setGraphic(buttonImage);
-            viewProfileButton.setText("");
+            setImage(viewProfileButton, clazz, path, 70);
         } catch (Exception e) {
             System.out.println(e);
             viewProfileButton.setText("View Profile");
         }
 
         return viewProfileButton;
+    }
+
+    private static void setImage(Button button, Class<?> clazz, String path, double limits) throws Exception {
+        ImageView buttonImage = new ImageView(new Image(clazz.getResource(path).toExternalForm()));
+
+        buttonImage.setFitWidth(button.getWidth() + limits);
+        buttonImage.setFitHeight(button.getHeight() + limits);
+
+        buttonImage.setOpacity(0.7);
+
+        button.setGraphic(buttonImage);
+        button.setText("");
     }
 
 }

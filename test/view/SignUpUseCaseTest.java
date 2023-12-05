@@ -1,5 +1,5 @@
 
-package view;
+package VIEW;
 
 import DATA_ACCESS.DatabaseDAO;
 import ENTITY.User;

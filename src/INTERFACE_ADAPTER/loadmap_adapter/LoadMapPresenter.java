@@ -2,6 +2,7 @@
 package INTERFACE_ADAPTER.loadmap_adapter;
 
 
+import USE_CASE.loadmap.LoadMapInputData;
 import USE_CASE.loadmap.LoadMapOutputBoundary;
 import VIEW_CREATOR.LoadMapViewModel;
 

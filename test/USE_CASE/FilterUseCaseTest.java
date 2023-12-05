@@ -8,6 +8,7 @@ import ENTITY.User;
 import VIEW.FilterEventsView;
 import VIEW_CREATOR.FilterEventsViewFactory;
 import VIEW_CREATOR.LoadMapViewModel;
+import org.junit.jupiter.api.Test;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -22,7 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class FilterUseCaseTest {
     static String message;
@@ -45,7 +47,7 @@ public class FilterUseCaseTest {
         return filterEventsView;
     }
 
-    @org.junit.Test
+    @Test
     public void testEventShownAfterFilter() {
         Event event = addEvent();
 
@@ -81,7 +83,7 @@ public class FilterUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testEventNotShownAfterFilter() {
         Event event = addEvent();
 
@@ -117,7 +119,7 @@ public class FilterUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testShowAllFilter() {
         DatabaseDAO databaseDAO = new DatabaseDAO();
         Set<Event> allEvents = databaseDAO.FilterEvents("");
@@ -143,7 +145,7 @@ public class FilterUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testEmptyApplyButtonPopUp() {
         MakeFilterEventsView();
         JButton applyButton = getButton(1);
@@ -154,7 +156,7 @@ public class FilterUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testNoEventsFoundPopUp() {
         DatabaseDAO databaseDAO = new DatabaseDAO();
         Set<Event> allEvents = databaseDAO.FilterEvents("");
@@ -167,7 +169,7 @@ public class FilterUseCaseTest {
         assert(popUpDiscovered);
     }
 
-    @org.junit.Test
+    @Test
     public void testCancelButtonDisposal() {
         FilterEventsView filterEventsView = MakeFilterEventsView();
         filterEventsView.showMenu();

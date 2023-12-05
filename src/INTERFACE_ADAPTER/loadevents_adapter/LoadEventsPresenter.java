@@ -4,11 +4,12 @@ package INTERFACE_ADAPTER.loadevents_adapter;
 import ENTITY.Event;
 import USE_CASE.loadevents.LoadEventsInputBoundary;
 
+import USE_CASE.loadevents.LoadEventsInputData;
 import VIEW_CREATOR.FailViewFactory;
-import ENTITY.Event;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 
+import lombok.Setter;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -22,6 +23,10 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
     @Getter
     private final JXMapKit mapKit;
 
+    @Getter
+    @Setter
+    StackPane initialPane;
+
     private LoadEventsInputData loadEventsInputData;
 
     public LoadEventsPresenter(LoadEventsInputData loadEventsInputData, LoadMapView loadMapView) {
@@ -30,6 +35,7 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
     }
 
     public boolean PrepareSuccesView() {
+        System.out.println("LoadEvents mapkit Before: " + mapKit);
 
         Set<Event> localEvents = loadEventsInputData.getEvents();
 
@@ -38,13 +44,14 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
 
         mapKit.getMainMap().setOverlayPainter(eventPainter);
 
+        System.out.println("LoadEvents mapkit: " + mapKit);
         return true;
     }
 
     public void PrepareFailView(String reason, LoadMapView loadMapView) {
         FailViewFactory failViewFactory = new FailViewFactory();
 
-        StackPane initialPane = loadMapView.getStackPane();
+        initialPane = loadMapView.getStackPane();
 
         if (reason == "Database_error") {
             failViewFactory.createFailView(initialPane, "Database error", "Error connecting to the database. Check your connection and if your app is up-to-date");

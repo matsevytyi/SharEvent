@@ -8,6 +8,7 @@ import ENTITY.User;
 import VIEW.SearchEventsView;
 import VIEW_CREATOR.LoadMapViewModel;
 import VIEW_CREATOR.SearchEventsViewFactory;
+import org.junit.jupiter.api.Test;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -22,7 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class SearchUseCaseTest {
     static String message;
@@ -48,7 +50,7 @@ public class SearchUseCaseTest {
         return searchEventsView;
     }
 
-    @org.junit.Test
+    @Test
     public void testEventShownAfterSearch() {
         Event event = addEvent();
 
@@ -84,7 +86,7 @@ public class SearchUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testEventNotShownAfterSearch() {
         Event event = addEvent();
         DatabaseDAO databaseDAO = new DatabaseDAO();
@@ -119,7 +121,7 @@ public class SearchUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testNoEventsFoundPopUp(){
         DatabaseDAO databaseDAO = new DatabaseDAO();
         Set<Event> allEvents = databaseDAO.SearchEvent("");
@@ -132,7 +134,7 @@ public class SearchUseCaseTest {
         assert(popUpDiscovered);
     }
 
-    @org.junit.Test
+    @Test
     public void testCancelButtonFunctionality(){
 
         DatabaseDAO databaseDAO = new DatabaseDAO();
@@ -152,7 +154,7 @@ public class SearchUseCaseTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testEmptyStringApplyButtonPopUp() {
 
         MakeSearchEventsView();
@@ -165,6 +167,7 @@ public class SearchUseCaseTest {
         assert(popUpDiscovered);
 
     }
+    @Test
     public JFrame getFrame(){
         JFrame mainFrame = null;
         Window[] windows = Window.getWindows();
