@@ -7,6 +7,9 @@ import java.util.Set;
 
 import ENTITY.Event;
 
+/**
+ * Is used to pass data from LoadEventsInteractor to LoadEventsPresenter
+ * */
 public class LoadEventsInputData {
 
     @Getter
