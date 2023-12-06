@@ -34,6 +34,18 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         this.loadEventsInputData = loadEventsInputData;
     }
 
+    /**
+     * Prepares the success view by loading events onto the map
+     *
+     * Is invoked by LoadEventsInteractor
+     *
+     * Uses mapKit, accessed from LoadMapView in the creator function,
+     * because I used library functionality to add events
+     * by having event entity as a child class of DefaultWaypoint,
+     * that has the appropriate functionality
+     *
+     * @return  true if the success view is prepared successfully
+     */
     public boolean PrepareSuccesView() {
         System.out.println("LoadEvents mapkit Before: " + mapKit);
 
@@ -48,6 +60,15 @@ public class LoadEventsPresenter implements LoadEventsInputBoundary {
         return true;
     }
 
+    /**
+     * Prepares a fail view based on the given reason and loadMapView
+     *
+     * Fail view is shown over the map to make it obvious for user
+     * that something went wrong (it will also advice user what to do)
+     *
+     * @param  reason         the reason for the fail view, is created in LoadEventsInteractor
+     * @param  loadMapView    the loadMapView object
+     */
     public void PrepareFailView(String reason, LoadMapView loadMapView) {
         FailViewFactory failViewFactory = new FailViewFactory();
 
