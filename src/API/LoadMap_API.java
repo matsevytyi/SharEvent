@@ -23,7 +23,12 @@ public class LoadMap_API implements LoadMapAPIAccessInterface {
         this.apiUrl = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey;
     }
 
-
+    /**
+     * Retrieves the geographical coordinates of a location using the API.
+     *
+     * @return          A GeoPosition object representing the latitude and longitude of the location.
+     * @throws IOException     If there is an error in the API request.
+     */
     public GeoPosition getCoord() throws IOException {
         String longitude = "0";
         String latitude = "0";
@@ -75,6 +80,13 @@ public class LoadMap_API implements LoadMapAPIAccessInterface {
         return new GeoPosition(Double.parseDouble(latitude), Double.parseDouble(longitude));
     }
 
+    /**
+     * Retrieves the geographic position of a clicked point on a map.
+     *
+     * @param  clickPoint     the point that was clicked on the map
+     * @param  mapViewer      the map viewer that contains the clicked point
+     * @return                the geographic position of the clicked point
+     */
     public static GeoPosition getClickedPosition(Point clickPoint, JXMapViewer mapViewer) {
         double latitude = mapViewer.convertPointToGeoPosition(clickPoint).getLatitude();
         double longitude = mapViewer.convertPointToGeoPosition(clickPoint).getLongitude();
