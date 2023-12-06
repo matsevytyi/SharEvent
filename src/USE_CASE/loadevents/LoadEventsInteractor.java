@@ -42,7 +42,7 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
 
     /**
      *
-     * Here is only core Use Case logic implemened
+     * Only here is only core LoadEvents Use Case logic implemened
      * (adheres to SOLID SRP)
      *
      * Interactor tries to access the database. He passes there center position
