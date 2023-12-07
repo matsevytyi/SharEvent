@@ -19,20 +19,33 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * This class is responsible for passing user interactions
+ * from LoadMapView to */
 @Getter
 public class LoadMapController {
 
-    LoadMapOutputData loadMapOutputData; //test in ViewTest
+    LoadMapOutputData loadMapOutputData;
     @Setter
-    LoadMapInputBoundary interactor; //test in ViewTest
+    LoadMapInputBoundary interactor;
     FilterEventsDataAccessInterface filterEventsDAO;
     Set<Event> allEvents;
 
     SearchEventsView searchEventsView;
     SearchEventsDataAccessInterface searchEventsDAO;
     SearchEventsViewFactory searchEventsViewFactory;
-    LoadEventsView view; //test in ViewTest
+    LoadEventsView view;
 
+    /**
+     * After user logs in, controller works on moving
+     * workflow to LoadMapInteractor
+     *
+     * mapKit, used as basement for interactive map
+     * is passed via separate class
+     * to adhere to Single Responsibility SOLID principle
+     *
+     * @param  viewModel  the LoadMapViewModel where changes wil be made
+     */
     public void execute(LoadMapViewModel viewModel){
         loadMapOutputData = new LoadMapOutputData();
         interactor = new LoadMapInteractor();
