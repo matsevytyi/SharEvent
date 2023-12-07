@@ -52,6 +52,13 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
+/**
+ * Class that represents frontend of a LoadMap Use Case
+ * Is cornerstone in the whole app.
+ * All functionality is done with it or is displayed over it
+ * Except for Login and SignUp
+ *
+ * */
 @Getter
 public class LoadMapView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -142,10 +149,21 @@ public class LoadMapView extends JPanel implements ActionListener, PropertyChang
 
     }
 
+
+    /**
+     * Getter for StackPane where this view as well as all other elements are pinned*/
     public StackPane getStackPane() {
         return pane;
     }
 
+    /**
+     * Sets the button listeners for the given StackPane and LoadMapController
+     *
+     * From here most of other Use Cases are invoked
+     *
+     * @param  pane       the StackPane to set button listeners for
+     * @param  controller the LoadMapController to set button listeners for
+     */
     public void setButtonListeners(StackPane pane, LoadMapController controller) {
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);
