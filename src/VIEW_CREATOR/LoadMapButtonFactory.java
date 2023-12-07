@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 
 import java.io.FileNotFoundException;
 
+/**
+ * Special class for creating buttons in LoadMapView
+ * */
 public class LoadMapButtonFactory {
 
     /**

@@ -10,6 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * is responsible for creating fail views with purpose for
+ * providing user with information
+ * what went wrong and what to do in order to fix it
+ * */
 public class FailViewFactory {
 
     /**

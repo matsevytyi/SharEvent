@@ -27,14 +27,10 @@ public class LoadMapViewFactory {
         FailViewFactory failViewFactory = new FailViewFactory();
 
         if(viewModel.getMap_Load_Error() != null) {
-            //create failview
             failViewFactory.createFailView(pane, "Oops, looks like you are using wrong map", "Check your connection, ensure that your app is up-to-date and reload the app.\n If problem still appears, contact our support");
             return pane;
         }
-
-        //TODO: create subclasses-models for these cases on LoadMapViewModel
         if(viewModel.getAPI_error() != null) {
-            //create fail view
             failViewFactory.createFailView(pane, "Failed to get or process your IP address", "Check your connection, ensure that your app is up-to-date and reload the app.\nAlso you may try to find your approximate location on the map\nand then press «Update Events» button");
         }
 
