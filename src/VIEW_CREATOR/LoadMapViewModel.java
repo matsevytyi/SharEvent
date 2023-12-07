@@ -10,6 +10,9 @@ import org.jxmapviewer.JXMapKit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Class that passes data and styling to LoadMapViewFactory
+ * */
 public class LoadMapViewModel {
 
     @Getter

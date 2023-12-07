@@ -4,7 +4,8 @@ import USE_CASE.login.LoginOutputData;
 
 /**
  * LoadMapState is used to store
- * user who is LoggedIn
+ * current state of LoadMapView
+ * User who is LoggedIn
  * */
 public class LoadMapState {
 
