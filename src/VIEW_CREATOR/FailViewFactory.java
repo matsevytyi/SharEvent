@@ -10,15 +10,27 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * is responsible for creating fail views with purpose for
+ * providing user with information
+ * what went wrong and what to do in order to fix it
+ * */
 public class FailViewFactory {
+
+    /**
+     * Creates a fail view on the specified StackPane with the given title label text and description label text
+     * All fail views lhas the same styling and are diplayed over the existing pane
+     * but have different content and titles depending on its reason
+     *
+     * @param  pane                  the StackPane on which to create the fail view
+     * @param  titleLabelText        the text to display on the title label of the fail view
+     * @param  descriptionLabelText  the text to display on the description label of the fail view
+     */
     public void createFailView(StackPane pane, String titleLabelText, String descriptionLabelText){
 
         Rectangle overlay = new Rectangle(1600, 1200);
         overlay.setFill(Color.BLACK);
         overlay.setOpacity(0.5);
-
-        //TODO: create models for different fail views
-        //TODO: adjust styling for labels and buttons
 
         Label titleLabel = new Label(titleLabelText);
         Label descriptionLabel = new Label(descriptionLabelText);

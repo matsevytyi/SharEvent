@@ -8,6 +8,9 @@ import javafx.scene.layout.StackPane;
 
 import java.util.LinkedList;
 
+/**
+ * Class that creates LoadMapView
+ * */
 public class LoadMapViewFactory {
 
 
@@ -24,22 +27,23 @@ public class LoadMapViewFactory {
         FailViewFactory failViewFactory = new FailViewFactory();
 
         if(viewModel.getMap_Load_Error() != null) {
-            //create failview
             failViewFactory.createFailView(pane, "Oops, looks like you are using wrong map", "Check your connection, ensure that your app is up-to-date and reload the app.\n If problem still appears, contact our support");
             return pane;
         }
-
-        //TODO: create subclasses-models for these cases on LoadMapViewModel
         if(viewModel.getAPI_error() != null) {
-            //create fail view
             failViewFactory.createFailView(pane, "Failed to get or process your IP address", "Check your connection, ensure that your app is up-to-date and reload the app.\nAlso you may try to find your approximate location on the map\nand then press «Update Events» button");
         }
 
         return pane;
     }
 
+    /**
+     * Creates a linked list of buttons based on the provided LoadMapViewModel.
+     *
+     * @param  viewModel  the LoadMapViewModel containing the necessary data for creating the buttons
+     * @return            a linked list of buttons
+     */
     private LinkedList<Button> createButtons(LoadMapViewModel viewModel) {
-        //TODO: addjust buttons so that they meet the UI
         Button viewProfileButton = LoadMapButtonFactory.createViewProfileButton(LoadMapButtonFactory.class, viewModel.getViewProfileButtonImgPath(), viewModel.getViewProfileButtonStyle(), viewModel.getViewProfileButtonSize());
         Button filterEventsButton = LoadMapButtonFactory.createFilterEventsButton(LoadMapButtonFactory.class, viewModel.getFilterEventsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
         Button searchEventsButton = LoadMapButtonFactory.createSearchEventsButton(LoadMapButtonFactory.class, viewModel.getSearchEventsButtonImgPath(), viewModel.getRightMenuButtonsStyle(), viewModel.getRightMenuButtonSize());
@@ -59,6 +63,11 @@ public class LoadMapViewFactory {
         return buttons;
     }
 
+    /**
+     * Adjusts the location of buttons within a StackPane.
+     *
+     * @param  pane  the StackPane containing the buttons
+     */
     private void adjustButtonLocation(StackPane pane){
 
         Button viewProfileButton = (Button) pane.getChildren().get(1);

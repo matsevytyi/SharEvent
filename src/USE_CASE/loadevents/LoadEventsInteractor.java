@@ -40,7 +40,22 @@ public class LoadEventsInteractor implements LoadEventsOutputBoundary {
         problem = "";
     }
 
-
+    /**
+     *
+     * Only here is only core LoadEvents Use Case logic implemened
+     * (adheres to SOLID SRP)
+     *
+     * Interactor tries to access the database. He passes there center position
+     * of the part of the map that user looks on.
+     * From the database he updates List<Event> that later will be passed to presenter
+     * to be loaded on the map.
+     *
+     * If there is a problem with database,
+     * presenter will work on showing the appropriate fail view
+     *
+     * @param  loadEventsOuputData   The output data from user actions
+     * @param  loadMapView          The map view for loading events.
+     */
 @Override
     public void execute(LoadEventsOuputData loadEventsOuputData, LoadMapView loadMapView) {
 

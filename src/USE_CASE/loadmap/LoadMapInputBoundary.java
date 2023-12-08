@@ -4,6 +4,11 @@ import VIEW_CREATOR.LoadMapViewModel;
 import org.jxmapviewer.JXMapKit;
 
 
+/**
+ * Interface for accessing the Interactor from Controller
+ * Helps to adhere to Open-Closed SOLID principle
+ *
+ * */
 public interface LoadMapInputBoundary {
 
     JXMapKit getMapKit();

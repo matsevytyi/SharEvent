@@ -3,9 +3,10 @@ package DATA_ACCESS.loadevents_dataaccess;
 import lombok.Getter;
 import org.jxmapviewer.viewer.GeoPosition;
 
+/**
+ * Class, used for passing data fromLoadEventsInteractor to Database
+ * */
 public class LoadEventsDAO_InputData {
-
-    //TODO: Fill this class for other queries data as well
 
     @Getter
     String latitude1, latitude2, longitude1, longitude2;

@@ -12,7 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * Is responsible to database connect/disconect and passing queries to the database
+ * Note: SQL is constructed in another class, it is only responsible for passing it to databse
+ * to adhere with Single Responsibility SOLID principle
+ * */
 public class Database {
     private static final String url = "jdbc:postgresql://db.bqeyxdersfsiysrpyzqb.supabase.co:5432/postgres";
     private static final String user = "basic_user";
@@ -50,6 +54,9 @@ public class Database {
         }
     }
 
+    /**
+     * Connects to the database
+     * */
     private Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -60,6 +67,9 @@ public class Database {
         }
     }
 
+    /**
+     * Disconnects from the database
+     * */
     private void closeConnection(Connection connection) {
         try {
             connection.close();
@@ -69,6 +79,14 @@ public class Database {
     }
 
 
+    /**
+     * Executes the given SQL query and returns the result.
+     *
+     * @param  query       the SQL query to execute
+     * @param  isUpdate    a flag indicating whether the query is an update operation
+     * @param  parameters  optional parameters to be set in the query
+     * @return             the result of the query execution
+     */
     public Object executeQuery(String query, boolean isUpdate, Object... parameters) {
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
